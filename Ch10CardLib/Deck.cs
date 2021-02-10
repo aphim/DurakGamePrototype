@@ -6,9 +6,11 @@
  */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Ch10CardLib
 {
@@ -18,21 +20,19 @@ namespace Ch10CardLib
     public class Deck
     {
         //private card array
-        private Card[] cards;
-        public int cardsInDeck = 36;
+        public static int cardsInDeck = 36;
+        private ArrayList cards = new ArrayList(cardsInDeck);
 
         /// <summary>
         /// Deck constructor that initializes a deck of cards
         /// </summary>
         public Deck()
         {
-            //creates an array fo 52 cards looping through the suits and ranks
-            cards = new Card[cardsInDeck];
             for (int suitVal = 0; suitVal < 4; suitVal++)
             {
                 for (int rankVal = 1; rankVal < 10; rankVal++)
                 {
-                    cards[suitVal * 9 + rankVal - 1] = new Card((Suit)suitVal, (Rank)rankVal);
+                    cards.Add(new Card((Suit)suitVal, (Rank)rankVal));
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace Ch10CardLib
         {
             if(cardNum >= 0 && cardNum <= cardsInDeck-1)
             {
-                return cards[cardNum];
+                return (Card)cards[cardNum];
             }
             else
             {
@@ -77,30 +77,42 @@ namespace Ch10CardLib
                     }
                 }
                 assigned[destCard] = true;
-                newDeck[destCard] = cards[i]; 
+                newDeck[destCard] = (Card)cards[i]; 
             }
-            newDeck.CopyTo(cards, 0);
+            cards = new ArrayList(newDeck);
         }
 
+        /// <summary>
+        /// Gets the number of remaining cards in the deck
+        /// </summary>
+        /// <returns>number of cards in the current deck</returns>
         public int getCardsRemaining()
         {
-            int cardsRemaining = cards.Length;
+            int cardsRemaining = cards.Count;
             return cardsRemaining;
         }
 
+        /// <summary>
+        /// Gets the trump card from the deck.
+        /// </summary>
+        /// <returns>Pulls the bottom card and sets it as the trump card</returns>
         public TrumpCard getTrumpcard()
         {
-            TrumpCard trumpCard = new TrumpCard(cards[0]);
-            cards = cards.Skip(1).ToArray();
+            TrumpCard trumpCard = new TrumpCard((Card)cards[0]);
+            cards.RemoveAt(0);
 
             return trumpCard;
         }
 
+        /// <summary>
+        /// Draws a card from the deck
+        /// </summary>
+        /// <returns>the top card from the deck as the drawn card</returns>
         public Card drawCard()
         {
-            Card drawnCard = new Card(cards[cards.Length-1]);
+            Card drawnCard = new Card((Card)cards[cards.Count-1]);
 
-            Array.Resize(ref cards, cards.Length - 1);
+            cards.RemoveAt(cards.Count - 1);
             
             return drawnCard;
         }

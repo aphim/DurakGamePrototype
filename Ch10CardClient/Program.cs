@@ -173,7 +173,6 @@ namespace Ch10CardClient
                 }
             }
 
-
             Console.ReadKey();
 
         }

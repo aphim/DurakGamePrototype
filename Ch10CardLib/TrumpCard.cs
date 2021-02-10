@@ -14,16 +14,28 @@ namespace Ch10CardLib
 
         }
 
+        /// <summary>
+        /// get the suit of the trump card
+        /// </summary>
+        /// <returns>suit of trump card</returns>
         public Suit getTrumpSuit()
         {
             return suit;
         }
 
+        /// <summary>
+        /// gets the rank of the trump card
+        /// </summary>
+        /// <returns>rank of the trump card</returns>
         public Rank getTrumpRank()
         {
             return rank;
         }
 
+        /// <summary>
+        /// overwritten tostring method for the trump card
+        /// </summary>
+        /// <returns>formatted message for the trump card</returns>
         public override string ToString()
         {
             return "The " + rank + " of " + suit + "s";
