@@ -32,10 +32,16 @@ namespace Ch10CardLib
             rank = newRank;
         }
 
+        public Card(Card card)
+        {
+            suit = card.suit;
+            rank = card.rank;
+        }
+
         /// <summary>
         /// Defualt constructor for cards.
         /// </summary>
-        private Card()
+        protected Card()
         {
 
         }

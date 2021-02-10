@@ -96,5 +96,14 @@ namespace Ch10CardLib
             return trumpCard;
         }
 
+        public Card drawCard()
+        {
+            Card drawnCard = new Card(cards[cards.Length-1]);
+
+            Array.Resize(ref cards, cards.Length - 1);
+            
+            return drawnCard;
+        }
+
     }
 }

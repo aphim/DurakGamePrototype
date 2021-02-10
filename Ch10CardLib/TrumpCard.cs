@@ -6,30 +6,27 @@ using System.Threading.Tasks;
 
 namespace Ch10CardLib
 {
-    public class TrumpCard
+    public class TrumpCard : Card
     {
-        public readonly Suit trumpSuit;
-        public readonly Rank trumpRank;
 
-        public TrumpCard (Card card)
+        public TrumpCard (Card card): base(card)
         {
-            trumpSuit = card.suit;
-            trumpRank = card.rank;
+
         }
 
         public Suit getTrumpSuit()
         {
-            return trumpSuit;
+            return suit;
         }
 
         public Rank getTrumpRank()
         {
-            return trumpRank;
+            return rank;
         }
 
         public override string ToString()
         {
-            return "The " + trumpRank + " of " + trumpSuit + "s";
+            return "The " + rank + " of " + suit + "s";
         }
 
     }
