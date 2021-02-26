@@ -63,6 +63,7 @@ namespace Ch10CardLib
         /// <returns>returns selected card from the hand</returns>
         public Card playCard(int cardNum)
         {
+
             if (cardNum >= 0 && cardNum <= hand.Count - 1)
             {
                 Card playedCard = (Card)hand[cardNum];
@@ -70,6 +71,42 @@ namespace Ch10CardLib
                 hand.RemoveAt(cardNum);
 
                 return playedCard;
+            }
+            else
+            {
+                throw (new System.ArgumentOutOfRangeException("cardNum", cardNum, "Value must be between 0 and handsize"));
+            }
+
+        }
+
+        public Card selectCard(int cardNum)
+        {
+            if (cardNum >= 0 && cardNum <= hand.Count - 1)
+            {
+                Card playedCard = (Card)hand[cardNum];
+
+                return playedCard;
+            }
+            else
+            {
+                throw (new System.ArgumentOutOfRangeException("cardNum", cardNum, "Value must be between 0 and handsize"));
+            }
+        }
+
+
+        public Card playAttackerCard(int cardNum)
+        {
+
+
+            if (cardNum >= 0 && cardNum <= hand.Count - 1)
+            {
+
+                Card playedCard = (Card)hand[cardNum];
+
+                hand.RemoveAt(cardNum);
+
+                return playedCard;
+
             }
             else
             {

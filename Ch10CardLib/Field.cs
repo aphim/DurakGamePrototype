@@ -42,6 +42,17 @@ namespace Ch10CardLib
             field.Add(card);
         }
 
+        //get current card in the field
+        public Card getCurrentCard()
+        {
+            Card currentCard;
+
+            currentCard = ((Card)field[field.Count-1]);
+
+            return currentCard;
+        }
+
+
 
         public ArrayList getDiscard()
         {

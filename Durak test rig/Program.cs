@@ -57,13 +57,13 @@ namespace Ch10CardClient
                 Console.WriteLine("");
                 Console.WriteLine(player1.playerName + "'s Hand:");
                 player1.playerHand = new Hand(myDeck);
-                //player1.playerHand.displayHand(player1.playerHand);
+                player1.playerHand.displayHand(player1.playerHand);
 
                 //initialize player2's hand
                 Console.WriteLine("");
                 Console.WriteLine(playerAI.playerName + "'s Hand:");
                 playerAI.playerHand = new Hand(myDeck);
-                //playerAI.playerHand.displayHand(playerAI.playerHand);
+                playerAI.playerHand.displayHand(playerAI.playerHand);
 
                 //initialize the field
                 Field playingField = new Field();
@@ -84,9 +84,9 @@ namespace Ch10CardClient
 
                 int.TryParse(Console.ReadLine(), out selectedCard);
 
-                playingField.cardPlayed(player1.playerHand.playCard(selectedCard));
+                playingField.cardPlayed(player1.playerHand.playAttackerCard(selectedCard));
 
-               
+                playingField.displayField(playingField);
 
                 //player 2's initial turn (defender)
                 Console.WriteLine("");
@@ -96,9 +96,65 @@ namespace Ch10CardClient
 
                 int.TryParse(Console.ReadLine(), out selectedCard);
 
-                playingField.cardPlayed(playerAI.playerHand.playCard(selectedCard));
+                Card currentCard = playingField.getCurrentCard();
+
+                Card cardSelected = playerAI.playerHand.selectCard(selectedCard);
+
+
+                while (true)
+                {
+                    //checks the card in hand is equals to the trump suit
+                    if (cardSelected.suit.Equals(trumpCard.suit))
+                    {
+                        if (currentCard.suit.Equals(trumpCard.suit))
+                        {
+                            //if the selected card rank is higher than the current card rank
+                            if (cardSelected.rank > currentCard.rank)
+                            {
+                                playingField.cardPlayed(playerAI.playerHand.playCard(selectedCard));
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("rank is too low.");
+                                int.TryParse(Console.ReadLine(), out selectedCard);
+                                cardSelected = playerAI.playerHand.selectCard(selectedCard);
+                            }
+                        }
+                        else
+                        {
+                            playingField.cardPlayed(playerAI.playerHand.playCard(selectedCard));
+                            break;
+                        }
+                    }
+
+                    //checks to see if played card suit is the field card suit
+                    else if (cardSelected.suit == currentCard.suit)
+                    {
+                        //checks to see if played card rank is higher than field card rank
+                        if (cardSelected.rank > currentCard.rank)
+                        {
+                            playingField.cardPlayed(playerAI.playerHand.playCard(selectedCard));
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("rank is too low.");
+                            int.TryParse(Console.ReadLine(), out selectedCard);
+                            cardSelected = playerAI.playerHand.selectCard(selectedCard);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("You can only play the same suit or the trump suit.");
+                        int.TryParse(Console.ReadLine(), out selectedCard);
+                        cardSelected = playerAI.playerHand.selectCard(selectedCard);
+                    }
+                }
+
 
                 playingField.displayField(playingField);
+
 
 
 
@@ -127,6 +183,7 @@ namespace Ch10CardClient
                 if (flag == "Y" || flag == "y")
                 {
                     playAgain = true;
+                    Console.Clear();
                 }
                 else
                 {
