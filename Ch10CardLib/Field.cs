@@ -100,5 +100,41 @@ namespace Ch10CardLib
 
         }
 
+        public void displayField(Field playingField)
+        {
+            for (int i = 0; i < playingField.getField().Count; i++)
+            {
+                //displays the current card
+                Card tempCard = (Card)playingField.getField()[i];
+                Console.Write(tempCard.ToString());
+                if (i != playingField.getField().Count - 1)
+                {
+                    Console.Write(", ");
+                }
+                else
+                {
+                    Console.WriteLine();
+                }
+            }
+        }
+
+        public void displayDiscarded(Field playingField)
+        {
+            for (int i = 0; i < playingField.getDiscard().Count; i++)
+            {
+                //displays the current card
+                Card tempCard = (Card)playingField.getDiscard()[i];
+                Console.Write(tempCard.ToString());
+                if (i != playingField.getDiscard().Count - 1)
+                {
+                    Console.Write(", ");
+                }
+                else
+                {
+                    Console.WriteLine();
+                }
+            }
+        }
+
     }
 }

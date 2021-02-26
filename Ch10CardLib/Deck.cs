@@ -117,5 +117,25 @@ namespace Ch10CardLib
             return drawnCard;
         }
 
+       public void displayDeck(Deck myDeck)
+        {
+            for (int i = 0; i < myDeck.getCardsRemaining(); i++)
+            {
+                //displays the current card
+                Card tempCard = myDeck.GetCard(i);
+                Console.Write(tempCard.ToString());
+                if (i != myDeck.getCardsRemaining() - 1)
+                {
+                    Console.Write(", ");
+                }
+                else
+                {
+                    Console.WriteLine();
+                }
+            }
+        }
+
+    
+
     }
 }

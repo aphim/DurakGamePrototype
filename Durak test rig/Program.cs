@@ -57,13 +57,16 @@ namespace Ch10CardClient
 
             //initialize player2's hand
             Console.WriteLine("");
-            Console.WriteLine(playerAI.playerName + "'s hand:");
+            Console.WriteLine(playerAI.playerName + "'s Hand:");
             playerAI.playerHand = new Hand(myDeck);
             playerAI.playerHand.displayHand(playerAI.playerHand);
 
             //initialize the field
             Field playingField = new Field();
-
+            Console.WriteLine("\nPlay the 4th card");
+            playingField.cardPlayed(playerAI.playerHand.playCard(3));
+            Console.WriteLine("\nDisplay the field");
+            playingField.displayField(playingField);
         }
     }
 }

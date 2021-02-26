@@ -179,20 +179,22 @@ namespace Ch10CardClient
             }
             Console.WriteLine("");
             Console.WriteLine("new remaining cards in deck:");
-            for (int i = 0; i < myDeck.getCardsRemaining(); i++)
-            {
-                //displays the current card
-                Card tempCard = myDeck.GetCard(i);
-                Console.Write(tempCard.ToString());
-                if (i != myDeck.getCardsRemaining() - 1)
-                {
-                    Console.Write(", ");
-                }
-                else
-                {
-                    Console.WriteLine();
-                }
-            }
+            myDeck.displayDeck(myDeck);
+
+            //for (int i = 0; i < myDeck.getCardsRemaining(); i++)
+            //{
+            //    //displays the current card
+            //    Card tempCard = myDeck.GetCard(i);
+            //    Console.Write(tempCard.ToString());
+            //    if (i != myDeck.getCardsRemaining() - 1)
+            //    {
+            //        Console.Write(", ");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine();
+            //    }
+            //}
 
             Console.WriteLine("");
             Console.WriteLine("Play card from hand1, current hand 1");
@@ -214,7 +216,7 @@ namespace Ch10CardClient
 
             Console.WriteLine("");
             Console.WriteLine("Cards on field");
-
+            playingField.displayField(playingField);
             for (int i = 0; i < playingField.getField().Count; i++)
             {
                 //displays the current card
@@ -314,20 +316,21 @@ namespace Ch10CardClient
 
             Console.WriteLine("");
             Console.WriteLine("Discard pile");
-            for (int i = 0; i < playingField.getDiscard().Count; i++)
-            {
-                //displays the current card
-                Card tempCard = (Card)playingField.getDiscard()[i];
-                Console.Write(tempCard.ToString());
-                if (i != playingField.getDiscard().Count - 1)
-                {
-                    Console.Write(", ");
-                }
-                else
-                {
-                    Console.WriteLine();
-                }
-            }
+            playingField.displayDiscarded(playingField);
+            //for (int i = 0; i < playingField.getDiscard().Count; i++)
+            //{
+            //    //displays the current card
+            //    Card tempCard = (Card)playingField.getDiscard()[i];
+            //    Console.Write(tempCard.ToString());
+            //    if (i != playingField.getDiscard().Count - 1)
+            //    {
+            //        Console.Write(", ");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine();
+            //    }
+            //}
 
             Console.WriteLine("");
             Console.WriteLine("Final hand 1");
