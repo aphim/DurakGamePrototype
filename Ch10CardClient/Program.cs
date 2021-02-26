@@ -18,10 +18,22 @@ namespace Ch10CardClient
 
     class Program
     {
+        
+       
         static void Main(string[] args)
         {
+
             //creates a new deck object
             Deck myDeck = new Deck();
+            Player playerAI = new Player("AI");
+            Player player1;
+
+            Console.WriteLine("Please Enter you name");
+
+            string playerName = Console.ReadLine();
+
+            player1 = new Player(playerName);
+
             //shuffles the deck object
             //myDeck.Shuffle();
             //loops through the deck
@@ -71,39 +83,42 @@ namespace Ch10CardClient
             Console.WriteLine(myDeck.getCardsRemaining());
 
             Console.WriteLine("");
-            Console.WriteLine("Hand 1:");
-            Hand hand1 = new Hand(myDeck);
-            for (int i = 0; i < hand1.gethandSize(); i++)
-            {
-                //displays the current card
-                Card tempCard = hand1.GetCard(i);
-                Console.Write(tempCard.ToString());
-                if (i != hand1.gethandSize() - 1)
-                {
-                    Console.Write(", ");
-                }
-                else
-                {
-                    Console.WriteLine();
-                }
-            }
+            Console.WriteLine(player1.playerName+"'s Hand:");
+            player1.playerHand = new Hand(myDeck);
+            player1.playerHand.displayHand(player1.playerHand);
+            //for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+            //{
+            //    //displays the current card
+            //    Card tempCard = player1.playerHand.GetCard(i);
+            //    Console.Write(tempCard.ToString());
+            //    if (i != player1.playerHand.gethandSize() - 1)
+            //    {
+            //        Console.Write(", ");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine();
+            //    }
+            //}
             Console.WriteLine("");
-            Console.WriteLine("hand 2:");
-            Hand hand2 = new Hand(myDeck);
-            for (int i = 0; i < hand2.gethandSize(); i++)
-            {
-                //displays the current card
-                Card tempCard = hand2.GetCard(i);
-                Console.Write(tempCard.ToString());
-                if (i != hand2.gethandSize() - 1)
-                {
-                    Console.Write(", ");
-                }
-                else
-                {
-                    Console.WriteLine();
-                }
-            }
+            Console.WriteLine(playerAI.playerName+ "'s hand:");
+            playerAI.playerHand = new Hand(myDeck);
+            playerAI.playerHand.displayHand(playerAI.playerHand);
+            
+            //for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+            //{
+            //    //displays the current card
+            //    Card tempCard = playerAI.playerHand.GetCard(i);
+            //    Console.Write(tempCard.ToString());
+            //    if (i != playerAI.playerHand.gethandSize() - 1)
+            //    {
+            //        Console.Write(", ");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine();
+            //    }
+            //}
             Console.WriteLine("");
             Console.WriteLine("remaining cards in deck");
             for (int i = 0; i < myDeck.getCardsRemaining(); i++)
@@ -125,16 +140,16 @@ namespace Ch10CardClient
 
             Console.WriteLine("play 4th card from hand 2:");
             Field playingField = new Field();
-            playingField.cardPlayed(hand2.playCard(3));
+            playingField.cardPlayed(playerAI.playerHand.playCard(3));
 
             Console.WriteLine("");
             Console.WriteLine("new hand 2:");
-            for (int i = 0; i < hand2.gethandSize(); i++)
+            for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
             {
                 //displays the current card
-                Card tempCard = hand2.GetCard(i);
+                Card tempCard = playerAI.playerHand.GetCard(i);
                 Console.Write(tempCard.ToString());
-                if (i != hand2.gethandSize() - 1)
+                if (i != playerAI.playerHand.gethandSize() - 1)
                 {
                     Console.Write(", ");
                 }
@@ -146,14 +161,14 @@ namespace Ch10CardClient
 
             Console.WriteLine("");
             Console.WriteLine("draw card into hand 2:");
-            hand2.addCard(myDeck.drawCard());
+            playerAI.playerHand.addCard(myDeck.drawCard());
 
-            for (int i = 0; i < hand2.gethandSize(); i++)
+            for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
             {
                 //displays the current card
-                Card tempCard = hand2.GetCard(i);
+                Card tempCard = playerAI.playerHand.GetCard(i);
                 Console.Write(tempCard.ToString());
-                if (i != hand2.gethandSize() - 1)
+                if (i != playerAI.playerHand.gethandSize() - 1)
                 {
                     Console.Write(", ");
                 }
@@ -181,13 +196,13 @@ namespace Ch10CardClient
 
             Console.WriteLine("");
             Console.WriteLine("Play card from hand1, current hand 1");
-            playingField.cardPlayed(hand1.playCard(3));
-            for (int i = 0; i < hand1.gethandSize(); i++)
+            playingField.cardPlayed(player1.playerHand.playCard(3));
+            for (int i = 0; i < player1.playerHand.gethandSize(); i++)
             {
                 //displays the current card
-                Card tempCard = hand1.GetCard(i);
+                Card tempCard = player1.playerHand.GetCard(i);
                 Console.Write(tempCard.ToString());
-                if (i != hand1.gethandSize() - 1)
+                if (i != player1.playerHand.gethandSize() - 1)
                 {
                     Console.Write(", ");
                 }
@@ -222,15 +237,15 @@ namespace Ch10CardClient
             for (int i = 0; i < tempList.Count; i++)
             {
                 //displays the current card
-                hand1.addCard((Card)tempList[i]);
+                player1.playerHand.addCard((Card)tempList[i]);
             }
             //new hand 1
-            for (int i = 0; i < hand1.gethandSize(); i++)
+            for (int i = 0; i < player1.playerHand.gethandSize(); i++)
             {
                 //displays the current card
-                Card tempCard = hand1.GetCard(i);
+                Card tempCard = player1.playerHand.GetCard(i);
                 Console.Write(tempCard.ToString());
-                if (i != hand1.gethandSize() - 1)
+                if (i != player1.playerHand.gethandSize() - 1)
                 {
                     Console.Write(", ");
                 }
@@ -258,8 +273,8 @@ namespace Ch10CardClient
 
             Console.WriteLine("");
             Console.WriteLine("Play some cards from hand2");
-            playingField.cardPlayed(hand1.playCard(1));
-            playingField.cardPlayed(hand1.playCard(1));
+            playingField.cardPlayed(player1.playerHand.playCard(1));
+            playingField.cardPlayed(player1.playerHand.playCard(1));
 
             Console.WriteLine("");
             Console.WriteLine("Cards on field");
@@ -316,12 +331,12 @@ namespace Ch10CardClient
 
             Console.WriteLine("");
             Console.WriteLine("Final hand 1");
-            for (int i = 0; i < hand1.gethandSize(); i++)
+            for (int i = 0; i < player1.playerHand.gethandSize(); i++)
             {
                 //displays the current card
-                Card tempCard = hand1.GetCard(i);
+                Card tempCard = player1.playerHand.GetCard(i);
                 Console.Write(tempCard.ToString());
-                if (i != hand1.gethandSize() - 1)
+                if (i != player1.playerHand.gethandSize() - 1)
                 {
                     Console.Write(", ");
                 }
@@ -332,12 +347,12 @@ namespace Ch10CardClient
             }
             Console.WriteLine("");
             Console.WriteLine("Final hand 2");
-            for (int i = 0; i < hand2.gethandSize(); i++)
+            for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
             {
                 //displays the current card
-                Card tempCard = hand2.GetCard(i);
+                Card tempCard = playerAI.playerHand.GetCard(i);
                 Console.Write(tempCard.ToString());
-                if (i != hand2.gethandSize() - 1)
+                if (i != playerAI.playerHand.gethandSize() - 1)
                 {
                     Console.Write(", ");
                 }
@@ -369,5 +384,6 @@ namespace Ch10CardClient
             Console.ReadKey();
 
         }
+        
     }
 }
