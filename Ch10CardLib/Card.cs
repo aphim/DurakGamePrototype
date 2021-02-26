@@ -21,6 +21,10 @@ namespace Ch10CardLib
         public readonly Suit suit;
         public readonly Rank rank;
 
+
+
+        public static Suit trump ;
+        public static Rank trumpRank;
         /// <summary>
         /// parameterized constructor: Sets the suit and rank for the card object.
         /// </summary>
@@ -54,5 +58,198 @@ namespace Ch10CardLib
         {
             return "The " + rank + " of " + suit + "s";
         }
+
+        //OPERATOR OVERLAODS
+
+        /// <summary>
+        /// Flag for trump usage If true, trumps are value higher thant cards of other suits
+        /// </summary>
+        public static bool useTrumps = false;
+
+        public static void setTrumpSuit(TrumpCard trumpCard) 
+        {
+             Suit trump = trumpCard.suit;
+        
+        }
+        public Suit getTrumpSuit()
+        {
+            return trump;
+        }
+
+        public static void setTrumpRank(TrumpCard trumpCard)
+        {
+            Rank trumpRank = trumpCard.rank;
+
+        }
+        public Rank getTrumpRank()
+        {
+            return trumpRank;
+        }
+
+        /// <summary>
+        /// The trump suit to use if useTrump is true
+        /// </summary>
+
+
+        public static bool isAceHigh = true;
+
+        //OPERATOR OVERLOADS AND OVERRIDES
+        /// <summary>
+        /// Overriden == operator
+        /// </summary>
+        /// <param name="card1"></param>
+        /// <param name="card2"></param>
+        /// <returns></returns>
+        public static bool operator ==(Card card1, Card card2)
+        {
+            return (card1.suit == card2.suit) && (card1.rank == card2.rank);
+        }
+
+        /// <summary>
+        /// Overriden != operator
+        /// </summary>
+        /// <param name="card1"></param>
+        /// <param name="card2"></param>
+        /// <returns></returns>
+        public static bool operator !=(Card card1, Card card2)
+        {
+            return !(card1 == card2);
+        }
+
+        /// <summary>
+        /// Overriden Equals()
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
+        public override bool Equals(object card)
+        {
+            return this == (Card)card;
+        }
+
+
+
+
+        /// <summary>
+        /// Overloaded > operator
+        /// </summary>
+        /// <param name="card1"></param>
+        /// <param name="card2"></param>
+        /// <returns></returns>
+        public static bool operator >(Card card1, Card card2)
+        {
+            if (card1.suit == card2.suit)
+            {
+                if (isAceHigh)
+                {
+                    if (card1.rank == Rank.Ace)
+                    {
+                        if (card2.rank == Rank.Ace)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        if (card2.rank == Rank.Ace)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return (card1.rank > card2.rank);
+                        }
+                    }
+                }
+                else
+                {
+                    return (card1.rank > card2.rank);
+                }
+            }
+            else
+            {
+                if (useTrumps && (card2.suit == Card.trump))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Overloaded < operator
+        /// </summary>
+        /// <param name="card1"></param>
+        /// <param name="card2"></param>
+        /// <returns></returns>
+        public static bool operator <(Card card1, Card card2)
+        {
+            return !(card1 >= card2);
+        }
+
+        /// <summary>
+        /// Overloaded >= operator
+        /// </summary>
+        /// <param name="card1"></param>
+        /// <param name="card2"></param>
+        /// <returns></returns>
+        public static bool operator >=(Card card1, Card card2)
+        {
+            if (card1.suit == card2.suit)
+            {
+                if (isAceHigh)
+                {
+                    if (card1.rank == Rank.Ace)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        if (card2.rank == Rank.Ace)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return (card1.rank >= card2.rank);
+                        }
+                    }
+                }
+                else
+                {
+                    return (card1.rank >= card2.rank);
+                }
+            }
+            else
+            {
+                if (useTrumps && (card2.suit == Card.trump))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Overloaded <= operator
+        /// </summary>
+        /// <param name="card1"></param>
+        /// <param name="card2"></param>
+        /// <returns></returns>
+        public static bool operator <=(Card card1, Card card2)
+        {
+            return !(card1 > card2);
+        }
+
     }
 }

@@ -96,9 +96,9 @@ namespace Ch10CardLib
         /// Gets the trump card from the deck.
         /// </summary>
         /// <returns>Pulls the bottom card and sets it as the trump card</returns>
-        public TrumpCard getTrumpcard()
+        public Card getTrumpcard()
         {
-            TrumpCard trumpCard = new TrumpCard((Card)cards[0]);
+            Card trumpCard = new Card((Card)cards[0]);
             cards.RemoveAt(0);
 
             return trumpCard;

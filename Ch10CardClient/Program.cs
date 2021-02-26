@@ -54,7 +54,7 @@ namespace Ch10CardClient
             Console.WriteLine("");
             Console.WriteLine("Number of cards remaining:");
             Console.WriteLine(myDeck.getCardsRemaining());
-            TrumpCard trumpCard = myDeck.getTrumpcard();
+            Card trumpCard = myDeck.getTrumpcard();
             Console.WriteLine("");
             Console.WriteLine("Trump Card:");
             Console.WriteLine(trumpCard.ToString());

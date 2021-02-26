@@ -30,7 +30,7 @@ namespace Ch10CardClient
 
                 //shuffle deck
                 myDeck.Shuffle();
-
+                
                 //display shuffled deck
                 //for (int i = 0; i < myDeck.getCardsRemaining(); i++)
                 //{
@@ -48,7 +48,7 @@ namespace Ch10CardClient
                 //}
 
                 //get the trump card
-                TrumpCard trumpCard = myDeck.getTrumpcard();
+                Card trumpCard = myDeck.getTrumpcard();
 
                 Console.WriteLine("Trump Card");
                 Console.WriteLine(trumpCard.ToString());
