@@ -216,7 +216,7 @@ namespace Ch10CardClient
 
             Console.WriteLine("");
             Console.WriteLine("Cards on field");
-            playingField.displayField(playingField);
+            playingField.displayField();
             for (int i = 0; i < playingField.getField().Count; i++)
             {
                 //displays the current card
@@ -316,7 +316,7 @@ namespace Ch10CardClient
 
             Console.WriteLine("");
             Console.WriteLine("Discard pile");
-            playingField.displayDiscarded(playingField);
+            playingField.displayDiscarded();
             //for (int i = 0; i < playingField.getDiscard().Count; i++)
             //{
             //    //displays the current card

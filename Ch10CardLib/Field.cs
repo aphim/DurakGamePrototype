@@ -120,14 +120,14 @@ namespace Ch10CardLib
 
         }
 
-        public void displayField(Field playingField)
+        public void displayField()
         {
-            for (int i = 0; i < playingField.getField().Count; i++)
+            for (int i = 0; i < this.getField().Count; i++)
             {
                 //displays the current card
-                Card tempCard = (Card)playingField.getField()[i];
+                Card tempCard = (Card)this.getField()[i];
                 Console.Write(tempCard.ToString());
-                if (i != playingField.getField().Count - 1)
+                if (i != this.getField().Count - 1)
                 {
                     Console.Write(", ");
                 }
@@ -138,14 +138,14 @@ namespace Ch10CardLib
             }
         }
 
-        public void displayDiscarded(Field playingField)
+        public void displayDiscarded()
         {
-            for (int i = 0; i < playingField.getDiscard().Count; i++)
+            for (int i = 0; i < this.getDiscard().Count; i++)
             {
                 //displays the current card
-                Card tempCard = (Card)playingField.getDiscard()[i];
+                Card tempCard = (Card)this.getDiscard()[i];
                 Console.Write(tempCard.ToString());
-                if (i != playingField.getDiscard().Count - 1)
+                if (i != this.getDiscard().Count - 1)
                 {
                     Console.Write(", ");
                 }

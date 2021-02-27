@@ -58,20 +58,7 @@ namespace Ch10CardClient
               
                 Console.WriteLine("");
                 player1.AttackerInitialTurn(playingField);
-                //Console.WriteLine(player1.playerName + "'s turn");
-
-                //player1.playerHand.displayHand(player1.playerHand);
-
-                //int selectedCard;
-
-                //int.TryParse(Console.ReadLine(), out selectedCard);
-                //selectedCard = selectedCard - 1;
-
-                //playingField.cardPlayed(player1.playerHand.playCard(selectedCard));
-
-
-
-                //playingField.displayField(playingField);
+              
 
 
                 /////////////////////////////////////// player 2's turn (defender) /////////////////////////////////////////////////////////////
@@ -81,119 +68,16 @@ namespace Ch10CardClient
 
                 Console.WriteLine("");
                 playerAI.DefenderTurn(playingField, trumpCard);
-                //int selectedCard;
+                
 
-               
-
-                //playerAI.playerHand.displayHand(playerAI.playerHand);
-
-                //int.TryParse(Console.ReadLine(), out selectedCard);
-                //selectedCard = selectedCard - 1;
-
-                //Card currentCard = playingField.getCurrentCard();
-
-                //Card cardSelected = playerAI.playerHand.selectCard(selectedCard);
-
-                //while (true)
-                //{
-                    
-                   
-                //    //checks the card in hand is equals to the trump suit
-                //    if (cardSelected.suit.Equals(trumpCard.suit))
-                //    {
-                //        if (currentCard.suit.Equals(trumpCard.suit))
-                //        {
-                //            //if the selected card rank is higher than the current card rank
-                //            if (cardSelected.rank > currentCard.rank)
-                //            {
-                //                playingField.cardPlayed(playerAI.playerHand.playCard(selectedCard));
-                //                break;
-                //            }
-                //            else
-                //            {
-                //                Console.WriteLine("rank is too low.");
-                //                int.TryParse(Console.ReadLine(), out selectedCard);
-                //                selectedCard = selectedCard - 1;
-                //                cardSelected = playerAI.playerHand.selectCard(selectedCard);
-                //            }
-                //        }
-                //        else
-                //        {
-                //            playingField.cardPlayed(playerAI.playerHand.playCard(selectedCard));
-                //            break;
-                //        }
-                //    }
-                //    //checks to see if played card suit is the field card suit
-                //    else if (cardSelected.suit == currentCard.suit)
-                //    {
-                //        //checks to see if played card rank is higher than field card rank
-                //        if (cardSelected.rank > currentCard.rank)
-                //        {
-                //            playingField.cardPlayed(playerAI.playerHand.playCard(selectedCard));
-                //            break;
-                //        }
-                //        else
-                //        {
-                //            Console.WriteLine("rank is too low.");
-                //            int.TryParse(Console.ReadLine(), out selectedCard);
-                //            selectedCard = selectedCard - 1;
-                //            cardSelected = playerAI.playerHand.selectCard(selectedCard);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        Console.WriteLine("You can only play the same suit or the trump suit.");
-                //        int.TryParse(Console.ReadLine(), out selectedCard);
-                //        selectedCard = selectedCard - 1;
-                //        cardSelected = playerAI.playerHand.selectCard(selectedCard);
-                //    }
-                //}
-
-                playingField.displayField(playingField);
+                playingField.displayField();
 
 
                 /////////////////////////////////////// player1"s second turn /////////////////////////////////////////////////////////////
                 Console.WriteLine("");
         
                 player1.AttackerTurn(playingField);
-                // int selectedCard;
-                // player1.playerHand.displayHand(player1.playerHand);
-
-                // int.TryParse(Console.ReadLine(), out selectedCard);
-                // selectedCard = selectedCard - 1;
-
-                // Card tempCard;
-                //Card cardSelected = player1.playerHand.selectCard(selectedCard);
-
-                // //GET ALL CARDS ON FIELD
-                // bool matchFlag = true;
-                // while (matchFlag)
-                // {
-                //     for (int i = 0; i < playingField.getField().Count; i++)
-                //     {
-                //         tempCard = (Card)playingField.getField()[i];
-
-                //         if (tempCard.isSameRank(cardSelected))
-                //         {
-
-                //             matchFlag = false;
-                //         }
-
-                //     }
-
-                //     if (matchFlag == false)
-                //     {
-                //         playingField.cardPlayed(player1.playerHand.playCard(selectedCard));
-                //         playingField.displayField(playingField);
-                //     }
-                //     else
-                //     {
-                //         Console.WriteLine("You can only play a card of the same rank as the cards on the field");
-                //         int.TryParse(Console.ReadLine(), out selectedCard);
-                //         selectedCard = selectedCard - 1;
-                //         cardSelected = player1.playerHand.selectCard(selectedCard);
-                //     }
-                // }
+                
 
                 //////////////////////////////// end of round logic ///////////////////////////////////////////////////////////////////////
                 //flags to be placed in the proper places later

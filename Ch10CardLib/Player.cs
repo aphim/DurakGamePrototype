@@ -23,31 +23,62 @@ namespace Ch10CardLib
             this.playerHand.displayHand(this.playerHand);
 
             int selectedCard;
+            bool validCard = false;
 
-            int.TryParse(Console.ReadLine(), out selectedCard);
-            selectedCard = selectedCard - 1;
+            do
+            {
+
+                int.TryParse(Console.ReadLine(), out selectedCard);
+                selectedCard = selectedCard - 1;
+                
+                if (selectedCard > this.playerHand.gethandSize() || selectedCard < 0)
+                {
+                    Console.WriteLine("Invalid option please pick a card.");
+                }
+                else
+                {
+                    validCard = true;
+                }
+            } while (!validCard);
 
             playingField.cardPlayed(this.playerHand.playCard(selectedCard));
 
 
 
-            playingField.displayField(playingField);
+            playingField.displayField();
 
         }
 
         public void AttackerTurn(Field playingField)
         {
-            int selectedCard;
+            int selectedCard=0;
             bool validCard = false;
+            string inputString;
+            bool quit = false;
             Console.WriteLine("It is " + this.playerName + "'s Turn.");
             this.playerHand.displayHand(this.playerHand);
 
             do
             {
-                int.TryParse(Console.ReadLine(), out selectedCard);
+
+                inputString = Console.ReadLine();
+                if (inputString.Equals("D") || inputString.Equals("d"))
+                {
+                    playingField.displayDiscarded();
+                    inputString = Console.ReadLine();
+
+                }
+                if (inputString.Equals("Q") || inputString.Equals("q"))
+                {
+                    quit = true;
+                    break;
+                }
+
+
+                int.TryParse(inputString, out selectedCard);
                 selectedCard = selectedCard - 1;
-                //TODO CHECK IF THE USER ENTERS AN INVALID NUMBER
-                if (selectedCard > this.playerHand.gethandSize() || selectedCard <= 0)
+
+                if (selectedCard > this.playerHand.gethandSize() || selectedCard < 0)
                 {
                     Console.WriteLine("Invalid option please pick a card.");
                 }
@@ -60,38 +91,40 @@ namespace Ch10CardLib
 
 
             Card tempCard;
-            Card cardSelected = this.playerHand.selectCard(selectedCard);
-
-            //GET ALL CARDS ON FIELD
-            bool matchFlag = true;
-            while (matchFlag)
+            if (!quit)
             {
-                for (int i = 0; i < playingField.getField().Count; i++)
+                Card cardSelected = this.playerHand.selectCard(selectedCard);
+
+                //GET ALL CARDS ON FIELD
+                bool matchFlag = true;
+                while (matchFlag)
                 {
-                    tempCard = (Card)playingField.getField()[i];
-
-                    if (tempCard.isSameRank(cardSelected))
+                    for (int i = 0; i < playingField.getField().Count; i++)
                     {
+                        tempCard = (Card)playingField.getField()[i];
 
-                        matchFlag = false;
+                        if (tempCard.isSameRank(cardSelected))
+                        {
+
+                            matchFlag = false;
+                        }
+
                     }
 
-                }
-
-                if (matchFlag == false)
-                {
-                    playingField.cardPlayed(this.playerHand.playCard(selectedCard));
-                    playingField.displayField(playingField);
-                }
-                else
-                {
-                    Console.WriteLine("You can only play a card of the same rank as the cards on the field");
-                    int.TryParse(Console.ReadLine(), out selectedCard);
-                    selectedCard = selectedCard - 1;
-                    cardSelected = this.playerHand.selectCard(selectedCard);
+                    if (matchFlag == false)
+                    {
+                        playingField.cardPlayed(this.playerHand.playCard(selectedCard));
+                        playingField.displayField();
+                    }
+                    else
+                    {
+                        Console.WriteLine("You can only play a card of the same rank as the cards on the field");
+                        int.TryParse(Console.ReadLine(), out selectedCard);
+                        selectedCard = selectedCard - 1;
+                        cardSelected = this.playerHand.selectCard(selectedCard);
+                    }
                 }
             }
-
 
 
         }
@@ -99,27 +132,78 @@ namespace Ch10CardLib
         public void DefenderTurn(Field playingField, Card trumpCard)
         {
             Console.WriteLine( "It is " + this.playerName + "'s Turn.");
-            int selectedCard;
-
+            int selectedCard=0;
+            bool validCard = false;
+            string inputString;
+            bool quit = false;
             this.playerHand.displayHand(this.playerHand);
+            do
+            {
 
-            int.TryParse(Console.ReadLine(), out selectedCard);
-            selectedCard = selectedCard - 1;
+                inputString = Console.ReadLine();
+                if (inputString.Equals("D") || inputString.Equals("d"))
+                {
+                    playingField.displayDiscarded();
+                    inputString = Console.ReadLine();
+                }
+                if(inputString.Equals("Q") || inputString.Equals("q"))
+                {
+                    quit = true;
+                    break;
+                }
+                
+                
+                int.TryParse(inputString, out selectedCard);
+                selectedCard = selectedCard - 1;
+
+                if (selectedCard > this.playerHand.gethandSize() || selectedCard < 0)
+                {
+                    Console.WriteLine("Invalid option please pick a card.");
+                }
+                else
+                {
+                    validCard = true;
+                }
+            } while (!validCard);
 
             Card currentCard = playingField.getCurrentCard();
 
-            Card cardSelected = this.playerHand.selectCard(selectedCard);
-
-            while (true)
+            if (!quit)
             {
+                Card cardSelected = this.playerHand.selectCard(selectedCard);
 
-
-                //checks the card in hand is equals to the trump suit
-                if (cardSelected.suit.Equals(trumpCard.suit))
+                while (true)
                 {
-                    if (currentCard.suit.Equals(trumpCard.suit))
+
+                    //checks the card in hand is equals to the trump suit
+                    if (cardSelected.suit.Equals(trumpCard.suit))
                     {
-                        //if the selected card rank is higher than the current card rank
+                        if (currentCard.suit.Equals(trumpCard.suit))
+                        {
+                            //if the selected card rank is higher than the current card rank
+                            if (cardSelected.rank > currentCard.rank)
+                            {
+                                playingField.cardPlayed(this.playerHand.playCard(selectedCard));
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("rank is too low.");
+                                int.TryParse(Console.ReadLine(), out selectedCard);
+                                selectedCard = selectedCard - 1;
+                                cardSelected = this.playerHand.selectCard(selectedCard);
+                            }
+                        }
+                        else
+                        {
+                            playingField.cardPlayed(this.playerHand.playCard(selectedCard));
+                            break;
+                        }
+                    }
+                    //checks to see if played card suit is the field card suit
+                    else if (cardSelected.suit == currentCard.suit)
+                    {
+                        //checks to see if played card rank is higher than field card rank
                         if (cardSelected.rank > currentCard.rank)
                         {
                             playingField.cardPlayed(this.playerHand.playCard(selectedCard));
@@ -135,35 +219,14 @@ namespace Ch10CardLib
                     }
                     else
                     {
-                        playingField.cardPlayed(this.playerHand.playCard(selectedCard));
-                        break;
-                    }
-                }
-                //checks to see if played card suit is the field card suit
-                else if (cardSelected.suit == currentCard.suit)
-                {
-                    //checks to see if played card rank is higher than field card rank
-                    if (cardSelected.rank > currentCard.rank)
-                    {
-                        playingField.cardPlayed(this.playerHand.playCard(selectedCard));
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("rank is too low.");
+                        Console.WriteLine("You can only play the same suit or the trump suit.");
                         int.TryParse(Console.ReadLine(), out selectedCard);
                         selectedCard = selectedCard - 1;
                         cardSelected = this.playerHand.selectCard(selectedCard);
                     }
                 }
-                else
-                {
-                    Console.WriteLine("You can only play the same suit or the trump suit.");
-                    int.TryParse(Console.ReadLine(), out selectedCard);
-                    selectedCard = selectedCard - 1;
-                    cardSelected = this.playerHand.selectCard(selectedCard);
-                }
-            }
+            }//END OF IF
+           
         }
 
 
