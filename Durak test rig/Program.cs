@@ -25,14 +25,21 @@ namespace Ch10CardClient
                 Deck myDeck = new Deck();
 
                 //create player objects
-                Player playerAI = new Player("AI", (PlayerStatus)0);
+                Player playerAI = new Player("AI", (PlayerStatus)1);
                 Player player1;
+
+                Player attacker;
+                Player defender;
 
                 Console.WriteLine("Please Enter you name");
 
                 string playerName = Console.ReadLine();
 
-                player1 = new Player(playerName, (PlayerStatus)1);
+                player1 = new Player(playerName, (PlayerStatus)0);
+
+                //initialize attacker and defenders
+                attacker = player1;
+                defender = playerAI;
 
                 //shuffle deck
                 myDeck.Shuffle();
@@ -175,25 +182,25 @@ namespace Ch10CardClient
 
                 do ////Loop for the different turns 
                 {
-                    ////////////////////////////////// player 1's initial turn (attacker) /////////////////////////////////////////////////////////////
+                    ////////////////////////////////// attacker's initial turn  /////////////////////////////////////////////////////////////
 
 
 
 
                     Console.WriteLine("");
-                    player1.AttackerInitialTurn(playingField, trumpCard);
+                    attacker.AttackerInitialTurn(playingField, trumpCard);
                     turnCounter++;
 
 
 
                     do ///Loop for the attack and defence chain rounds
                     {
-                        /////////////////////////////////////// player 2's turn (defender) /////////////////////////////////////////////////////////////
+                        /////////////////////////////////////// (defender) turn /////////////////////////////////////////////////////////////
                         Console.WriteLine("");
                         if (!playerPassed.passFlag)
                         {
 
-                            playerAI.DefenderTurn(playingField, trumpCard, playerPassed);
+                            defender.DefenderTurn(playingField, trumpCard, playerPassed);
                             playingField.displayField();
                         }
 
@@ -201,11 +208,11 @@ namespace Ch10CardClient
                         if (turnCounter <= 2)
                         {
 
-                            /////////////////////////////////////// player1"s second turn /////////////////////////////////////////////////////////////
+                            /////////////////////////////////////// Attacker's standard turn /////////////////////////////////////////////////////////////
                             Console.WriteLine("");
                             if (!playerPassed.passFlag)
                             {
-                                player1.AttackerTurn(playingField, playerPassed, trumpCard);
+                                attacker.AttackerTurn(playingField, playerPassed, trumpCard);
                                 playingField.displayField();
 
                             }
@@ -230,9 +237,11 @@ namespace Ch10CardClient
 
                         for (int i = 0; i < cardsToBePickedUp.Count; i++)
                         {
-                            playerAI.playerHand.addCard((Card)cardsToBePickedUp[i]);
+                            defender.playerHand.addCard((Card)cardsToBePickedUp[i]);
                         }
 
+                        playerAI = defender;
+                        player1 = attacker;
 
 
                         /////DRAW CARDS/////
@@ -251,6 +260,11 @@ namespace Ch10CardClient
                         playerPassed.passFlag = false;
                         playerPassed.attackerWin = false;
                         turnCounter = 0;
+
+                        attacker = player1;
+                        defender = playerAI;
+
+
                         Console.WriteLine("");
                         Console.WriteLine("New hands are:");
                         player1.playerHand.displayHand();
@@ -263,6 +277,9 @@ namespace Ch10CardClient
                         /////Discard Field Cards //////
                         //field cards get discarded
                         playingField.discardField();
+
+                        playerAI = defender;
+                        player1 = attacker;
 
 
                         /////DRAW CARDS/////
@@ -281,6 +298,13 @@ namespace Ch10CardClient
                         playerPassed.passFlag = false;
                         playerPassed.defenderWin = false;
                         turnCounter = 0;
+
+                        player1.playerStatus = ((PlayerStatus)1);
+                        playerAI.playerStatus = ((PlayerStatus)0);
+
+                        defender = player1;
+                        attacker = playerAI;
+
                         Console.WriteLine("");
                         Console.WriteLine("New hands are:");
                         player1.playerHand.displayHand();
