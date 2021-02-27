@@ -156,45 +156,165 @@ namespace Ch10CardClient
                 Console.WriteLine("");
         
                 player1.AttackerTurn(playingField);
-               // int selectedCard;
-               // player1.playerHand.displayHand(player1.playerHand);
+                // int selectedCard;
+                // player1.playerHand.displayHand(player1.playerHand);
 
-               // int.TryParse(Console.ReadLine(), out selectedCard);
-               // selectedCard = selectedCard - 1;
+                // int.TryParse(Console.ReadLine(), out selectedCard);
+                // selectedCard = selectedCard - 1;
 
-               // Card tempCard;
-               //Card cardSelected = player1.playerHand.selectCard(selectedCard);
+                // Card tempCard;
+                //Card cardSelected = player1.playerHand.selectCard(selectedCard);
 
-               // //GET ALL CARDS ON FIELD
-               // bool matchFlag = true;
-               // while (matchFlag)
-               // {
-               //     for (int i = 0; i < playingField.getField().Count; i++)
-               //     {
-               //         tempCard = (Card)playingField.getField()[i];
+                // //GET ALL CARDS ON FIELD
+                // bool matchFlag = true;
+                // while (matchFlag)
+                // {
+                //     for (int i = 0; i < playingField.getField().Count; i++)
+                //     {
+                //         tempCard = (Card)playingField.getField()[i];
 
-               //         if (tempCard.isSameRank(cardSelected))
-               //         {
+                //         if (tempCard.isSameRank(cardSelected))
+                //         {
 
-               //             matchFlag = false;
-               //         }
+                //             matchFlag = false;
+                //         }
 
-               //     }
+                //     }
 
-               //     if (matchFlag == false)
-               //     {
-               //         playingField.cardPlayed(player1.playerHand.playCard(selectedCard));
-               //         playingField.displayField(playingField);
-               //     }
-               //     else
-               //     {
-               //         Console.WriteLine("You can only play a card of the same rank as the cards on the field");
-               //         int.TryParse(Console.ReadLine(), out selectedCard);
-               //         selectedCard = selectedCard - 1;
-               //         cardSelected = player1.playerHand.selectCard(selectedCard);
-               //     }
-               // }
+                //     if (matchFlag == false)
+                //     {
+                //         playingField.cardPlayed(player1.playerHand.playCard(selectedCard));
+                //         playingField.displayField(playingField);
+                //     }
+                //     else
+                //     {
+                //         Console.WriteLine("You can only play a card of the same rank as the cards on the field");
+                //         int.TryParse(Console.ReadLine(), out selectedCard);
+                //         selectedCard = selectedCard - 1;
+                //         cardSelected = player1.playerHand.selectCard(selectedCard);
+                //     }
+                // }
 
+                //////////////////////////////// end of round logic ///////////////////////////////////////////////////////////////////////
+                //flags to be placed in the proper places later
+                bool attackerWin = false;
+
+                bool defenderWin = false;
+
+                if (attackerWin)
+                {
+                    //defender picks up all the field cards
+
+
+
+
+
+
+                    /////DRAW CARDS/////
+                    //draws back up to 6 cards in hand if necessary/possible attackers first
+                    bool attackerDraw = true;
+                    bool defenderDraw = true;
+                    //loop until minimum hand size is reached for attacker (*Note attackers draw first)
+                    while (attackerDraw)
+                    {
+                        //check the remaining deck size
+                        if (myDeck.getCardsRemaining() > 0)
+                        {
+                            //check if the attacker's hand is greater than 6 (standard hand size)
+                            int attackerHandSize = player1.playerHand.gethandSize();
+                            if (attackerHandSize < 6)
+                            {
+                                player1.playerHand.addCard(myDeck.drawCard());
+                            }
+                            else
+                            {
+                                attackerDraw = false;
+                            }
+                        }
+                    }
+                    //loop until minimum hand size is reached for defender (*Note defender always draws second)
+                    while (defenderDraw)
+                    {
+                        //check the remaining deck size
+                        if (myDeck.getCardsRemaining() > 0)
+                        {
+                            //check if the attacker's hand is greater than 6 (standard hand size)
+                            int defenderHandSize = playerAI.playerHand.gethandSize();
+                            if (defenderHandSize < 6)
+                            {
+                                playerAI.playerHand.addCard(myDeck.drawCard());
+                            }
+                            else
+                            {
+                                defenderDraw = false;
+                            }
+                        }
+                    }
+
+
+
+
+
+                    //resets the loop and attacker is the same player
+
+                }
+
+                if (defenderWin)
+                {
+                    /////Discard Field Cards //////
+                    //field cards get discarded
+                    playingField.discardField();
+
+
+                    /////DRAW CARDS/////
+                    //draws back up to 6 cards in hand if necessary/possible attackers first
+                    bool attackerDraw = true;
+                    bool defenderDraw = true;
+                    //loop until minimum hand size is reached for attacker (*Note attackers draw first)
+                    while (attackerDraw)
+                    {
+                        //check the remaining deck size
+                        if (myDeck.getCardsRemaining() > 0)
+                        {
+                            //check if the attacker's hand is greater than 6 (standard hand size)
+                            int attackerHandSize = player1.playerHand.gethandSize();
+                            if (attackerHandSize < 6)
+                            {
+                                player1.playerHand.addCard(myDeck.drawCard());
+                            }
+                            else
+                            {
+                                attackerDraw = false;
+                            }
+                        }
+                    }
+                    //loop until minimum hand size is reached for defender (*Note defender always draws second)
+                    while (defenderDraw)
+                    {
+                        //check the remaining deck size
+                        if (myDeck.getCardsRemaining() > 0)
+                        {
+                            //check if the attacker's hand is greater than 6 (standard hand size)
+                            int defenderHandSize = playerAI.playerHand.gethandSize();
+                            if (defenderHandSize < 6)
+                            {
+                                playerAI.playerHand.addCard(myDeck.drawCard());
+                            }
+                            else
+                            {
+                                defenderDraw = false;
+                            }
+                        }
+                    }
+
+
+                    //defender is the new attacker
+
+
+
+
+
+                }
 
 
 
