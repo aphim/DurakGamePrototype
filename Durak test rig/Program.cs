@@ -198,15 +198,18 @@ namespace Ch10CardClient
                 //////////////////////////////// end of round logic ///////////////////////////////////////////////////////////////////////
                 //flags to be placed in the proper places later
                 bool attackerWin = false;
-
                 bool defenderWin = false;
 
                 if (attackerWin)
                 {
                     //defender picks up all the field cards
 
+                    ArrayList cardsToBePickedUp = playingField.pickupField();
 
-
+                    for (int i = 0; i < cardsToBePickedUp.Count; i++)
+                    {
+                        player1.playerHand.addCard((Card)cardsToBePickedUp[i]);
+                    }
 
 
 
