@@ -50,7 +50,7 @@ namespace Ch10CardLib
 
         }
 
-        public void AttackerTurn(Field playingField, PassFlag passFlag)
+        public void AttackerTurn(Field playingField, PassFlag passFlag, Card trumpCard)
         {
             int selectedCard=0;
             bool validCard = false;
@@ -65,8 +65,13 @@ namespace Ch10CardLib
                 if (inputString.Equals("D") || inputString.Equals("d"))
                 {
                     playingField.displayDiscarded();
-                    inputString = Console.ReadLine();
+                    continue;
 
+                }
+                if(inputString.Equals("T") || inputString.Equals("t"))
+                {
+                    Console.WriteLine(trumpCard.ToString());
+                    continue;
                 }
                 if (inputString.Equals("Q") || inputString.Equals("q"))
                 {
@@ -116,7 +121,7 @@ namespace Ch10CardLib
                     if (matchFlag == false)
                     {
                         playingField.cardPlayed(this.playerHand.playCard(selectedCard));
-                        playingField.displayField();
+                        //playingField.displayField();
                     }
                     else
                     {
@@ -145,9 +150,15 @@ namespace Ch10CardLib
                 if (inputString.Equals("D") || inputString.Equals("d"))
                 {
                     playingField.displayDiscarded();
-                    inputString = Console.ReadLine();
+                    continue;
+                   
                 }
-                if(inputString.Equals("Q") || inputString.Equals("q"))
+                if (inputString.Equals("T") || inputString.Equals("t"))
+                {
+                    Console.WriteLine(trumpCard.ToString());
+                    continue;
+                }
+                if (inputString.Equals("Q") || inputString.Equals("q"))
                 {
                     passFlag.passFlag = true;
                     passFlag.attackerWin = true;
@@ -229,6 +240,36 @@ namespace Ch10CardLib
                 }
             }//END OF IF
            
+        }
+
+        public void DrawCards(Deck myDeck)
+        {
+            bool attackerDraw = true;
+            //check the remaining deck size
+
+            while (attackerDraw)
+            {
+                if (myDeck.getCardsRemaining() > 0)
+                {
+                    //check if the attacker's hand is greater than 6 (standard hand size)
+                    int attackerHandSize = this.playerHand.gethandSize();
+                    if (attackerHandSize < 6)
+                    {
+                        this.playerHand.addCard(myDeck.drawCard());
+
+                    }
+                    else
+                    {
+                        attackerDraw = false;
+
+                    }
+                }
+                else
+                {
+                    attackerDraw = false;
+
+                }
+            }
         }
 
 

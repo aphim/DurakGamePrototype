@@ -17,6 +17,7 @@ namespace Ch10CardClient
             playerPassed.passFlag = false;
             playerPassed.attackerWin = false;
             playerPassed.defenderWin = false;
+            int turnCounter = 0;
 
             do
             {
@@ -65,30 +66,44 @@ namespace Ch10CardClient
               
                 Console.WriteLine("");
                 player1.AttackerInitialTurn(playingField);
-              
+                turnCounter++;
 
 
-                /////////////////////////////////////// player 2's turn (defender) /////////////////////////////////////////////////////////////
-
-                //ASK THE USER IF THEY WANT TO PLAY OR SKIP
-                //IF THEY WANT TO PLAY THEN DO BELOW CODE OTHERWISE ADD FEILD CARDS TO HAND
-
-                Console.WriteLine("");
-                if (!playerPassed.passFlag)
+                
+                do
                 {
-                    playerAI.DefenderTurn(playingField, trumpCard, playerPassed);
-                }
+                    /////////////////////////////////////// player 2's turn (defender) /////////////////////////////////////////////////////////////
+                    Console.WriteLine("");
+                    if (!playerPassed.passFlag)
+                    {
+                     
+                        playerAI.DefenderTurn(playingField, trumpCard, playerPassed);
+                        playingField.displayField();
+                    }
+
+                    turnCounter++;
+                    if(turnCounter <=2)
+                    {
+                      
+                        /////////////////////////////////////// player1"s second turn /////////////////////////////////////////////////////////////
+                        Console.WriteLine("");
+                        if (!playerPassed.passFlag)
+                        {
+                            player1.AttackerTurn(playingField, playerPassed,trumpCard);
+                            playingField.displayField();
+
+                        }
+                    }
+                    
+                      
+                    
+                } while (!playerPassed.passFlag || turnCounter<3);
+
+         
+
+               
 
 
-                playingField.displayField();
-
-
-                /////////////////////////////////////// player1"s second turn /////////////////////////////////////////////////////////////
-                Console.WriteLine("");
-                if (!playerPassed.passFlag)
-                {
-                    player1.AttackerTurn(playingField, playerPassed);
-                }
 
                 //////////////////////////////// end of round logic ///////////////////////////////////////////////////////////////////////
                 //flags to be placed in the proper places later
@@ -109,50 +124,20 @@ namespace Ch10CardClient
 
                     /////DRAW CARDS/////
                     //draws back up to 6 cards in hand if necessary/possible attackers first
-                    bool attackerDraw = true;
-                    bool defenderDraw = true;
+         
                     //loop until minimum hand size is reached for attacker (*Note attackers draw first)
-                    while (attackerDraw)
-                    {
-                        //check the remaining deck size
-                        if (myDeck.getCardsRemaining() > 0)
-                        {
-                            //check if the attacker's hand is greater than 6 (standard hand size)
-                            int attackerHandSize = player1.playerHand.gethandSize();
-                            if (attackerHandSize < 6)
-                            {
-                                player1.playerHand.addCard(myDeck.drawCard());
-                            }
-                            else
-                            {
-                                attackerDraw = false;
-                            }
-                        }
-                    }
+                   
+                        player1.DrawCards(myDeck);
+
+
                     //loop until minimum hand size is reached for defender (*Note defender always draws second)
-                    while (defenderDraw)
-                    {
-                        //check the remaining deck size
-                        if (myDeck.getCardsRemaining() > 0)
-                        {
-                            //check if the attacker's hand is greater than 6 (standard hand size)
-                            int defenderHandSize = playerAI.playerHand.gethandSize();
-                            if (defenderHandSize < 6)
-                            {
-                                playerAI.playerHand.addCard(myDeck.drawCard());
-                            }
-                            else
-                            {
-                                defenderDraw = false;
-                            }
-                        }
-                    }
+                    playerAI.DrawCards(myDeck);
 
 
                     //resets the loop and attacker is the same player
                     playerPassed.passFlag = false;
                     playerPassed.attackerWin = false;
-
+                    turnCounter = 0;
                    player1.playerHand.displayHand();
                    playerAI.playerHand.displayHand();
                     playingField.displayField();
@@ -168,50 +153,20 @@ namespace Ch10CardClient
 
                     /////DRAW CARDS/////
                     //draws back up to 6 cards in hand if necessary/possible attackers first
-                    bool attackerDraw = true;
-                    bool defenderDraw = true;
+             
                     //loop until minimum hand size is reached for attacker (*Note attackers draw first)
-                    while (attackerDraw)
-                    {
-                        //check the remaining deck size
-                        if (myDeck.getCardsRemaining() > 0)
-                        {
-                            //check if the attacker's hand is greater than 6 (standard hand size)
-                            int attackerHandSize = player1.playerHand.gethandSize();
-                            if (attackerHandSize < 6)
-                            {
-                                player1.playerHand.addCard(myDeck.drawCard());
-                            }
-                            else
-                            {
-                                attackerDraw = false;
-                            }
-                        }
-                    }
+                    player1.DrawCards(myDeck);
+
+
                     //loop until minimum hand size is reached for defender (*Note defender always draws second)
-                    while (defenderDraw)
-                    {
-                        //check the remaining deck size
-                        if (myDeck.getCardsRemaining() > 0)
-                        {
-                            //check if the attacker's hand is greater than 6 (standard hand size)
-                            int defenderHandSize = playerAI.playerHand.gethandSize();
-                            if (defenderHandSize < 6)
-                            {
-                                playerAI.playerHand.addCard(myDeck.drawCard());
-                            }
-                            else
-                            {
-                                defenderDraw = false;
-                            }
-                        }
-                    }
+                    playerAI.DrawCards(myDeck);
+
 
 
                     //defender is the new attacker
                     playerPassed.passFlag = false;
                     playerPassed.defenderWin = false;
-
+                    turnCounter = 0;
                     player1.playerHand.displayHand();
                     playerAI.playerHand.displayHand();
 
