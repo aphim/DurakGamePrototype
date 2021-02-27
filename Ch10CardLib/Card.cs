@@ -101,9 +101,9 @@ namespace Ch10CardLib
         }
 
 
-        public bool isSameRank(Card card1)
+        public bool isSameRank(Card card1, Card card2)
         {
-            if (card1.rank == this.rank)
+            if (card1.rank == card2.rank)
             {
                 return true;
             }
