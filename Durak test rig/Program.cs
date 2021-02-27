@@ -24,17 +24,15 @@ namespace Ch10CardClient
                 //creates a new deck object
                 Deck myDeck = new Deck();
 
-
-
                 //create player objects
-                Player playerAI = new Player("AI");
+                Player playerAI = new Player("AI", (PlayerStatus)0);
                 Player player1;
 
                 Console.WriteLine("Please Enter you name");
 
                 string playerName = Console.ReadLine();
 
-                player1 = new Player(playerName);
+                player1 = new Player(playerName, (PlayerStatus)1);
 
                 //shuffle deck
                 myDeck.Shuffle();
@@ -60,123 +58,121 @@ namespace Ch10CardClient
                 //initialize the field
                 Field playingField = new Field();
 
+                bool turnFlag = true;
 
-                ////////////////////////////////// player 1's initial turn (attacker) /////////////////////////////////////////////////////////////
-
-              
-                Console.WriteLine("");
-                player1.AttackerInitialTurn(playingField);
-                turnCounter++;
-
-
-                
-                do
+                do ////Loop for the different turns 
                 {
-                    /////////////////////////////////////// player 2's turn (defender) /////////////////////////////////////////////////////////////
-                    Console.WriteLine("");
-                    if (!playerPassed.passFlag)
-                    {
-                     
-                        playerAI.DefenderTurn(playingField, trumpCard, playerPassed);
-                        playingField.displayField();
-                    }
+                    ////////////////////////////////// player 1's initial turn (attacker) /////////////////////////////////////////////////////////////
 
+
+                    Console.WriteLine("");
+                    player1.AttackerInitialTurn(playingField, trumpCard);
                     turnCounter++;
-                    if(turnCounter <=2)
+
+
+
+                    do ///Loop for the attack and defence chain rounds
                     {
-                      
-                        /////////////////////////////////////// player1"s second turn /////////////////////////////////////////////////////////////
+                        /////////////////////////////////////// player 2's turn (defender) /////////////////////////////////////////////////////////////
                         Console.WriteLine("");
                         if (!playerPassed.passFlag)
                         {
-                            player1.AttackerTurn(playingField, playerPassed,trumpCard);
+
+                            playerAI.DefenderTurn(playingField, trumpCard, playerPassed);
                             playingField.displayField();
-
                         }
-                    }
-                    
-                      
-                    
-                } while (!playerPassed.passFlag || turnCounter<3);
 
-         
+                        turnCounter++;
+                        if (turnCounter <= 2)
+                        {
 
-               
+                            /////////////////////////////////////// player1"s second turn /////////////////////////////////////////////////////////////
+                            Console.WriteLine("");
+                            if (!playerPassed.passFlag)
+                            {
+                                player1.AttackerTurn(playingField, playerPassed, trumpCard);
+                                playingField.displayField();
+
+                            }
+                        }
 
 
 
-                //////////////////////////////// end of round logic ///////////////////////////////////////////////////////////////////////
-                //flags to be placed in the proper places later
+                    } while (!playerPassed.passFlag || turnCounter < 3);
 
 
-                if (playerPassed.attackerWin)
-                {
-                    //defender picks up all the field cards
 
-                    ArrayList cardsToBePickedUp = playingField.pickupField();
 
-                    for (int i = 0; i < cardsToBePickedUp.Count; i++)
+                    //////////////////////////////// end of round logic ///////////////////////////////////////////////////////////////////////
+                    //flags to be placed in the proper places later
+
+
+                    if (playerPassed.attackerWin)
                     {
-                        playerAI.playerHand.addCard((Card)cardsToBePickedUp[i]);
-                    }
+                        //defender picks up all the field cards
+
+                        ArrayList cardsToBePickedUp = playingField.pickupField();
+
+                        for (int i = 0; i < cardsToBePickedUp.Count; i++)
+                        {
+                            playerAI.playerHand.addCard((Card)cardsToBePickedUp[i]);
+                        }
 
 
 
-                    /////DRAW CARDS/////
-                    //draws back up to 6 cards in hand if necessary/possible attackers first
-         
-                    //loop until minimum hand size is reached for attacker (*Note attackers draw first)
-                   
+                        /////DRAW CARDS/////
+                        //draws back up to 6 cards in hand if necessary/possible attackers first
+
+                        //loop until minimum hand size is reached for attacker (*Note attackers draw first)
+
                         player1.DrawCards(myDeck);
 
 
-                    //loop until minimum hand size is reached for defender (*Note defender always draws second)
-                    playerAI.DrawCards(myDeck);
+                        //loop until minimum hand size is reached for defender (*Note defender always draws second)
+                        playerAI.DrawCards(myDeck);
 
 
-                    //resets the loop and attacker is the same player
-                    playerPassed.passFlag = false;
-                    playerPassed.attackerWin = false;
-                    turnCounter = 0;
-                   player1.playerHand.displayHand();
-                   playerAI.playerHand.displayHand();
-                    playingField.displayField();
-
-                }
-
-                if (playerPassed.defenderWin)
-                {
-                    /////Discard Field Cards //////
-                    //field cards get discarded
-                    playingField.discardField();
+                        //resets the loop and attacker is the same player
+                        playerPassed.passFlag = false;
+                        playerPassed.attackerWin = false;
+                        turnCounter = 0;
+                        Console.WriteLine("");
+                        Console.WriteLine("New hands are:");
+                        player1.playerHand.displayHand();
+                        playerAI.playerHand.displayHand();
+                    }
 
 
-                    /////DRAW CARDS/////
-                    //draws back up to 6 cards in hand if necessary/possible attackers first
-             
-                    //loop until minimum hand size is reached for attacker (*Note attackers draw first)
-                    player1.DrawCards(myDeck);
+                    if (playerPassed.defenderWin)
+                    {
+                        /////Discard Field Cards //////
+                        //field cards get discarded
+                        playingField.discardField();
 
 
-                    //loop until minimum hand size is reached for defender (*Note defender always draws second)
-                    playerAI.DrawCards(myDeck);
+                        /////DRAW CARDS/////
+                        //draws back up to 6 cards in hand if necessary/possible attackers first
+
+                        //loop until minimum hand size is reached for attacker (*Note attackers draw first)
+                        player1.DrawCards(myDeck);
+
+
+                        //loop until minimum hand size is reached for defender (*Note defender always draws second)
+                        playerAI.DrawCards(myDeck);
 
 
 
-                    //defender is the new attacker
-                    playerPassed.passFlag = false;
-                    playerPassed.defenderWin = false;
-                    turnCounter = 0;
-                    player1.playerHand.displayHand();
-                    playerAI.playerHand.displayHand();
+                        //defender is the new attacker
+                        playerPassed.passFlag = false;
+                        playerPassed.defenderWin = false;
+                        turnCounter = 0;
+                        Console.WriteLine("");
+                        Console.WriteLine("New hands are:");
+                        player1.playerHand.displayHand();
+                        playerAI.playerHand.displayHand();
+                    }
 
-                    playingField.displayField();
-                    playingField.displayDiscarded();
-
-
-                }
-
-
+                } while (turnFlag);
 
 
 

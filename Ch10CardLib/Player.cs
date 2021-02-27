@@ -10,26 +10,43 @@ namespace Ch10CardLib
     {
         public string playerName { get; set; }
         public Hand playerHand { get; set; }
-        public Player(string name)
+
+        public PlayerStatus playerStatus;
+
+        public Player(string name, PlayerStatus status)
         {
             playerName = name;
+            playerStatus = status;
         }
         
   
 
-        public void AttackerInitialTurn(Field playingField)
+        public void AttackerInitialTurn(Field playingField, Card trumpCard)
         {
             Console.WriteLine("It is " + this.playerName + "'s Turn.");
 
             this.playerHand.displayHand();
 
-            int selectedCard;
+            int selectedCard = 0;
             bool validCard = false;
+            string inputString;
 
             do
             {
+                inputString = Console.ReadLine();
+                if (inputString.Equals("D") || inputString.Equals("d"))
+                {
+                    playingField.displayDiscarded();
+                    continue;
 
-                int.TryParse(Console.ReadLine(), out selectedCard);
+                }
+                if (inputString.Equals("T") || inputString.Equals("t"))
+                {
+                    Console.WriteLine(trumpCard.ToString());
+                    continue;
+                }
+
+                int.TryParse(inputString, out selectedCard);
                 selectedCard = selectedCard - 1;
                 
                 if (selectedCard > this.playerHand.gethandSize() || selectedCard < 0)
