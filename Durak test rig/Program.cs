@@ -60,9 +60,124 @@ namespace Ch10CardClient
 
                 bool turnFlag = true;
 
+                //Determine who goes first
+                Card lowestCard = player1.playerHand.GetCard(0);
+                for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                {
+                    if (lowestCard.rank > player1.playerHand.GetCard(i).rank)
+                    {
+                        lowestCard = player1.playerHand.GetCard(i);
+                    }
+
+                }
+
+                Card lowestCard2 = playerAI.playerHand.GetCard(0);
+                for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                {
+                    if (lowestCard2.rank > playerAI.playerHand.GetCard(i).rank)
+                    {
+                        lowestCard2 = playerAI.playerHand.GetCard(i);
+                    }
+
+                }
+
+                Console.WriteLine("P1 Lowest: " + lowestCard + " P2 Lowest: " + lowestCard2);
+
+                //Player one has lower rank
+                if (lowestCard.rank < lowestCard2.rank)
+                {
+                    Console.WriteLine("Player 1 Goes lower rank");
+                }
+                //If ranks are equal to each other 
+                else if (lowestCard.rank == lowestCard2.rank)
+                {
+                    //If P1 has same suit as trump card
+                    if (lowestCard.suit == trumpCard.suit)
+                    {
+                        Console.WriteLine("Player 1 Goes, equal to trump suit");
+                    }
+                    //If P2 has same suit as trump card
+                    else if (lowestCard2.suit == trumpCard.suit)
+                    {
+                        Console.WriteLine("Player 2 Goes, equal to trump suit");
+                    }
+                    //If P1 and P2 do not have same suit as trump card, but same rank
+                    else
+                    {
+                        int p1TrumpCount = 0;
+                        int p2TrumpCount = 0;
+                        bool trumpFound = false;
+
+                        //Do they have trump suit in either deck, count if so
+                        for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                        {
+                            if (trumpCard.suit == player1.playerHand.GetCard(i).suit)
+                            {
+                                p1TrumpCount += 1;
+                                trumpFound = true;
+                            }
+                            if (trumpCard.suit == playerAI.playerHand.GetCard(i).suit)
+                            {
+                                p2TrumpCount += 1;
+                                trumpFound = true;
+                            }
+                        }
+                        // If a trump card is found in either deck
+                        if (trumpFound)
+                        {
+                            //If p1 deck has more trump suits than p2 deck
+                            if (p1TrumpCount > p2TrumpCount)
+                            {
+                                Console.WriteLine("P1 goes has more trump suits than P2");
+                            }
+                            //If p2 deck has more trump suits than p1 deck
+                            else
+                            {
+                                Console.WriteLine("P2 goes has more trump suits than P1");
+                            }
+                        }
+                        //If they do not have trump suit in either deck, poker style lowest-highest (diamonds, clubs, hearts ,spades)
+                        else
+                        {
+                            Console.WriteLine("Poker Style");
+                            int p1SuitWins = 0;
+                            int p2SuitWins = 0;
+                            for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                            {
+                                if (player1.playerHand.GetCard(i).suit > playerAI.playerHand.GetCard(i).suit)
+                                {
+                                    p1SuitWins += 1;
+                                }
+                                else
+                                {
+                                    p2SuitWins += 1;
+                                }
+                            }
+
+                            if (p1SuitWins > p2SuitWins)
+                            {
+                                Console.WriteLine("P1 goes Poker Style");
+                            }
+                            else
+                            {
+                                Console.WriteLine("P2 goes Poker Style");
+                            }
+
+                        }
+                    }
+                }
+                //P2 has lower rank
+                else
+                {
+                    Console.WriteLine("Player 2 Goes lower rank");
+                }
+
+
                 do ////Loop for the different turns 
                 {
                     ////////////////////////////////// player 1's initial turn (attacker) /////////////////////////////////////////////////////////////
+
+
 
 
                     Console.WriteLine("");
