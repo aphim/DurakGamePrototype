@@ -13,11 +13,18 @@ namespace Ch10CardClient
         static void Main(string[] args)
         {
             bool playAgain = false;
+            PassFlag playerPassed = new PassFlag();
+            playerPassed.passFlag = false;
+            playerPassed.attackerWin = false;
+            playerPassed.defenderWin = false;
 
             do
             {
                 //creates a new deck object
                 Deck myDeck = new Deck();
+
+
+
                 //create player objects
                 Player playerAI = new Player("AI");
                 Player player1;
@@ -41,13 +48,13 @@ namespace Ch10CardClient
                 Console.WriteLine("");
                 Console.WriteLine(player1.playerName + "'s Hand:");
                 player1.playerHand = new Hand(myDeck);
-                player1.playerHand.displayHand(player1.playerHand);
+                player1.playerHand.displayHand();
 
                 //initialize player2's hand
                 Console.WriteLine("");
                 Console.WriteLine(playerAI.playerName + "'s Hand:");
                 playerAI.playerHand = new Hand(myDeck);
-                playerAI.playerHand.displayHand(playerAI.playerHand);
+                playerAI.playerHand.displayHand();
 
                 //initialize the field
                 Field playingField = new Field();
@@ -67,24 +74,27 @@ namespace Ch10CardClient
                 //IF THEY WANT TO PLAY THEN DO BELOW CODE OTHERWISE ADD FEILD CARDS TO HAND
 
                 Console.WriteLine("");
-                playerAI.DefenderTurn(playingField, trumpCard);
-                
+                if (!playerPassed.passFlag)
+                {
+                    playerAI.DefenderTurn(playingField, trumpCard, playerPassed);
+                }
+
 
                 playingField.displayField();
 
 
                 /////////////////////////////////////// player1"s second turn /////////////////////////////////////////////////////////////
                 Console.WriteLine("");
-        
-                player1.AttackerTurn(playingField);
-                
+                if (!playerPassed.passFlag)
+                {
+                    player1.AttackerTurn(playingField, playerPassed);
+                }
 
                 //////////////////////////////// end of round logic ///////////////////////////////////////////////////////////////////////
                 //flags to be placed in the proper places later
-                bool attackerWin = false;
-                bool defenderWin = false;
 
-                if (attackerWin)
+
+                if (playerPassed.attackerWin)
                 {
                     //defender picks up all the field cards
 
@@ -92,7 +102,7 @@ namespace Ch10CardClient
 
                     for (int i = 0; i < cardsToBePickedUp.Count; i++)
                     {
-                        player1.playerHand.addCard((Card)cardsToBePickedUp[i]);
+                        playerAI.playerHand.addCard((Card)cardsToBePickedUp[i]);
                     }
 
 
@@ -139,14 +149,17 @@ namespace Ch10CardClient
                     }
 
 
-
-
-
                     //resets the loop and attacker is the same player
+                    playerPassed.passFlag = false;
+                    playerPassed.attackerWin = false;
+
+                   player1.playerHand.displayHand();
+                   playerAI.playerHand.displayHand();
+                    playingField.displayField();
 
                 }
 
-                if (defenderWin)
+                if (playerPassed.defenderWin)
                 {
                     /////Discard Field Cards //////
                     //field cards get discarded
@@ -196,17 +209,17 @@ namespace Ch10CardClient
 
 
                     //defender is the new attacker
+                    playerPassed.passFlag = false;
+                    playerPassed.defenderWin = false;
 
+                    player1.playerHand.displayHand();
+                    playerAI.playerHand.displayHand();
 
-
+                    playingField.displayField();
+                    playingField.displayDiscarded();
 
 
                 }
-
-
-
-
-
 
 
 

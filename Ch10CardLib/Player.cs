@@ -14,13 +14,14 @@ namespace Ch10CardLib
         {
             playerName = name;
         }
-
+        
+  
 
         public void AttackerInitialTurn(Field playingField)
         {
             Console.WriteLine("It is " + this.playerName + "'s Turn.");
 
-            this.playerHand.displayHand(this.playerHand);
+            this.playerHand.displayHand();
 
             int selectedCard;
             bool validCard = false;
@@ -49,14 +50,13 @@ namespace Ch10CardLib
 
         }
 
-        public void AttackerTurn(Field playingField)
+        public void AttackerTurn(Field playingField, PassFlag passFlag)
         {
             int selectedCard=0;
             bool validCard = false;
             string inputString;
-            bool quit = false;
             Console.WriteLine("It is " + this.playerName + "'s Turn.");
-            this.playerHand.displayHand(this.playerHand);
+            this.playerHand.displayHand();
 
             do
             {
@@ -70,7 +70,9 @@ namespace Ch10CardLib
                 }
                 if (inputString.Equals("Q") || inputString.Equals("q"))
                 {
-                    quit = true;
+                    passFlag.passFlag = true;
+                    passFlag.defenderWin = true;
+                    
                     break;
                 }
 
@@ -91,7 +93,7 @@ namespace Ch10CardLib
 
 
             Card tempCard;
-            if (!quit)
+            if (passFlag.passFlag == false)
             {
                 Card cardSelected = this.playerHand.selectCard(selectedCard);
 
@@ -129,14 +131,13 @@ namespace Ch10CardLib
 
         }
 
-        public void DefenderTurn(Field playingField, Card trumpCard)
+        public void DefenderTurn(Field playingField, Card trumpCard, PassFlag passFlag)
         {
             Console.WriteLine( "It is " + this.playerName + "'s Turn.");
             int selectedCard=0;
             bool validCard = false;
             string inputString;
-            bool quit = false;
-            this.playerHand.displayHand(this.playerHand);
+            this.playerHand.displayHand();
             do
             {
 
@@ -148,7 +149,8 @@ namespace Ch10CardLib
                 }
                 if(inputString.Equals("Q") || inputString.Equals("q"))
                 {
-                    quit = true;
+                    passFlag.passFlag = true;
+                    passFlag.attackerWin = true;
                     break;
                 }
                 
@@ -168,7 +170,7 @@ namespace Ch10CardLib
 
             Card currentCard = playingField.getCurrentCard();
 
-            if (!quit)
+            if (passFlag.passFlag == false)
             {
                 Card cardSelected = this.playerHand.selectCard(selectedCard);
 

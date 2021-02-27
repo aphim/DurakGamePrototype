@@ -85,7 +85,7 @@ namespace Ch10CardClient
             Console.WriteLine("");
             Console.WriteLine(player1.playerName+"'s Hand:");
             player1.playerHand = new Hand(myDeck);
-            player1.playerHand.displayHand(player1.playerHand);
+            player1.playerHand.displayHand();
             //for (int i = 0; i < player1.playerHand.gethandSize(); i++)
             //{
             //    //displays the current card
@@ -103,7 +103,7 @@ namespace Ch10CardClient
             Console.WriteLine("");
             Console.WriteLine(playerAI.playerName+ "'s hand:");
             playerAI.playerHand = new Hand(myDeck);
-            playerAI.playerHand.displayHand(playerAI.playerHand);
+            playerAI.playerHand.displayHand();
             
             //for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
             //{

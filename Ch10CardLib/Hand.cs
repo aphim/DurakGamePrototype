@@ -103,14 +103,14 @@ namespace Ch10CardLib
             hand.Add(card);
         }
 
-        public void displayHand(Hand playerHand)
+        public void displayHand()
         {
-            for (int i = 0; i < playerHand.gethandSize(); i++)
+            for (int i = 0; i < this.gethandSize(); i++)
             {
                 //displays the current card
-                Card tempCard = playerHand.GetCard(i);
+                Card tempCard = this.GetCard(i);
                 Console.Write(tempCard.ToString());
-                if (i != playerHand.gethandSize() - 1)
+                if (i != this.gethandSize() - 1)
                 {
                     Console.Write(", ");
                 }
