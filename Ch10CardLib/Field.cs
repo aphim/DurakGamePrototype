@@ -52,6 +52,15 @@ namespace Ch10CardLib
             return currentCard;
         }
 
+        //get current card in the field
+        public Card getIndexCard(int index)
+        {
+            Card indexCard;
+
+            indexCard = ((Card)field[index]);
+
+            return indexCard;
+        }
 
 
         public ArrayList getDiscard()

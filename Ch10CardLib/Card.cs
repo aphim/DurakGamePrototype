@@ -59,6 +59,8 @@ namespace Ch10CardLib
             return "The " + rank + " of " + suit + "s";
         }
 
+
+
         //OPERATOR OVERLAODS
 
         /// <summary>
@@ -66,6 +68,8 @@ namespace Ch10CardLib
         /// </summary>
         /// 
         public static bool useTrumps = false;
+
+
 
         /// <summary>
         /// Overriden GetHashCode()
@@ -96,9 +100,19 @@ namespace Ch10CardLib
             return trumpRank;
         }
 
-        /// <summary>
-        /// The trump suit to use if useTrump is true
-        /// </summary>
+
+        public bool isSameRank(Card card1)
+        {
+            if (card1.rank == this.rank)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
 
 
         public static bool isAceHigh = true;
@@ -114,6 +128,7 @@ namespace Ch10CardLib
         {
             return (card1.suit == card2.suit) && (card1.rank == card2.rank);
         }
+
 
         /// <summary>
         /// Overriden != operator

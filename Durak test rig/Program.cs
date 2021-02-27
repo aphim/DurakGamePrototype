@@ -30,13 +30,13 @@ namespace Ch10CardClient
 
                 //shuffle deck
                 myDeck.Shuffle();
-                
-                //display shuffled deck
+
+                ////display shuffled deck
                 //for (int i = 0; i < myDeck.getCardsRemaining(); i++)
                 //{
                 //    //displays the current card
                 //    Card tempCard = myDeck.GetCard(i);
-                //    Console.Write(tempCard.ToString());
+                //    Console.Write(tempCard.rank.ToString());
                 //    if (i != myDeck.getCardsRemaining() - 1)
                 //    {
                 //        Console.Write(", ");
@@ -83,8 +83,11 @@ namespace Ch10CardClient
                 int selectedCard;
 
                 int.TryParse(Console.ReadLine(), out selectedCard);
+                selectedCard = selectedCard - 1;
 
                 playingField.cardPlayed(player1.playerHand.playAttackerCard(selectedCard));
+
+
 
                 playingField.displayField(playingField);
 
@@ -96,13 +99,11 @@ namespace Ch10CardClient
                 playerAI.playerHand.displayHand(playerAI.playerHand);
 
                 int.TryParse(Console.ReadLine(), out selectedCard);
+                selectedCard = selectedCard - 1;
 
                 Card currentCard = playingField.getCurrentCard();
 
                 Card cardSelected = playerAI.playerHand.selectCard(selectedCard);
-
-               
-                //ATTACKER TURN2
               
                 //DEFENDER TURN
                 while (true)
@@ -122,6 +123,7 @@ namespace Ch10CardClient
                             {
                                 Console.WriteLine("rank is too low.");
                                 int.TryParse(Console.ReadLine(), out selectedCard);
+                                selectedCard = selectedCard - 1;
                                 cardSelected = playerAI.playerHand.selectCard(selectedCard);
                             }
                         }
@@ -144,6 +146,7 @@ namespace Ch10CardClient
                         {
                             Console.WriteLine("rank is too low.");
                             int.TryParse(Console.ReadLine(), out selectedCard);
+                            selectedCard = selectedCard - 1;
                             cardSelected = playerAI.playerHand.selectCard(selectedCard);
                         }
                     }
@@ -151,9 +154,12 @@ namespace Ch10CardClient
                     {
                         Console.WriteLine("You can only play the same suit or the trump suit.");
                         int.TryParse(Console.ReadLine(), out selectedCard);
+                        selectedCard = selectedCard - 1;
                         cardSelected = playerAI.playerHand.selectCard(selectedCard);
                     }
                 }
+
+                playingField.displayField(playingField);
 
                 //player1"s second turn
                 Console.WriteLine("");
@@ -162,34 +168,56 @@ namespace Ch10CardClient
                 player1.playerHand.displayHand(player1.playerHand);
 
                 int.TryParse(Console.ReadLine(), out selectedCard);
+                selectedCard = selectedCard - 1;
 
-                while (true)
+                Card tempCard;
+                cardSelected = playerAI.playerHand.selectCard(selectedCard);
+
+                //GET ALL CARDS ON FIELD
+                bool matchFlag = false;
+
+                for (int i = 0; i < playingField.getField().Count; i++)
                 {
-                    
-                }
+                    tempCard = playingField.getIndexCard(i);
+                    Console.WriteLine(tempCard.ToString());
 
-
-
-                playingField.displayField(playingField);
-                bool flag1 = true;
-                while (flag1)
-                {
-                    //GET ALL CARDS ON FIELD
-                    ArrayList rankList = new ArrayList();
-
-                    for (int i = 0; i < playingField.getField().Count; i++)
+                    if (cardSelected.isSameRank(tempCard) == true)
                     {
-                        //GET THEIR RANKS
-                       rankList.Add(((Card)playingField.getField()[i]).rank);
+                        matchFlag = true;
                     }
-                    flag1 = false;
-                   
-                    //foreach()
-                    //{
-
-                    //}
-                    //COMPARE THE RANK OF THE ATTACKER'S CARD WITH THE FIELD CARDS
                 }
+
+                if (matchFlag == true)
+                {
+                    playingField.cardPlayed(player1.playerHand.playCard(selectedCard));
+                    playingField.displayField(playingField);
+                }
+
+
+
+                //foreach (Rank rank in rankList)
+                //{
+                //    cardSelected = playerAI.playerHand.selectCard(selectedCard);
+
+                //    if (cardSelected.rank.Equals(rank))
+                //    {
+                //        Console.WriteLine(rank);
+                //        playingField.cardPlayed(player1.playerHand.playAttackerCard(selectedCard));
+                //        playingField.displayField(playingField);
+                //        whileFlag = false;
+                //        break;
+                //    }
+                //    else
+                //    {
+                //        Console.WriteLine(rank);
+                //        Console.WriteLine("You can only play a card of a rank that is already on the field.");
+                //        int.TryParse(Console.ReadLine(), out selectedCard);
+                //        cardSelected = playerAI.playerHand.selectCard(selectedCard);
+                //    }
+
+                //}
+
+
 
 
 
