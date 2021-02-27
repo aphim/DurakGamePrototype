@@ -25,6 +25,6 @@ namespace Ch10CardLib
         Jack,
         Queen,
         King,
-        Ace
+        Ace,
     }
 }
