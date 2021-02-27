@@ -140,7 +140,7 @@ namespace Ch10CardClient
 
             Console.WriteLine("play 4th card from hand 2:");
             Field playingField = new Field();
-            playingField.cardPlayed(playerAI.playerHand.playAttackerCard(3));
+            playingField.cardPlayed(playerAI.playerHand.playCard(3));
 
             Console.WriteLine("");
             Console.WriteLine("new hand 2:");
@@ -198,7 +198,7 @@ namespace Ch10CardClient
 
             Console.WriteLine("");
             Console.WriteLine("Play card from hand1, current hand 1");
-            playingField.cardPlayed(player1.playerHand.playAttackerCard(3));
+            playingField.cardPlayed(player1.playerHand.playCard(3));
             for (int i = 0; i < player1.playerHand.gethandSize(); i++)
             {
                 //displays the current card
@@ -275,8 +275,8 @@ namespace Ch10CardClient
 
             Console.WriteLine("");
             Console.WriteLine("Play some cards from hand2");
-            playingField.cardPlayed(player1.playerHand.playAttackerCard(1));
-            playingField.cardPlayed(player1.playerHand.playAttackerCard(1));
+            playingField.cardPlayed(player1.playerHand.playCard(1));
+            playingField.cardPlayed(player1.playerHand.playCard(1));
 
             Console.WriteLine("");
             Console.WriteLine("Cards on field");

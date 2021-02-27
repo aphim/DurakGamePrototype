@@ -94,26 +94,6 @@ namespace Ch10CardLib
         }
 
 
-        public Card playAttackerCard(int cardNum)
-        {
-
-
-            if (cardNum >= 0 && cardNum <= hand.Count - 1)
-            {
-
-                Card playedCard = (Card)hand[cardNum];
-
-                hand.RemoveAt(cardNum);
-
-                return playedCard;
-
-            }
-            else
-            {
-                throw (new System.ArgumentOutOfRangeException("cardNum", cardNum, "Value must be between 0 and handsize"));
-            }
-        }
-
         /// <summary>
         /// adds a card to the hand
         /// </summary>
