@@ -100,7 +100,10 @@ namespace Ch10CardClient
 
                 Card cardSelected = playerAI.playerHand.selectCard(selectedCard);
 
-
+               
+                //ATTACKER TURN2
+              
+                //DEFENDER TURN
                 while (true)
                 {
                     //checks the card in hand is equals to the trump suit
@@ -154,8 +157,25 @@ namespace Ch10CardClient
 
 
                 playingField.displayField(playingField);
+                bool flag1 = true;
+                while (flag1)
+                {
+                    //GET ALL CARDS ON FIELD
+                    ArrayList rankList = new ArrayList();
 
+                    for (int i = 0; i < playingField.getField().Count; i++)
+                    {
+                        //GET THEIR RANKS
+                       rankList.Add(((Card)playingField.getField()[i]).rank);
+                    }
+                    flag1 = false;
+                   
+                    //foreach()
+                    //{
 
+                    //}
+                    //COMPARE THE RANK OF THE ATTACKER'S CARD WITH THE FIELD CARDS
+                }
 
 
 

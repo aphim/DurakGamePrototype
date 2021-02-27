@@ -64,7 +64,17 @@ namespace Ch10CardLib
         /// <summary>
         /// Flag for trump usage If true, trumps are value higher thant cards of other suits
         /// </summary>
+        /// 
         public static bool useTrumps = false;
+
+        /// <summary>
+        /// Overriden GetHashCode()
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return 13 * (int)suit + (int)rank;
+        }
 
         public static void setTrumpSuit(TrumpCard trumpCard) 
         {
