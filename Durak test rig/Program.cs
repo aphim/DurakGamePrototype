@@ -76,7 +76,7 @@ namespace Ch10CardClient
 
                 //player 1's initial turn (attacker)
                 Console.WriteLine("");
-                Console.WriteLine(player1.playerName + " goes first.");
+                Console.WriteLine(player1.playerName + "'s turn");
 
                 player1.playerHand.displayHand(player1.playerHand);
 
@@ -88,7 +88,8 @@ namespace Ch10CardClient
 
                 playingField.displayField(playingField);
 
-                //player 2's initial turn (defender)
+
+                //player 2's turn (defender)
                 Console.WriteLine("");
                 Console.WriteLine("AI player's turn.");
 
@@ -130,7 +131,6 @@ namespace Ch10CardClient
                             break;
                         }
                     }
-
                     //checks to see if played card suit is the field card suit
                     else if (cardSelected.suit == currentCard.suit)
                     {
@@ -154,6 +154,20 @@ namespace Ch10CardClient
                         cardSelected = playerAI.playerHand.selectCard(selectedCard);
                     }
                 }
+
+                //player1"s second turn
+                Console.WriteLine("");
+                Console.WriteLine(player1.playerName + "'s turn");
+
+                player1.playerHand.displayHand(player1.playerHand);
+
+                int.TryParse(Console.ReadLine(), out selectedCard);
+
+                while (true)
+                {
+                    
+                }
+
 
 
                 playingField.displayField(playingField);
