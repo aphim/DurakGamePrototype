@@ -17,9 +17,9 @@ namespace Ch10CardLib
     /// </summary>
     public enum Suit
     {
-        Club,
         Diamond,
+        Club,
         Heart,
-        Spade
+        Spade, 
     }
 }

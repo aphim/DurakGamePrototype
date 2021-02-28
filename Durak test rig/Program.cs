@@ -109,59 +109,90 @@ namespace Ch10CardClient
                         Console.WriteLine("Player 2 Goes, equal to trump suit");
                     }
                     //If P1 and P2 do not have same suit as trump card, but same rank
-                    else
-                    {
-                        int p1TrumpCount = 0;
-                        int p2TrumpCount = 0;
-                        bool trumpFound = false;
+                    //else
+                    //{
+                        //int p1TrumpCount = 0;
+                        //int p2TrumpCount = 0;
+                        //bool trumpFound = false;
 
-                        //Do they have trump suit in either deck, count if so
-                        for (int i = 0; i < player1.playerHand.gethandSize(); i++)
-                        {
-                            if (trumpCard.suit == player1.playerHand.GetCard(i).suit)
-                            {
-                                p1TrumpCount += 1;
-                                trumpFound = true;
-                            }
-                            if (trumpCard.suit == playerAI.playerHand.GetCard(i).suit)
-                            {
-                                p2TrumpCount += 1;
-                                trumpFound = true;
-                            }
-                        }
-                        // If a trump card is found in either deck
-                        if (trumpFound)
-                        {
-                            //If p1 deck has more trump suits than p2 deck
-                            if (p1TrumpCount > p2TrumpCount)
-                            {
-                                Console.WriteLine("P1 goes has more trump suits than P2");
-                            }
-                            //If p2 deck has more trump suits than p1 deck
-                            else
-                            {
-                                Console.WriteLine("P2 goes has more trump suits than P1");
-                            }
-                        }
+                        ////Do they have trump suit in either deck, count if so
+                        //for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                        //{
+                        //    if (trumpCard.suit == player1.playerHand.GetCard(i).suit)
+                        //    {
+                        //        p1TrumpCount += 1;
+                        //        trumpFound = true;
+                        //    }
+                        //    if (trumpCard.suit == playerAI.playerHand.GetCard(i).suit)
+                        //    {
+                        //        p2TrumpCount += 1;
+                        //        trumpFound = true;
+                        //    }
+                        //}
+                        //// If a trump card is found in either deck
+                        //if (trumpFound)
+                        //{
+                        //    //If p1 deck has more trump suits than p2 deck
+                        //    if (p1TrumpCount > p2TrumpCount)
+                        //    {
+                        //        Console.WriteLine("P1 goes has more trump suits than P2");
+                        //    }
+                        //    //If p2 deck has more trump suits than p1 deck
+                        //    else
+                        //    {
+                        //        Console.WriteLine("P2 goes has more trump suits than P1");
+                        //    }
+                        //}
                         //If they do not have trump suit in either deck, poker style lowest-highest (diamonds, clubs, hearts ,spades)
                         else
                         {
                             Console.WriteLine("Poker Style");
-                            int p1SuitWins = 0;
-                            int p2SuitWins = 0;
+                            int p1DeckSuitValue = 0;
+                            int p2DeckSuitValue = 0;
+
+                            Card p1HighestSuit = player1.playerHand.GetCard(0);
+                            Card p2HighestSuit = playerAI.playerHand.GetCard(0);
+
                             for (int i = 0; i < player1.playerHand.gethandSize(); i++)
                             {
-                                if (player1.playerHand.GetCard(i).suit > playerAI.playerHand.GetCard(i).suit)
+                                if(player1.playerHand.GetCard(i).suit == Suit.Diamond)
                                 {
-                                    p1SuitWins += 1;
+                                    p1DeckSuitValue += 4;
                                 }
-                                else
+                                if (player1.playerHand.GetCard(i).suit == Suit.Club)
                                 {
-                                    p2SuitWins += 1;
+                                    p1DeckSuitValue += 3;
+                                }
+                                if (player1.playerHand.GetCard(i).suit == Suit.Heart)
+                                {
+                                    p1DeckSuitValue += 2;
+                                }
+                                if (player1.playerHand.GetCard(i).suit == Suit.Spade)
+                                {
+                                    p1DeckSuitValue += 1;
                                 }
                             }
-
-                            if (p1SuitWins > p2SuitWins)
+                            for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                            {
+                                if (playerAI.playerHand.GetCard(i).suit == Suit.Diamond)
+                                {
+                                    p2DeckSuitValue += 4;
+                                }
+                                if (playerAI.playerHand.GetCard(i).suit == Suit.Club)
+                                {
+                                    p2DeckSuitValue += 3;
+                                }
+                                if (playerAI.playerHand.GetCard(i).suit == Suit.Heart)
+                                {
+                                    p2DeckSuitValue += 2;
+                                }
+                                if (playerAI.playerHand.GetCard(i).suit == Suit.Spade)
+                                {
+                                    p2DeckSuitValue += 1;
+                                }
+                            }
+                            Console.WriteLine("P1 DECK VALUE: " + p1DeckSuitValue + "\t" + "P2 DECK VALUE: " + p2DeckSuitValue);
+                            if (p1DeckSuitValue > p2DeckSuitValue)
                             {
                                 Console.WriteLine("P1 goes Poker Style");
                             }
@@ -172,7 +203,7 @@ namespace Ch10CardClient
 
                         }
                     }
-                }
+                
                 //P2 has lower rank
                 else
                 {
