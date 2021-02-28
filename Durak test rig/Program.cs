@@ -201,7 +201,7 @@ namespace Ch10CardClient
                         player1 = attacker;
 
 
-                        /////DRAW CARDS/////
+                        /////DRAW CARDS///// (TODO FURTHER TESTING NEEDED FOR EXCEEDING MAXIMUM ROUNDS BUG)
                         //draws back up to 6 cards in hand if necessary/possible attackers first
 
                         //loop until minimum hand size is reached for attacker (*Note attackers draw first)
