@@ -36,12 +36,16 @@ namespace Ch10CardLib
                 inputString = Console.ReadLine();
                 if (inputString.Equals("D") || inputString.Equals("d"))
                 {
+                    Console.WriteLine("");
+                    Console.WriteLine("The discard pile is:");
                     playingField.displayDiscarded();
                     continue;
 
                 }
                 if (inputString.Equals("T") || inputString.Equals("t"))
                 {
+                    Console.WriteLine("");
+                    Console.WriteLine("The trump card is:");
                     Console.WriteLine(trumpCard.ToString());
                     continue;
                 }
@@ -62,9 +66,6 @@ namespace Ch10CardLib
             playingField.cardPlayed(this.playerHand.playCard(selectedCard));
 
 
-
-            playingField.displayField();
-
         }
 
         public void AttackerTurn(Field playingField, PassFlag passFlag, Card trumpCard)
@@ -81,12 +82,16 @@ namespace Ch10CardLib
                 inputString = Console.ReadLine();
                 if (inputString.Equals("D") || inputString.Equals("d"))
                 {
+                    Console.WriteLine("");
+                    Console.WriteLine("The discard pile is:");
                     playingField.displayDiscarded();
                     continue;
 
                 }
                 if(inputString.Equals("T") || inputString.Equals("t"))
                 {
+                    Console.WriteLine("");
+                    Console.WriteLine("The trump card is:");
                     Console.WriteLine(trumpCard.ToString());
                     continue;
                 }
@@ -166,12 +171,16 @@ namespace Ch10CardLib
                 inputString = Console.ReadLine();
                 if (inputString.Equals("D") || inputString.Equals("d"))
                 {
+                    Console.WriteLine("");
+                    Console.WriteLine("The discard pile is:");
                     playingField.displayDiscarded();
                     continue;
                    
                 }
                 if (inputString.Equals("T") || inputString.Equals("t"))
                 {
+                    Console.WriteLine("");
+                    Console.WriteLine("The trump card is:");
                     Console.WriteLine(trumpCard.ToString());
                     continue;
                 }

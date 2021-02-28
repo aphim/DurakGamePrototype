@@ -19,6 +19,8 @@ namespace Ch10CardClient
             playerPassed.defenderWin = false;
             int turnCounter = 0;
 
+            bool endGame = false;
+
             do
             {
                 //creates a new deck object
@@ -63,10 +65,6 @@ namespace Ch10CardClient
                 //initialize the field
                 Field playingField = new Field();
 
-                bool turnFlag = true;
-
-
-
 
                 ////Determine who goes first /////////////////////////////////////////////////////////////////
                 Card lowestCard = player1.playerHand.GetCard(0);
@@ -102,47 +100,86 @@ namespace Ch10CardClient
                     attacker = playerAI;
                 }
 
+                bool turnFlag = true; //flag for the below do while loop
                 do ////Loop for the different turns 
                 {
                     ////////////////////////////////// attacker's initial turn  /////////////////////////////////////////////////////////////
 
-
-
-
                     Console.WriteLine("");
                     attacker.AttackerInitialTurn(playingField, trumpCard);
+                    Console.WriteLine("");
+                    Console.WriteLine("The cards on the field:");
+                    playingField.displayField();
+
                     turnCounter++;
 
+                    //checks to see if the player wins during the endgame
+                    if (endGame)
+                    {
+                        if (attacker.playerHand.gethandSize() == 0)
+                        {
+                            Console.WriteLine(attacker.playerName + "Wins!");
+                            playerPassed.passFlag = true;
+                            turnFlag = false;
+                        }
+                    }
 
 
                     do ///Loop for the attack and defence chain rounds
                     {
                         /////////////////////////////////////// (defender) turn /////////////////////////////////////////////////////////////
-                        Console.WriteLine("");
+
                         if (!playerPassed.passFlag)
                         {
-
+                            Console.WriteLine("");
                             defender.DefenderTurn(playingField, trumpCard, playerPassed);
+                            Console.WriteLine("");
+                            Console.WriteLine("The cards on the field are:");
                             playingField.displayField();
                         }
 
+                        //checks to see if the player wins during the endgame
+                        if (endGame)
+                        {
+                            if (defender.playerHand.gethandSize() == 0)
+                            {
+                                Console.WriteLine(defender.playerName + "Wins!");
+                                playerPassed.passFlag = true;
+                                turnFlag = false;
+                            }
+                        }
+
                         turnCounter++;
-                        if (turnCounter <= 2)
+                        if (turnCounter <= 6)
                         {
 
                             /////////////////////////////////////// Attacker's standard turn /////////////////////////////////////////////////////////////
-                            Console.WriteLine("");
+
                             if (!playerPassed.passFlag)
                             {
+                                Console.WriteLine("");
                                 attacker.AttackerTurn(playingField, playerPassed, trumpCard);
+                                Console.WriteLine("");
+                                Console.WriteLine("The cards on the field are:");
                                 playingField.displayField();
+
+                                //checks to see if the player wins during the endgame
+                                if (endGame)
+                                {
+                                    if (attacker.playerHand.gethandSize() == 0)
+                                    {
+                                        Console.WriteLine(attacker.playerStatus + "Wins!");
+                                        playerPassed.passFlag = true;
+                                        turnFlag = false;
+                                    }
+                                }
 
                             }
                         }
 
 
 
-                    } while (!playerPassed.passFlag || turnCounter < 3);
+                    } while (!playerPassed.passFlag || turnCounter < 7);
 
 
 
@@ -174,8 +211,56 @@ namespace Ch10CardClient
                         player1.DrawCards(myDeck);
 
 
+                        //sets the endgame flag
+                        if (myDeck.getCardsRemaining() == 0)
+                        {
+                            endGame = true;
+                        }
+
+                        //checks to see if attacker wins during the endgame
+                        if (endGame)
+                        {
+                            if (player1.playerHand.gethandSize() == 0)
+                            {
+                                Console.WriteLine(player1.playerName + "Wins!");
+                                playerPassed.passFlag = true;
+                                turnFlag = false;
+                            }
+                            else if (playerAI.playerHand.gethandSize() == 0)
+                            {
+                                Console.WriteLine(playerAI.playerName + "Wins!");
+                                playerPassed.passFlag = true;
+                                turnFlag = false;
+                            }
+                        }
+
+
                         //loop until minimum hand size is reached for defender (*Note defender always draws second)
                         playerAI.DrawCards(myDeck);
+
+
+                        //sets the endgame flag
+                        if (myDeck.getCardsRemaining() == 0)
+                        {
+                            endGame = true;
+                        }
+
+                        //checks to see if attacker wins during the endgame
+                        if (endGame)
+                        {
+                            if (playerAI.playerHand.gethandSize() == 0)
+                            {
+                                Console.WriteLine(playerAI.playerName + "Wins!");
+                                playerPassed.passFlag = true;
+                                turnFlag = false;
+                            }
+                            else if (player1.playerHand.gethandSize() == 0)
+                            {
+                                Console.WriteLine(player1.playerName + "Wins!");
+                                playerPassed.passFlag = true;
+                                turnFlag = false;
+                            }
+                        }
 
 
                         //resets the loop and attacker is the same player
@@ -186,10 +271,14 @@ namespace Ch10CardClient
                         attacker = player1;
                         defender = playerAI;
 
+                        Console.Clear();
+
 
                         Console.WriteLine("");
-                        Console.WriteLine("New hands are:");
+                        Console.WriteLine(player1.playerName + "'s new hands is:");
                         player1.playerHand.displayHand();
+                        Console.WriteLine("");
+                        Console.WriteLine(playerAI.playerName + "'s new hands is:");
                         playerAI.playerHand.displayHand();
                     }
 
@@ -211,9 +300,55 @@ namespace Ch10CardClient
                         player1.DrawCards(myDeck);
 
 
+                        //sets the endgame flag
+                        if (myDeck.getCardsRemaining() == 0)
+                        {
+                            endGame = true;
+                        }
+
+                        //checks to see if attacker wins during the endgame
+                        if (endGame)
+                        {
+                            if (player1.playerHand.gethandSize() == 0)
+                            {
+                                Console.WriteLine(player1.playerName + "Wins!");
+                                playerPassed.passFlag = true;
+                                turnFlag = false;
+                            }
+                            else if (playerAI.playerHand.gethandSize() == 0)
+                            {
+                                Console.WriteLine(playerAI.playerName + "Wins!");
+                                playerPassed.passFlag = true;
+                                turnFlag = false;
+                            }
+                        }
+
                         //loop until minimum hand size is reached for defender (*Note defender always draws second)
                         playerAI.DrawCards(myDeck);
 
+
+                        //sets the endgame flag
+                        if (myDeck.getCardsRemaining() == 0)
+                        {
+                            endGame = true;
+                        }
+
+                        //checks to see if attacker wins during the endgame
+                        if (endGame)
+                        {
+                            if (playerAI.playerHand.gethandSize() == 0)
+                            {
+                                Console.WriteLine(playerAI.playerName + "Wins!");
+                                playerPassed.passFlag = true;
+                                turnFlag = false;
+                            }
+                            else if (player1.playerHand.gethandSize() == 0)
+                            {
+                                Console.WriteLine(player1.playerName + "Wins!");
+                                playerPassed.passFlag = true;
+                                turnFlag = false;
+                            }
+                        }
 
 
                         //defender is the new attacker
@@ -227,13 +362,20 @@ namespace Ch10CardClient
                         defender = player1;
                         attacker = playerAI;
 
+                        Console.Clear();
+
                         Console.WriteLine("");
-                        Console.WriteLine("New hands are:");
+                        Console.WriteLine(player1.playerName + "'s new hands is:");
                         player1.playerHand.displayHand();
+                        Console.WriteLine("");
+                        Console.WriteLine(playerAI.playerName + "'s new hands is:");
                         playerAI.playerHand.displayHand();
                     }
 
+
+
                 } while (turnFlag);
+
 
 
 
