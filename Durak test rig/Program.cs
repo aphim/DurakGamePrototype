@@ -118,7 +118,7 @@ namespace Ch10CardClient
                     {
                         if (attacker.playerHand.gethandSize() == 0)
                         {
-                            Console.WriteLine(attacker.playerName + "Wins!");
+                            Console.WriteLine(attacker.playerName + " Wins!");
                             playerPassed.passFlag = true;
                             turnFlag = false;
                         }
@@ -143,7 +143,7 @@ namespace Ch10CardClient
                         {
                             if (defender.playerHand.gethandSize() == 0)
                             {
-                                Console.WriteLine(defender.playerName + "Wins!");
+                                Console.WriteLine(defender.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
                             }
@@ -163,21 +163,19 @@ namespace Ch10CardClient
                                 Console.WriteLine("The cards on the field are:");
                                 playingField.displayField();
 
-                                //checks to see if the player wins during the endgame
-                                if (endGame)
-                                {
-                                    if (attacker.playerHand.gethandSize() == 0)
-                                    {
-                                        Console.WriteLine(attacker.playerStatus + "Wins!");
-                                        playerPassed.passFlag = true;
-                                        turnFlag = false;
-                                    }
-                                }
+                            }
 
+                            //checks to see if the player wins during the endgame
+                            if (endGame)
+                            {
+                                if (attacker.playerHand.gethandSize() == 0)
+                                {
+                                    Console.WriteLine(attacker.playerStatus + " Wins!");
+                                    playerPassed.passFlag = true;
+                                    turnFlag = false;
+                                }
                             }
                         }
-
-
 
                     } while (!playerPassed.passFlag || turnCounter < 7);
 
@@ -222,13 +220,13 @@ namespace Ch10CardClient
                         {
                             if (player1.playerHand.gethandSize() == 0)
                             {
-                                Console.WriteLine(player1.playerName + "Wins!");
+                                Console.WriteLine(player1.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
                             }
                             else if (playerAI.playerHand.gethandSize() == 0)
                             {
-                                Console.WriteLine(playerAI.playerName + "Wins!");
+                                Console.WriteLine(playerAI.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
                             }
@@ -250,13 +248,13 @@ namespace Ch10CardClient
                         {
                             if (playerAI.playerHand.gethandSize() == 0)
                             {
-                                Console.WriteLine(playerAI.playerName + "Wins!");
+                                Console.WriteLine(playerAI.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
                             }
                             else if (player1.playerHand.gethandSize() == 0)
                             {
-                                Console.WriteLine(player1.playerName + "Wins!");
+                                Console.WriteLine(player1.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
                             }
@@ -311,13 +309,13 @@ namespace Ch10CardClient
                         {
                             if (player1.playerHand.gethandSize() == 0)
                             {
-                                Console.WriteLine(player1.playerName + "Wins!");
+                                Console.WriteLine(player1.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
                             }
                             else if (playerAI.playerHand.gethandSize() == 0)
                             {
-                                Console.WriteLine(playerAI.playerName + "Wins!");
+                                Console.WriteLine(playerAI.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
                             }
@@ -338,13 +336,13 @@ namespace Ch10CardClient
                         {
                             if (playerAI.playerHand.gethandSize() == 0)
                             {
-                                Console.WriteLine(playerAI.playerName + "Wins!");
+                                Console.WriteLine(playerAI.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
                             }
                             else if (player1.playerHand.gethandSize() == 0)
                             {
-                                Console.WriteLine(player1.playerName + "Wins!");
+                                Console.WriteLine(player1.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
                             }

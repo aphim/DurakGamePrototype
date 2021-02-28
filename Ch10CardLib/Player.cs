@@ -115,8 +115,6 @@ namespace Ch10CardLib
                 {
                     validCard = true;
                 }
-            } while (!validCard);
-
 
 
             Card tempCard;
@@ -148,13 +146,13 @@ namespace Ch10CardLib
                     else
                     {
                         Console.WriteLine("You can only play a card of the same rank as the cards on the field");
-                        int.TryParse(Console.ReadLine(), out selectedCard);
-                        selectedCard = selectedCard - 1;
-                        cardSelected = this.playerHand.selectCard(selectedCard);
+                        validCard = false;
+                        break;
                     }
                 }
             }
 
+            } while (!validCard);
 
         }
 
@@ -203,7 +201,6 @@ namespace Ch10CardLib
                 {
                     validCard = true;
                 }
-            } while (!validCard);
 
             Card currentCard = playingField.getCurrentCard();
 
@@ -228,9 +225,8 @@ namespace Ch10CardLib
                             else
                             {
                                 Console.WriteLine("rank is too low.");
-                                int.TryParse(Console.ReadLine(), out selectedCard);
-                                selectedCard = selectedCard - 1;
-                                cardSelected = this.playerHand.selectCard(selectedCard);
+                                validCard = false;
+                                break;
                             }
                         }
                         else
@@ -251,21 +247,20 @@ namespace Ch10CardLib
                         else
                         {
                             Console.WriteLine("rank is too low.");
-                            int.TryParse(Console.ReadLine(), out selectedCard);
-                            selectedCard = selectedCard - 1;
-                            cardSelected = this.playerHand.selectCard(selectedCard);
+                            validCard = false;
+                            break;
                         }
                     }
                     else
                     {
                         Console.WriteLine("You can only play the same suit or the trump suit.");
-                        int.TryParse(Console.ReadLine(), out selectedCard);
-                        selectedCard = selectedCard - 1;
-                        cardSelected = this.playerHand.selectCard(selectedCard);
+                        validCard = false;
+                        break;
                     }
                 }
             }//END OF IF
-           
+
+            } while (!validCard);
         }
 
         public void DrawCards(Deck myDeck)
