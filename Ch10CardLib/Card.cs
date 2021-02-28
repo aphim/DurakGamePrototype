@@ -21,7 +21,7 @@ namespace Ch10CardLib
         public readonly Suit suit;
         public readonly Rank rank;
 
-
+        public readonly int value;
 
         public static Suit trump ;
         public static Rank trumpRank;
@@ -30,17 +30,22 @@ namespace Ch10CardLib
         /// </summary>
         /// <param name="newSuit">stores the suit of the card</param>
         /// <param name="newRank">stores the rank of the card</param>
-        public Card(Suit newSuit, Rank newRank)
+        public Card(Suit newSuit, Rank newRank, int newValue)
         {
             suit = newSuit;
             rank = newRank;
+            value = newValue;
         }
 
         public Card(Card card)
         {
             suit = card.suit;
             rank = card.rank;
+            value = card.value;
         }
+
+
+
 
         /// <summary>
         /// Defualt constructor for cards.

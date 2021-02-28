@@ -37,9 +37,6 @@ namespace Ch10CardClient
 
                 player1 = new Player(playerName, (PlayerStatus)0);
 
-                //initialize attacker and defenders
-                attacker = player1;
-                defender = playerAI;
 
                 //shuffle deck
                 myDeck.Shuffle();
@@ -56,6 +53,7 @@ namespace Ch10CardClient
                 player1.playerHand = new Hand(myDeck);
                 player1.playerHand.displayHand();
 
+
                 //initialize player2's hand
                 Console.WriteLine("");
                 Console.WriteLine(playerAI.playerName + "'s Hand:");
@@ -67,149 +65,42 @@ namespace Ch10CardClient
 
                 bool turnFlag = true;
 
-                //Determine who goes first
+
+
+
+                ////Determine who goes first /////////////////////////////////////////////////////////////////
                 Card lowestCard = player1.playerHand.GetCard(0);
                 for (int i = 0; i < player1.playerHand.gethandSize(); i++)
                 {
-                    if (lowestCard.rank > player1.playerHand.GetCard(i).rank)
+
+                    if (lowestCard.value > player1.playerHand.GetCard(i).value)
                     {
                         lowestCard = player1.playerHand.GetCard(i);
                     }
-
                 }
 
                 Card lowestCard2 = playerAI.playerHand.GetCard(0);
                 for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
                 {
-                    if (lowestCard2.rank > playerAI.playerHand.GetCard(i).rank)
+                    if (lowestCard2.value > playerAI.playerHand.GetCard(i).value)
                     {
                         lowestCard2 = playerAI.playerHand.GetCard(i);
                     }
 
                 }
 
-                Console.WriteLine("P1 Lowest: " + lowestCard + " P2 Lowest: " + lowestCard2);
-
-                //Player one has lower rank
-                if (lowestCard.rank < lowestCard2.rank)
+                //set the starting player based on who has the lowest card (poker suits)
+                if (lowestCard < lowestCard2)
                 {
-                    Console.WriteLine("Player 1 Goes lower rank");
+                    //initialize attacker and defenders
+                    attacker = player1;
+                    defender = playerAI;
                 }
-                //If ranks are equal to each other 
-                else if (lowestCard.rank == lowestCard2.rank)
-                {
-                    //If P1 has same suit as trump card
-                    if (lowestCard.suit == trumpCard.suit)
-                    {
-                        Console.WriteLine("Player 1 Goes, equal to trump suit");
-                    }
-                    //If P2 has same suit as trump card
-                    else if (lowestCard2.suit == trumpCard.suit)
-                    {
-                        Console.WriteLine("Player 2 Goes, equal to trump suit");
-                    }
-                    //If P1 and P2 do not have same suit as trump card, but same rank
-                    //else
-                    //{
-                        //int p1TrumpCount = 0;
-                        //int p2TrumpCount = 0;
-                        //bool trumpFound = false;
-
-                        ////Do they have trump suit in either deck, count if so
-                        //for (int i = 0; i < player1.playerHand.gethandSize(); i++)
-                        //{
-                        //    if (trumpCard.suit == player1.playerHand.GetCard(i).suit)
-                        //    {
-                        //        p1TrumpCount += 1;
-                        //        trumpFound = true;
-                        //    }
-                        //    if (trumpCard.suit == playerAI.playerHand.GetCard(i).suit)
-                        //    {
-                        //        p2TrumpCount += 1;
-                        //        trumpFound = true;
-                        //    }
-                        //}
-                        //// If a trump card is found in either deck
-                        //if (trumpFound)
-                        //{
-                        //    //If p1 deck has more trump suits than p2 deck
-                        //    if (p1TrumpCount > p2TrumpCount)
-                        //    {
-                        //        Console.WriteLine("P1 goes has more trump suits than P2");
-                        //    }
-                        //    //If p2 deck has more trump suits than p1 deck
-                        //    else
-                        //    {
-                        //        Console.WriteLine("P2 goes has more trump suits than P1");
-                        //    }
-                        //}
-                        //If they do not have trump suit in either deck, poker style lowest-highest (diamonds, clubs, hearts ,spades)
-                        else
-                        {
-                            Console.WriteLine("Poker Style");
-                            int p1DeckSuitValue = 0;
-                            int p2DeckSuitValue = 0;
-
-                            Card p1HighestSuit = player1.playerHand.GetCard(0);
-                            Card p2HighestSuit = playerAI.playerHand.GetCard(0);
-
-                            for (int i = 0; i < player1.playerHand.gethandSize(); i++)
-                            {
-                                if(player1.playerHand.GetCard(i).suit == Suit.Diamond)
-                                {
-                                    p1DeckSuitValue += 4;
-                                }
-                                if (player1.playerHand.GetCard(i).suit == Suit.Club)
-                                {
-                                    p1DeckSuitValue += 3;
-                                }
-                                if (player1.playerHand.GetCard(i).suit == Suit.Heart)
-                                {
-                                    p1DeckSuitValue += 2;
-                                }
-                                if (player1.playerHand.GetCard(i).suit == Suit.Spade)
-                                {
-                                    p1DeckSuitValue += 1;
-                                }
-                            }
-                            for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
-                            {
-                                if (playerAI.playerHand.GetCard(i).suit == Suit.Diamond)
-                                {
-                                    p2DeckSuitValue += 4;
-                                }
-                                if (playerAI.playerHand.GetCard(i).suit == Suit.Club)
-                                {
-                                    p2DeckSuitValue += 3;
-                                }
-                                if (playerAI.playerHand.GetCard(i).suit == Suit.Heart)
-                                {
-                                    p2DeckSuitValue += 2;
-                                }
-                                if (playerAI.playerHand.GetCard(i).suit == Suit.Spade)
-                                {
-                                    p2DeckSuitValue += 1;
-                                }
-                            }
-                            Console.WriteLine("P1 DECK VALUE: " + p1DeckSuitValue + "\t" + "P2 DECK VALUE: " + p2DeckSuitValue);
-                            if (p1DeckSuitValue > p2DeckSuitValue)
-                            {
-                                Console.WriteLine("P1 goes Poker Style");
-                            }
-                            else
-                            {
-                                Console.WriteLine("P2 goes Poker Style");
-                            }
-
-                        }
-                    }
-                
-                //P2 has lower rank
                 else
                 {
-                    Console.WriteLine("Player 2 Goes lower rank");
+                    defender = player1;
+                    attacker = playerAI;
                 }
-
 
                 do ////Loop for the different turns 
                 {

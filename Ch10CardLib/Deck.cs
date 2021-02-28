@@ -28,11 +28,16 @@ namespace Ch10CardLib
         /// </summary>
         public Deck()
         {
+            int cardValue = 1;
+            int initialValue = 1;
             for (int suitVal = 0; suitVal < 4; suitVal++)
             {
+                cardValue = initialValue;
+                initialValue++;
                 for (int rankVal = 1; rankVal < 10; rankVal++)
                 {
-                    cards.Add(new Card((Suit)suitVal, (Rank)rankVal));
+                    cards.Add(new Card((Suit)suitVal, (Rank)rankVal, cardValue));
+                    cardValue = cardValue + 4;
                 }
             }
         }
