@@ -42,6 +42,7 @@ namespace Ch10CardClient
                 //displays the current card
                 Card tempCard = myDeck.GetCard(i);
                 Console.Write(tempCard.ToString());
+                Console.Write(tempCard.value);
                 if (i != myDeck.getCardsRemaining()-1)
                 {
                     Console.Write(", ");
@@ -65,6 +66,7 @@ namespace Ch10CardClient
                 //displays the current card
                 Card tempCard = myDeck.GetCard(i);
                 Console.Write(tempCard.ToString());
+
                 if (i != myDeck.getCardsRemaining()-1)
                 {
                     Console.Write(", ");
@@ -168,6 +170,7 @@ namespace Ch10CardClient
                 //displays the current card
                 Card tempCard = playerAI.playerHand.GetCard(i);
                 Console.Write(tempCard.ToString());
+                Console.Write(tempCard.value);
                 if (i != playerAI.playerHand.gethandSize() - 1)
                 {
                     Console.Write(", ");
@@ -204,6 +207,7 @@ namespace Ch10CardClient
                 //displays the current card
                 Card tempCard = player1.playerHand.GetCard(i);
                 Console.Write(tempCard.ToString());
+                Console.Write(tempCard.value);
                 if (i != player1.playerHand.gethandSize() - 1)
                 {
                     Console.Write(", ");
