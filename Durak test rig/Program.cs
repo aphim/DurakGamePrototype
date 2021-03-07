@@ -12,6 +12,7 @@ namespace Ch10CardClient
     {
         static void Main(string[] args)
         {
+            //initiate variables
             bool playAgain = false;
             PassFlag playerPassed = new PassFlag();
             playerPassed.passFlag = false;
@@ -67,21 +68,29 @@ namespace Ch10CardClient
 
 
                 ////Determine who goes first /////////////////////////////////////////////////////////////////
+                
+                //sets the first card as the current lowest card 
                 Card lowestCard = player1.playerHand.GetCard(0);
+                //loops through the hand
                 for (int i = 0; i < player1.playerHand.gethandSize(); i++)
                 {
-
+                    //checks if the value of the new card is lower than the current card
                     if (lowestCard.value > player1.playerHand.GetCard(i).value)
                     {
+                        //sets the lowest card to new card if new card is lower than current card
                         lowestCard = player1.playerHand.GetCard(i);
                     }
                 }
 
+                //sets the first card as the current lowest card 
                 Card lowestCard2 = playerAI.playerHand.GetCard(0);
+                //loops through the hand
                 for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
                 {
+                    //checks if the value of the new card is lower than the current card
                     if (lowestCard2.value > playerAI.playerHand.GetCard(i).value)
                     {
+                        //sets the lowest card to new card if new card is lower than current card
                         lowestCard2 = playerAI.playerHand.GetCard(i);
                     }
 
@@ -106,6 +115,7 @@ namespace Ch10CardClient
                     ////////////////////////////////// attacker's initial turn  /////////////////////////////////////////////////////////////
 
                     Console.WriteLine("");
+                    //calls the attacker initial turn function
                     attacker.AttackerInitialTurn(playingField, trumpCard);
                     Console.WriteLine("");
                     Console.WriteLine("The cards on the field:");
@@ -116,8 +126,10 @@ namespace Ch10CardClient
                     //checks to see if the player wins during the endgame
                     if (endGame)
                     {
+                        //check player hand size
                         if (attacker.playerHand.gethandSize() == 0)
                         {
+                            //declares winner if conditions are met
                             Console.WriteLine(attacker.playerName + " Wins!");
                             playerPassed.passFlag = true;
                             turnFlag = false;
@@ -129,9 +141,11 @@ namespace Ch10CardClient
                     {
                         /////////////////////////////////////// (defender) turn /////////////////////////////////////////////////////////////
 
+                        //checks if a player has passed their turn
                         if (!playerPassed.passFlag)
                         {
                             Console.WriteLine("");
+                            //calls the defender's turn method
                             defender.DefenderTurn(playingField, trumpCard, playerPassed);
                             Console.WriteLine("");
                             Console.WriteLine("The cards on the field are:");
@@ -141,8 +155,10 @@ namespace Ch10CardClient
                         //checks to see if the player wins during the endgame
                         if (endGame)
                         {
+                            //checks defender's hand size
                             if (defender.playerHand.gethandSize() == 0)
                             {
+                                //declares winner if conditions are met
                                 Console.WriteLine(defender.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
@@ -150,14 +166,18 @@ namespace Ch10CardClient
                         }
 
                         turnCounter++;
+
+                        //checks to see the number of turns that has gone.
                         if (turnCounter <= 6)
                         {
 
                             /////////////////////////////////////// Attacker's standard turn /////////////////////////////////////////////////////////////
 
+                            //check if a player has passed
                             if (!playerPassed.passFlag)
                             {
                                 Console.WriteLine("");
+                                //call attackers' standard turn method
                                 attacker.AttackerTurn(playingField, playerPassed, trumpCard);
                                 Console.WriteLine("");
                                 Console.WriteLine("The cards on the field are:");
@@ -168,35 +188,37 @@ namespace Ch10CardClient
                             //checks to see if the player wins during the endgame
                             if (endGame)
                             {
+                                //checks attacker's hand size
                                 if (attacker.playerHand.gethandSize() == 0)
                                 {
+                                    //declares winner if condition has been met
                                     Console.WriteLine(attacker.playerStatus + " Wins!");
                                     playerPassed.passFlag = true;
                                     turnFlag = false;
                                 }
                             }
                         }
-
+                        //loops as long as neither side passes and that it hasn't reached 6 turns
                     } while (!playerPassed.passFlag || turnCounter < 7);
 
 
 
 
                     //////////////////////////////// end of round logic ///////////////////////////////////////////////////////////////////////
-                    //flags to be placed in the proper places later
 
-
+                    //checks if attackerwin flag has been tripped
                     if (playerPassed.attackerWin)
                     {
-                        //defender picks up all the field cards
-
+                        //creates an arraylist with all the field cards
                         ArrayList cardsToBePickedUp = playingField.pickupField();
 
+                        //adds all the cards in the arraylist to the defender's hand
                         for (int i = 0; i < cardsToBePickedUp.Count; i++)
                         {
                             defender.playerHand.addCard((Card)cardsToBePickedUp[i]);
                         }
 
+                        //sets the roles for the next round
                         playerAI = defender;
                         player1 = attacker;
 
@@ -205,21 +227,22 @@ namespace Ch10CardClient
                         //draws back up to 6 cards in hand if necessary/possible attackers first
 
                         //loop until minimum hand size is reached for attacker (*Note attackers draw first)
-
                         player1.DrawCards(myDeck);
 
 
-                        //sets the endgame flag
+                        //sets the endgame flag if deck reaches 0 cards
                         if (myDeck.getCardsRemaining() == 0)
                         {
                             endGame = true;
                         }
 
-                        //checks to see if attacker wins during the endgame
+                        //checks to see if any player wins during the endgame
                         if (endGame)
                         {
+                            //checks their hand size
                             if (player1.playerHand.gethandSize() == 0)
                             {
+                                //declare winner
                                 Console.WriteLine(player1.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
@@ -246,8 +269,10 @@ namespace Ch10CardClient
                         //checks to see if attacker wins during the endgame
                         if (endGame)
                         {
+                            //checks hand size
                             if (playerAI.playerHand.gethandSize() == 0)
                             {
+                                //declare winner
                                 Console.WriteLine(playerAI.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
@@ -280,7 +305,7 @@ namespace Ch10CardClient
                         playerAI.playerHand.displayHand();
                     }
 
-
+                    //checks to see if defenderwin flag has been tripped
                     if (playerPassed.defenderWin)
                     {
                         /////Discard Field Cards //////
@@ -307,8 +332,10 @@ namespace Ch10CardClient
                         //checks to see if attacker wins during the endgame
                         if (endGame)
                         {
+                            //checks player's hand size
                             if (player1.playerHand.gethandSize() == 0)
                             {
+                                //declares winner
                                 Console.WriteLine(player1.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
@@ -334,8 +361,10 @@ namespace Ch10CardClient
                         //checks to see if attacker wins during the endgame
                         if (endGame)
                         {
+                            //checks players' handsize
                             if (playerAI.playerHand.gethandSize() == 0)
                             {
+                                //declare winner
                                 Console.WriteLine(playerAI.playerName + " Wins!");
                                 playerPassed.passFlag = true;
                                 turnFlag = false;
@@ -349,7 +378,7 @@ namespace Ch10CardClient
                         }
 
 
-                        //defender is the new attacker
+                        //defender is the new attacker (swap roles)(
                         playerPassed.passFlag = false;
                         playerPassed.defenderWin = false;
                         turnCounter = 0;
@@ -372,15 +401,16 @@ namespace Ch10CardClient
 
 
 
-                } while (turnFlag);
+                } while (turnFlag); //loops the program until the game ends by someone winning
 
 
 
 
-                //for looping the game
+                //for looping the game asks if user wants to play again
                 Console.WriteLine("");
                 Console.WriteLine("Play again? Y or N");
 
+                //if user enters y or Y, new game is started, otherwise loop is exited and program ends.
                 string flag = Console.ReadLine();
                 if (flag == "Y" || flag == "y")
                 {

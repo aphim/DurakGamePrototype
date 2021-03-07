@@ -9,7 +9,7 @@ namespace Ch10CardLib
 {
     public class Hand
     {
-        
+        //set the default hand size to 6 and create an arraylist for the hand
         public static int defaultHandSize = 6;
         private ArrayList hand = new ArrayList(defaultHandSize);
 
@@ -19,12 +19,17 @@ namespace Ch10CardLib
         /// <param name="deck">deck to draw the hand from</param>
         public Hand(Deck deck)
         {
+            //loops until we reach the default hand size
             for (int i=0; i< defaultHandSize; i++)
             {
+                //draw a card
                 hand.Add(deck.drawCard());
             }
         }
 
+        /// <summary>
+        /// default constructor 
+        /// </summary>
         private Hand()
         {
         }
@@ -63,7 +68,7 @@ namespace Ch10CardLib
         /// <returns>returns selected card from the hand</returns>
         public Card playCard(int cardNum)
         {
-
+            //checks to see if the index is within range of the hand and plays the corresponding card
             if (cardNum >= 0 && cardNum <= hand.Count - 1)
             {
                 Card playedCard = (Card)hand[cardNum];
@@ -72,6 +77,7 @@ namespace Ch10CardLib
 
                 return playedCard;
             }
+            //returns an error message
             else
             {
                 throw (new System.ArgumentOutOfRangeException("cardNum", cardNum, "Value must be between 0 and handsize"));
@@ -79,14 +85,22 @@ namespace Ch10CardLib
 
         }
 
+        /// <summary>
+        /// Chooses a card from the hand but does not play it (Similar to playCard method but doesn't play the card. Used for
+        /// validating the card selection before it is played)
+        /// </summary>
+        /// <param name="cardNum"></param>
+        /// <returns>the selected card</returns>
         public Card selectCard(int cardNum)
         {
+            //checks to see of the card selected is within the handsize
             if (cardNum >= 0 && cardNum <= hand.Count - 1)
             {
                 Card playedCard = (Card)hand[cardNum];
 
                 return playedCard;
             }
+            //otherwise throws an exception
             else
             {
                 throw (new System.ArgumentOutOfRangeException("cardNum", cardNum, "Value must be between 0 and handsize"));
@@ -103,8 +117,12 @@ namespace Ch10CardLib
             hand.Add(card);
         }
 
+        /// <summary>
+        /// Method used to display the current hand
+        /// </summary>
         public void displayHand()
         {
+            //loops through the hand
             for (int i = 0; i < this.gethandSize(); i++)
             {
                 //displays the current card

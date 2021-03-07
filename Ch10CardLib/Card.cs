@@ -1,10 +1,4 @@
-﻿/* OOP 4200 Lab 2 - textbook examples
- * This codes is made based in the example from the textbook.
- * @Author:     Jacky Yuan, 100520106
- * @Date:       01/19/2021      
- * @Version:    1.0
- */
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +17,7 @@ namespace Ch10CardLib
 
         public readonly int value;
 
-        public static Suit trump ;
+        public static Suit trump;
         public static Rank trumpRank;
         /// <summary>
         /// parameterized constructor: Sets the suit and rank for the card object.
@@ -37,14 +31,16 @@ namespace Ch10CardLib
             value = newValue;
         }
 
+        /// <summary>
+        /// Constructor that takes in a card and sets the current card to have the same suit, rank, and value
+        /// </summary>
+        /// <param name="card"></param>
         public Card(Card card)
         {
             suit = card.suit;
             rank = card.rank;
             value = card.value;
         }
-
-
 
 
         /// <summary>
@@ -85,27 +81,49 @@ namespace Ch10CardLib
             return 13 * (int)suit + (int)rank;
         }
 
-        public static void setTrumpSuit(TrumpCard trumpCard) 
+        /// <summary>
+        /// Method that sets the trump suit to be equal to the trump card's suit
+        /// </summary>
+        /// <param name="trumpCard"></param>
+        public static void setTrumpSuit(TrumpCard trumpCard)
         {
-             Suit trump = trumpCard.suit;
-        
+            Suit trump = trumpCard.suit;
+
         }
+
+        /// <summary>
+        /// Method that returns the trump suit
+        /// </summary>
+        /// <returns></returns>
         public Suit getTrumpSuit()
         {
             return trump;
         }
 
+        /// <summary>
+        /// method that sets the trump card's rank to be the rank of the trumpo card
+        /// </summary>
+        /// <param name="trumpCard"></param>
         public static void setTrumpRank(TrumpCard trumpCard)
         {
             Rank trumpRank = trumpCard.rank;
 
         }
+
+        /// <summary>
+        /// Method used to obtain the rank of the trump card
+        /// </summary>
+        /// <returns></returns>
         public Rank getTrumpRank()
         {
             return trumpRank;
         }
 
-
+        /// <summary>
+        /// method used to check if the ranks of 2 cards are the same
+        /// </summary>
+        /// <param name="card1"></param>
+        /// <returns></returns>
         public bool isSameRank(Card card1)
         {
             if (card1.rank == this.rank)

@@ -1,9 +1,4 @@
-﻿/* OOP 4200 Lab 2 - textbook examples
- * This codes is made based in the example from the textbook.
- * @Author:     Jacky Yuan, 100520106
- * @Date:       01/19/2021      
- * @Version:    1.0
- */
+﻿
 
 using System;
 using System.Collections;
@@ -28,15 +23,20 @@ namespace Ch10CardLib
         /// </summary>
         public Deck()
         {
+            //card value and in initial value are both set to increment the cards and assign them values properly due to way the cards are ordered when initialized
             int cardValue = 1;
             int initialValue = 1;
             for (int suitVal = 0; suitVal < 4; suitVal++)
             {
+                //reinitialize the starting point of the value assignment
                 cardValue = initialValue;
+                //increment the starting point by 1
                 initialValue++;
                 for (int rankVal = 1; rankVal < 10; rankVal++)
                 {
+                    //Adds the card to the deck
                     cards.Add(new Card((Suit)suitVal, (Rank)rankVal, cardValue));
+                    //increments the value by 4
                     cardValue = cardValue + 4;
                 }
             }
@@ -49,7 +49,7 @@ namespace Ch10CardLib
         /// <returns>the value of the card</returns>
         public Card GetCard(int cardNum)
         {
-            if(cardNum >= 0 && cardNum <= cardsInDeck-1)
+            if (cardNum >= 0 && cardNum <= cardsInDeck - 1)
             {
                 return (Card)cards[cardNum];
             }
@@ -69,20 +69,20 @@ namespace Ch10CardLib
             bool[] assigned = new bool[cardsInDeck];
             Random sourceGen = new Random();
             //for loop shuffling the cards
-            for(int i =0; i< cardsInDeck; i++)
+            for (int i = 0; i < cardsInDeck; i++)
             {
                 int destCard = 0;
                 bool foundCard = false;
                 while (foundCard == false)
                 {
                     destCard = sourceGen.Next(cardsInDeck);
-                    if(assigned[destCard] == false)
+                    if (assigned[destCard] == false)
                     {
                         foundCard = true;
                     }
                 }
                 assigned[destCard] = true;
-                newDeck[destCard] = (Card)cards[i]; 
+                newDeck[destCard] = (Card)cards[i];
             }
             cards = new ArrayList(newDeck);
         }
@@ -115,15 +115,20 @@ namespace Ch10CardLib
         /// <returns>the top card from the deck as the drawn card</returns>
         public Card drawCard()
         {
-            Card drawnCard = new Card((Card)cards[cards.Count-1]);
+            Card drawnCard = new Card((Card)cards[cards.Count - 1]);
 
             cards.RemoveAt(cards.Count - 1);
-            
+
             return drawnCard;
         }
 
-       public void displayDeck(Deck myDeck)
+        /// <summary>
+        /// Display deck method used to display the remaining deck
+        /// </summary>
+        /// <param name="myDeck"></param>
+        public void displayDeck(Deck myDeck)
         {
+            //loops through the length of the deck
             for (int i = 0; i < myDeck.getCardsRemaining(); i++)
             {
                 //displays the current card
@@ -140,7 +145,7 @@ namespace Ch10CardLib
             }
         }
 
-    
+
 
     }
 }
