@@ -38,7 +38,7 @@ namespace Ch10CardClient
                 string playerName = Console.ReadLine();
 
                 player1 = new Player(playerName, (PlayerStatus)0);
-
+              
 
                 //shuffle deck
                 myDeck.Shuffle();
