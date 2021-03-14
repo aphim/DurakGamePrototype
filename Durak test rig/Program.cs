@@ -28,7 +28,7 @@ namespace Ch10CardClient
                 Deck myDeck = new Deck();
 
                 //create player objects
-                Player playerAI = new Player("AI", (PlayerStatus)1);
+                AI playerAI = new AI("AI", (PlayerStatus)1);
                 Player player1;
 
                 Player attacker;
@@ -219,7 +219,7 @@ namespace Ch10CardClient
                         }
 
                         //sets the roles for the next round
-                        playerAI = defender;
+                        playerAI = (AI)defender;
                         player1 = attacker;
 
 
@@ -312,7 +312,7 @@ namespace Ch10CardClient
                         //field cards get discarded
                         playingField.discardField();
 
-                        playerAI = defender;
+                        playerAI = (AI)defender;
                         player1 = attacker;
 
 
