@@ -21,7 +21,7 @@ namespace Ch10CardLib
         public static Suit trump;
         public static Rank trumpRank;
 
-        protected bool faceUp = false;
+        protected bool faceUp = true;
         public bool FaceUp
         {
             get { return faceUp; }

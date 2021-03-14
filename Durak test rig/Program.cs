@@ -28,7 +28,7 @@ namespace Ch10CardClient
                 Deck myDeck = new Deck();
 
                 //create player objects
-                AI playerAI = new AI("AI", (PlayerStatus)1);
+                AI playerAI = new AI("AI");
                 Player player1;
 
                 Player attacker;
@@ -38,7 +38,7 @@ namespace Ch10CardClient
 
                 string playerName = Console.ReadLine();
 
-                player1 = new Player(playerName, (PlayerStatus)0);
+                player1 = new Player(playerName);
               
 
                 //shuffle deck

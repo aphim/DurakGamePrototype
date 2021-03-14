@@ -15,16 +15,24 @@ namespace DurakFormApp
     public partial class frmDurak : Form
     {
         private List<CardBox.CardBox> cards = new List<CardBox.CardBox>();
-        private Deck deck = new Deck();
+        private Deck myDeck = new Deck();
+        private AI playerAI = new AI("AI");
+        private Player player1;
+
         public frmDurak()
         {
             InitializeComponent();
+            //initiate variables
+            bool playAgain = false;
+            PassFlag playerPassed = new PassFlag();
+            playerPassed.passFlag = false;
+            playerPassed.attackerWin = false;
+            playerPassed.defenderWin = false;
+            int turnCounter = 0;
+            bool endGame = false;
+
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         /// <summary>
         /// Event that triggers when user clicks how to play menu option - displays Durak rules
@@ -78,40 +86,65 @@ namespace DurakFormApp
         /// <param name="e"></param>
         private void frmDurak_Load(object sender, EventArgs e)
         {
+            lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
             Card theCard = new Card(Suit.Clubs, Rank.Six, 1);
-            theCard.FaceUp = true;
+            theCard.FaceUp = false;
             Card theCard2 = new Card(Suit.Clubs, Rank.Seven, 2);
-            theCard2.FaceUp = true;
-
+            theCard2.FaceUp = false;
             this.cardBox1.Card = theCard;
-            this.cardBox2.Card = theCard2;
+            this.cbTrumpCard.Card = theCard2;
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            //shuffle deck
+            myDeck.Shuffle();
+
+            // create player objects
+            Player attacker;
+            Player defender;
+            btnStart.Visible = false;
+
+            player1 = new Player("Player1");
+
+
+            player1.playerHand = new Hand(myDeck);
+            playerAI.playerHand = new Hand(myDeck);
+
+            //initialize the field
+            Field playingField = new Field();
+
+            
+
+            //get the trump card
+            Card trumpCard = myDeck.getTrumpcard();
+            lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
+            this.cbTrumpCard.Card = trumpCard;
+
+
+
             CreateControls();
             DisplayControls();
+
         }
 
         private void CreateControls()
         {
-            for (int i = 0; i < deck.getCardsRemaining(); i++)
+            for (int i = 0; i < player1.playerHand.gethandSize(); i++)
             {
-                Card card = deck.GetCard(i);
-                card.FaceUp = true;
-                CardBox.CardBox newCardBox = new CardBox.CardBox(card);
+                CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
                 cards.Add(newCardBox);
-
             }
+            lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
         }
 
         private void DisplayControls()
         {
-            for (int i = 6; i >= 0; i--)
+            for (int i = player1.playerHand.gethandSize()-1; i >= 0; i--)
             {
                 cards[i].Left = (i * 20) + 100;
                 this.pnPlayerHand.Controls.Add(cards[i]);
-
+                
             }
         }
 

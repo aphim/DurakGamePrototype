@@ -18,17 +18,14 @@ namespace Ch10CardLib
         /// </summary>
         public Hand playerHand { get; set; }
 
-        public PlayerStatus playerStatus;
 
         /// <summary>
-        /// Constructor for the player class, entering his name and status
+        /// Constructor for the player class, entering his name
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="status"></param>
-        public Player(string name, PlayerStatus status)
+        public Player(string name)
         {
             playerName = name;
-            playerStatus = status;
         }
         
         /// <summary>

@@ -44,9 +44,9 @@
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDiscardPile = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.cardBox2 = new CardBox.CardBox();
-            this.cardBox1 = new CardBox.CardBox();
             this.btnStart = new System.Windows.Forms.Button();
+            this.cbTrumpCard = new CardBox.CardBox();
+            this.cardBox1 = new CardBox.CardBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,7 +67,6 @@
             this.lblDeckSizeValue.Name = "lblDeckSizeValue";
             this.lblDeckSizeValue.Size = new System.Drawing.Size(54, 31);
             this.lblDeckSizeValue.TabIndex = 3;
-            this.lblDeckSizeValue.Text = "32";
             this.lblDeckSizeValue.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // pnPlayerHand
@@ -178,32 +177,6 @@
             this.label2.Text = "0";
             this.label2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
-            // cardBox2
-            // 
-            card1.FaceUp = false;
-            this.cardBox2.Card = card1;
-            this.cardBox2.CardOrientation = System.Windows.Forms.Orientation.Vertical;
-            this.cardBox2.FaceUp = false;
-            this.cardBox2.Location = new System.Drawing.Point(115, 37);
-            this.cardBox2.Name = "cardBox2";
-            this.cardBox2.rank = Ch10CardLib.Rank.Six;
-            this.cardBox2.Size = new System.Drawing.Size(57, 80);
-            this.cardBox2.Suit = Ch10CardLib.Suit.Diamonds;
-            this.cardBox2.TabIndex = 16;
-            // 
-            // cardBox1
-            // 
-            card2.FaceUp = false;
-            this.cardBox1.Card = card2;
-            this.cardBox1.CardOrientation = System.Windows.Forms.Orientation.Vertical;
-            this.cardBox1.FaceUp = false;
-            this.cardBox1.Location = new System.Drawing.Point(12, 249);
-            this.cardBox1.Name = "cardBox1";
-            this.cardBox1.rank = Ch10CardLib.Rank.Six;
-            this.cardBox1.Size = new System.Drawing.Size(111, 175);
-            this.cardBox1.Suit = Ch10CardLib.Suit.Diamonds;
-            this.cardBox1.TabIndex = 15;
-            // 
             // btnStart
             // 
             this.btnStart.Location = new System.Drawing.Point(130, 314);
@@ -214,6 +187,32 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
+            // cbTrumpCard
+            // 
+            card1.FaceUp = false;
+            this.cbTrumpCard.Card = card1;
+            this.cbTrumpCard.CardOrientation = System.Windows.Forms.Orientation.Vertical;
+            this.cbTrumpCard.FaceUp = false;
+            this.cbTrumpCard.Location = new System.Drawing.Point(115, 37);
+            this.cbTrumpCard.Name = "cbTrumpCard";
+            this.cbTrumpCard.rank = Ch10CardLib.Rank.Seven;
+            this.cbTrumpCard.Size = new System.Drawing.Size(57, 80);
+            this.cbTrumpCard.Suit = Ch10CardLib.Suit.Diamonds;
+            this.cbTrumpCard.TabIndex = 16;
+            // 
+            // cardBox1
+            // 
+            card2.FaceUp = false;
+            this.cardBox1.Card = card2;
+            this.cardBox1.CardOrientation = System.Windows.Forms.Orientation.Vertical;
+            this.cardBox1.FaceUp = false;
+            this.cardBox1.Location = new System.Drawing.Point(12, 249);
+            this.cardBox1.Name = "cardBox1";
+            this.cardBox1.rank = Ch10CardLib.Rank.Seven;
+            this.cardBox1.Size = new System.Drawing.Size(111, 175);
+            this.cardBox1.Suit = Ch10CardLib.Suit.Diamonds;
+            this.cardBox1.TabIndex = 15;
+            // 
             // frmDurak
             // 
             this.AllowDrop = true;
@@ -221,7 +220,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(819, 447);
             this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.cardBox2);
+            this.Controls.Add(this.cbTrumpCard);
             this.Controls.Add(this.cardBox1);
             this.Controls.Add(this.btnDiscardPile);
             this.Controls.Add(this.label2);
@@ -262,7 +261,7 @@
         private System.Windows.Forms.Button btnDiscardPile;
         private System.Windows.Forms.ToolStripMenuItem mnuExit;
         private System.Windows.Forms.Label label2;
-        private CardBox.CardBox cardBox2;
+        private CardBox.CardBox cbTrumpCard;
         private CardBox.CardBox cardBox1;
         private System.Windows.Forms.Button btnStart;
     }

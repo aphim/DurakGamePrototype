@@ -10,10 +10,9 @@ namespace Ch10CardLib
     public class AI : Player
     {
         //constructor for making an instance of an AI object
-        public AI (string name, PlayerStatus status) : base(name, status)
+        public AI (string name) : base(name)
         {
             playerName = name;
-            playerStatus = status;
         }
 
         /// <summary>
