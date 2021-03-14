@@ -36,7 +36,7 @@ namespace Ch10CardLib
         /// </summary>
         /// <param name="playingField"></param>
         /// <param name="trumpCard"></param>
-        public void AttackerInitialTurn(Field playingField, Card trumpCard)
+        public virtual void AttackerInitialTurn(Field playingField, Card trumpCard)
         {
             //displays message
             Console.WriteLine("It is " + this.playerName + "'s Turn.");
@@ -101,7 +101,7 @@ namespace Ch10CardLib
         /// <param name="playingField"></param>
         /// <param name="passFlag"></param>
         /// <param name="trumpCard"></param>
-        public void AttackerTurn(Field playingField, PassFlag passFlag, Card trumpCard)
+        public virtual void AttackerTurn(Field playingField, PassFlag passFlag, Card trumpCard)
         {
             //initialize variables
             int selectedCard=0;
@@ -206,7 +206,7 @@ namespace Ch10CardLib
         /// <param name="playingField"></param>
         /// <param name="trumpCard"></param>
         /// <param name="passFlag"></param>
-        public void DefenderTurn(Field playingField, Card trumpCard, PassFlag passFlag)
+        public virtual void DefenderTurn(Field playingField, Card trumpCard, PassFlag passFlag)
         {
             //initialize some variables
             Console.WriteLine( "It is " + this.playerName + "'s Turn.");

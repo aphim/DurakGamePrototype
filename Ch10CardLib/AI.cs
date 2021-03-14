@@ -22,13 +22,13 @@ namespace Ch10CardLib
         /// <param name="playingField"></param>
         /// <param name="handAI"></param>
         /// <param name="trumpCard"></param>
-        public void AttackerInitialTurnAI(Field playingField, Card trumpCard, Hand handAI)
+        public override void AttackerInitialTurn(Field playingField, Card trumpCard)
         {
 
             ////////// CHECKS FOR THE LOWEST "VALUE" CARD IN THE HAND WITH TRUMP SUIT CARDS GETTING MORE VALUE THAN OTHER CARDS ///////////
             
             //sets the first card as the current lowest card 
-            Card lowestCard = handAI.GetCard(0);
+            Card lowestCard = playerHand.GetCard(0);
             int lowestcardIndex = 0;
 
             //initialize the lowestcard value
@@ -41,10 +41,10 @@ namespace Ch10CardLib
             }
 
             //loops through the hand
-            for (int i = 1; i < handAI.gethandSize(); i++)
+            for (int i = 1; i < playerHand.gethandSize(); i++)
             {
                 //create a variable for the next card
-                Card nextCard = handAI.GetCard(i);
+                Card nextCard = playerHand.GetCard(i);
 
                 //initialize the nextCardValue;
                 int nextCardValue = nextCard.value;
@@ -68,7 +68,7 @@ namespace Ch10CardLib
             //////////////////// Plays the lowest value card ///////////////////////////////
 
             //play the card onto the field (removing it from the hand)
-            playingField.cardPlayed(handAI.playCard(lowestcardIndex));
+            playingField.cardPlayed(playerHand.playCard(lowestcardIndex));
 
         }
 
@@ -79,17 +79,17 @@ namespace Ch10CardLib
         /// <param name="passFlag"></param>
         /// <param name="trumpCard"></param>
         /// <param name="handAI"></param>
-        public void AttackerTurnAI(Field playingField, PassFlag passFlag, Card trumpCard, Hand handAI)
+        public override void AttackerTurn(Field playingField, PassFlag passFlag, Card trumpCard)
         {
             //check the playingfield
             ArrayList validCards = new ArrayList();
             ArrayList validCardIndex = new ArrayList();
 
             //loop through the hand of the AI
-            for (int i = 0;  i < handAI.gethandSize(); i++ )
+            for (int i = 0;  i < playerHand.gethandSize(); i++ )
             {
                 //declare a temp card as the current card
-                Card tempCard = (Card)handAI.GetCard(i);
+                Card tempCard = (Card)playerHand.GetCard(i);
                 int tempCardIndex = i;
 
                 //loop through the field
@@ -195,7 +195,7 @@ namespace Ch10CardLib
                 }
 
                 //play the card onto the field (removing it from the hand)
-                playingField.cardPlayed(handAI.playCard(indexSelected));
+                playingField.cardPlayed(playerHand.playCard(indexSelected));
 
             }
         }

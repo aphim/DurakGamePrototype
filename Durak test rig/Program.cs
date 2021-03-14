@@ -97,7 +97,7 @@ namespace Ch10CardClient
                 }
 
                 //set the starting player based on who has the lowest card (poker suits)
-                if (lowestCard < lowestCard2)
+                if (lowestCard.value < lowestCard2.value)
                 {
                     //initialize attacker and defenders
                     attacker = player1;
