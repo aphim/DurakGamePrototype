@@ -66,7 +66,7 @@ namespace Ch10CardLib
         /// <returns>string displaying a card object</returns>
         public override string ToString()
         {
-            return "The " + rank + " of " + suit + "s";
+            return "The " + rank + " of " + suit;
         }
 
 
