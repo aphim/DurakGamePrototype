@@ -12,7 +12,7 @@ namespace Ch10CardLib
     /// </summary>
     public enum Rank
     {
-        Six = 1,
+        Six,
         Seven,
         Eight,
         Nine,
@@ -20,6 +20,6 @@ namespace Ch10CardLib
         Jack,
         Queen,
         King,
-        Ace,
+        Ace
     }
 }

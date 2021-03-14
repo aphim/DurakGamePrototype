@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace Ch10CardLib
 {
@@ -12,13 +13,21 @@ namespace Ch10CardLib
     public class Card
     {
         //calls the suit and rank enumerations
-        public readonly Suit suit;
-        public readonly Rank rank;
+        public Suit suit;
+        public Rank rank;
 
         public readonly int value;
 
         public static Suit trump;
         public static Rank trumpRank;
+
+        protected bool faceUp = false;
+        public bool FaceUp
+        {
+            get { return faceUp; }
+            set { faceUp = value; }
+        }
+
         /// <summary>
         /// parameterized constructor: Sets the suit and rank for the card object.
         /// </summary>
@@ -46,7 +55,7 @@ namespace Ch10CardLib
         /// <summary>
         /// Defualt constructor for cards.
         /// </summary>
-        protected Card()
+        public Card()
         {
 
         }
@@ -150,6 +159,27 @@ namespace Ch10CardLib
         public static bool operator ==(Card card1, Card card2)
         {
             return (card1.suit == card2.suit) && (card1.rank == card2.rank);
+        }
+
+        /// <summary>
+        /// Gets the card image based on suit and rank
+        /// </summary>
+        /// <returns></returns>
+        public Image GetCardImage()
+        {
+            string imageName;
+            Image cardImage;
+
+            if (!faceUp)
+            {
+                imageName = "purple_back";
+            }
+            else
+            {
+                imageName = suit.ToString() + "_" + rank.ToString();
+            }
+            cardImage = Properties.Resources.ResourceManager.GetObject(imageName) as Image;
+            return cardImage;
         }
 
 

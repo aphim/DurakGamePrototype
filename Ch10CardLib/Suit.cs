@@ -12,9 +12,9 @@ namespace Ch10CardLib
     /// </summary>
     public enum Suit
     {
-        Diamond,
-        Club,
-        Heart,
-        Spade, 
+        Diamonds,
+        Clubs,
+        Hearts,
+        Spades, 
     }
 }
