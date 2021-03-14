@@ -14,6 +14,8 @@ namespace DurakFormApp
 {
     public partial class frmDurak : Form
     {
+        private List<CardBox.CardBox> cards = new List<CardBox.CardBox>();
+        private Deck deck = new Deck();
         public frmDurak()
         {
             InitializeComponent();
@@ -84,5 +86,34 @@ namespace DurakFormApp
             this.cardBox1.Card = theCard;
             this.cardBox2.Card = theCard2;
         }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            CreateControls();
+            DisplayControls();
+        }
+
+        private void CreateControls()
+        {
+            for (int i = 0; i < deck.getCardsRemaining(); i++)
+            {
+                Card card = deck.GetCard(i);
+                card.FaceUp = true;
+                CardBox.CardBox newCardBox = new CardBox.CardBox(card);
+                cards.Add(newCardBox);
+
+            }
+        }
+
+        private void DisplayControls()
+        {
+            for (int i = 6; i >= 0; i--)
+            {
+                cards[i].Left = (i * 20) + 100;
+                this.pnPlayerHand.Controls.Add(cards[i]);
+
+            }
+        }
+
     }
 }

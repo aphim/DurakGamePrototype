@@ -32,7 +32,7 @@
             Ch10CardLib.Card card2 = new Ch10CardLib.Card();
             this.lblDeckSize = new System.Windows.Forms.Label();
             this.lblDeckSizeValue = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnPlayerHand = new System.Windows.Forms.Panel();
             this.btnPlayCard = new System.Windows.Forms.Button();
             this.btnSkipTurn = new System.Windows.Forms.Button();
             this.lblCardSelectedValue = new System.Windows.Forms.Label();
@@ -46,6 +46,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cardBox2 = new CardBox.CardBox();
             this.cardBox1 = new CardBox.CardBox();
+            this.btnStart = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,13 +70,13 @@
             this.lblDeckSizeValue.Text = "32";
             this.lblDeckSizeValue.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
-            // panel1
+            // pnPlayerHand
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.panel1.Location = new System.Drawing.Point(237, 326);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(570, 109);
-            this.panel1.TabIndex = 4;
+            this.pnPlayerHand.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.pnPlayerHand.Location = new System.Drawing.Point(237, 326);
+            this.pnPlayerHand.Name = "pnPlayerHand";
+            this.pnPlayerHand.Size = new System.Drawing.Size(570, 109);
+            this.pnPlayerHand.TabIndex = 4;
             // 
             // btnPlayCard
             // 
@@ -203,12 +204,23 @@
             this.cardBox1.Suit = Ch10CardLib.Suit.Diamonds;
             this.cardBox1.TabIndex = 15;
             // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(130, 314);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.TabIndex = 17;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
             // frmDurak
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(819, 447);
+            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.cardBox2);
             this.Controls.Add(this.cardBox1);
             this.Controls.Add(this.btnDiscardPile);
@@ -219,7 +231,7 @@
             this.Controls.Add(this.lblCardSelected);
             this.Controls.Add(this.btnSkipTurn);
             this.Controls.Add(this.btnPlayCard);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnPlayerHand);
             this.Controls.Add(this.lblDeckSizeValue);
             this.Controls.Add(this.lblDeckSize);
             this.Controls.Add(this.menuStrip1);
@@ -238,7 +250,7 @@
         #endregion
         private System.Windows.Forms.Label lblDeckSize;
         private System.Windows.Forms.Label lblDeckSizeValue;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnPlayerHand;
         private System.Windows.Forms.Button btnPlayCard;
         private System.Windows.Forms.Button btnSkipTurn;
         private System.Windows.Forms.Label lblCardSelectedValue;
@@ -252,6 +264,7 @@
         private System.Windows.Forms.Label label2;
         private CardBox.CardBox cardBox2;
         private CardBox.CardBox cardBox1;
+        private System.Windows.Forms.Button btnStart;
     }
 }
 
