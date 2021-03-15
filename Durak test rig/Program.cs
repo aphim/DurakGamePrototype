@@ -192,7 +192,7 @@ namespace Ch10CardClient
                                 if (attacker.playerHand.gethandSize() == 0)
                                 {
                                     //declares winner if condition has been met
-                                    Console.WriteLine(attacker.playerStatus + " Wins!");
+                                    Console.WriteLine(attacker.playerName + " Wins!");
                                     playerPassed.passFlag = true;
                                     turnFlag = false;
                                 }
@@ -383,8 +383,6 @@ namespace Ch10CardClient
                         playerPassed.defenderWin = false;
                         turnCounter = 0;
 
-                        player1.playerStatus = ((PlayerStatus)1);
-                        playerAI.playerStatus = ((PlayerStatus)0);
 
                         defender = player1;
                         attacker = playerAI;

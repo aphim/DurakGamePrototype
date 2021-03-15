@@ -18,6 +18,9 @@ namespace DurakFormApp
         private Deck myDeck = new Deck();
         private AI playerAI = new AI("AI");
         private Player player1;
+        // create player objects
+        Player attacker;
+        Player defender;
 
         public frmDurak()
         {
@@ -100,9 +103,7 @@ namespace DurakFormApp
             //shuffle deck
             myDeck.Shuffle();
 
-            // create player objects
-            Player attacker;
-            Player defender;
+
             btnStart.Visible = false;
 
             player1 = new Player("Player1");
@@ -121,10 +122,18 @@ namespace DurakFormApp
             lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
             this.cbTrumpCard.Card = trumpCard;
 
-
-
             CreateControls();
             DisplayControls();
+            DetermineStartingPlayer();
+               
+            if (attacker == player1)
+            {
+                lblPlayerTurn.Text = player1.playerName + "'s turn.";
+            }
+            else
+            {
+                lblPlayerTurn.Text = playerAI.playerName + "'s turn.";
+            }
 
         }
 
@@ -147,6 +156,52 @@ namespace DurakFormApp
                 
             }
         }
+
+        private void DetermineStartingPlayer()
+        {
+            //sets the first card as the current lowest card 
+            Card lowestCard = player1.playerHand.GetCard(0);
+            //loops through the hand
+            for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+            {
+                //checks if the value of the new card is lower than the current card
+                if (lowestCard.value > player1.playerHand.GetCard(i).value)
+                {
+                    //sets the lowest card to new card if new card is lower than current card
+                    lowestCard = player1.playerHand.GetCard(i);
+                }
+            }
+
+            //sets the first card as the current lowest card 
+            Card lowestCard2 = playerAI.playerHand.GetCard(0);
+            //loops through the hand
+            for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+            {
+                //checks if the value of the new card is lower than the current card
+                if (lowestCard2.value > playerAI.playerHand.GetCard(i).value)
+                {
+                    //sets the lowest card to new card if new card is lower than current card
+                    lowestCard2 = playerAI.playerHand.GetCard(i);
+                }
+
+            }
+
+            //set the starting player based on who has the lowest card (poker suits)
+            if (lowestCard.value < lowestCard2.value)
+            {
+                //initialize attacker and defenders
+                attacker = player1;
+                defender = playerAI;
+            }
+            else
+            {
+                defender = player1;
+                attacker = playerAI;
+            }
+
+        }
+
+
 
     }
 }
