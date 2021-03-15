@@ -93,6 +93,73 @@ namespace Ch10CardLib
         }
 
         /// <summary>
+        /// Method used to initialize the first attacker turn
+        /// </summary>
+        /// <param name="playingField"></param>
+        /// <param name="trumpCard"></param>
+        public virtual void AttackerInitialTurnForm(Field playingField, Card trumpCard, string input)
+        {
+            //displays message
+            //Console.WriteLine("It is " + this.playerName + "'s Turn.");
+
+            //displays this player's hand
+            //this.playerHand.displayHand();
+
+            //initialize some variables
+            int selectedCard = 0;
+            bool validCard = false;
+            string inputString;
+
+            //input loop
+            do
+            {
+                ///////////////TODO IMPLEMENT THE ADDITIONAL FUNCTIONALITY ////////////////////////////////// 
+                //recieves input
+                inputString = input;
+                ////if input is "d" or "D"
+                //if (inputString.Equals("D") || inputString.Equals("d"))
+                //{
+                //    //displays the discard pile and restart the loop
+                //    Console.WriteLine("");
+                //    Console.WriteLine("The discard pile is:");
+                //    playingField.displayDiscarded();
+                //    continue;
+
+                //}
+                ////if the input is "t" or "T"
+                //if (inputString.Equals("T") || inputString.Equals("t"))
+                //{
+                //    //displays the trump card and restarts the loop
+                //    Console.WriteLine("");
+                //    Console.WriteLine("The trump card is:");
+                //    Console.WriteLine(trumpCard.ToString());
+                //    continue;
+                //}
+
+                //tries the parse the selected card
+                int.TryParse(inputString, out selectedCard);
+                selectedCard = selectedCard - 1;
+                selectedCard = 1;
+
+                //if the selected card is not in the hand size, prints out an error message
+                if (selectedCard > this.playerHand.gethandSize() || selectedCard < 0)
+                {
+                    Console.WriteLine("Invalid option please pick a card.");
+                }
+                //if selection is valid, breaks out of the loop
+                else
+                {
+                    validCard = true;
+                }
+            } while (!validCard);
+
+            //play the card selected onto the field
+            playingField.cardPlayed(this.playerHand.playCard(selectedCard));
+
+        }
+
+
+        /// <summary>
         /// Method used to produce an attacker's standard turn
         /// </summary>
         /// <param name="playingField"></param>
