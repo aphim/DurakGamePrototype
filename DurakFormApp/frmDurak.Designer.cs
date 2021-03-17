@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Ch10CardLib.Card card3 = new Ch10CardLib.Card();
-            Ch10CardLib.Card card4 = new Ch10CardLib.Card();
+            Ch10CardLib.Card card1 = new Ch10CardLib.Card();
+            Ch10CardLib.Card card2 = new Ch10CardLib.Card();
             this.lblDeckSize = new System.Windows.Forms.Label();
             this.lblDeckSizeValue = new System.Windows.Forms.Label();
             this.pnPlayerHand = new System.Windows.Forms.Panel();
@@ -48,9 +48,10 @@
             this.lblField = new System.Windows.Forms.Label();
             this.lblHand = new System.Windows.Forms.Label();
             this.txtHandInput = new System.Windows.Forms.TextBox();
+            this.lblAIhand = new System.Windows.Forms.Label();
             this.cbTrumpCard = new CardBox.CardBox();
             this.cardBox1 = new CardBox.CardBox();
-            this.lblAIhand = new System.Windows.Forms.Label();
+            this.lblErrorMsg = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -231,10 +232,19 @@
             this.txtHandInput.Size = new System.Drawing.Size(100, 22);
             this.txtHandInput.TabIndex = 21;
             // 
+            // lblAIhand
+            // 
+            this.lblAIhand.AutoSize = true;
+            this.lblAIhand.Location = new System.Drawing.Point(324, 590);
+            this.lblAIhand.Name = "lblAIhand";
+            this.lblAIhand.Size = new System.Drawing.Size(46, 17);
+            this.lblAIhand.TabIndex = 22;
+            this.lblAIhand.Text = "label2";
+            // 
             // cbTrumpCard
             // 
-            card3.FaceUp = false;
-            this.cbTrumpCard.Card = card3;
+            card1.FaceUp = false;
+            this.cbTrumpCard.Card = card1;
             this.cbTrumpCard.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cbTrumpCard.FaceUp = false;
             this.cbTrumpCard.Location = new System.Drawing.Point(26, 88);
@@ -247,8 +257,8 @@
             // 
             // cardBox1
             // 
-            card4.FaceUp = false;
-            this.cardBox1.Card = card4;
+            card2.FaceUp = false;
+            this.cardBox1.Card = card2;
             this.cardBox1.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cardBox1.FaceUp = false;
             this.cardBox1.Location = new System.Drawing.Point(14, 346);
@@ -259,14 +269,14 @@
             this.cardBox1.Suit = Ch10CardLib.Suit.Diamonds;
             this.cardBox1.TabIndex = 15;
             // 
-            // lblAIhand
+            // lblErrorMsg
             // 
-            this.lblAIhand.AutoSize = true;
-            this.lblAIhand.Location = new System.Drawing.Point(324, 590);
-            this.lblAIhand.Name = "lblAIhand";
-            this.lblAIhand.Size = new System.Drawing.Size(46, 17);
-            this.lblAIhand.TabIndex = 22;
-            this.lblAIhand.Text = "label2";
+            this.lblErrorMsg.AutoSize = true;
+            this.lblErrorMsg.Location = new System.Drawing.Point(226, 28);
+            this.lblErrorMsg.Name = "lblErrorMsg";
+            this.lblErrorMsg.Size = new System.Drawing.Size(46, 17);
+            this.lblErrorMsg.TabIndex = 23;
+            this.lblErrorMsg.Text = "label2";
             // 
             // frmDurak
             // 
@@ -274,6 +284,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1090, 727);
+            this.Controls.Add(this.lblErrorMsg);
             this.Controls.Add(this.lblAIhand);
             this.Controls.Add(this.txtHandInput);
             this.Controls.Add(this.lblHand);
@@ -328,6 +339,7 @@
         private System.Windows.Forms.Label lblHand;
         private System.Windows.Forms.TextBox txtHandInput;
         private System.Windows.Forms.Label lblAIhand;
+        private System.Windows.Forms.Label lblErrorMsg;
     }
 }
 

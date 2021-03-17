@@ -216,13 +216,6 @@ namespace DurakFormApp
 
         }
 
-        private void InitialAttTurn()
-        {
-
-            attacker.AttackerInitialTurnForm(playingField, trumpCard, txtHandInput.Text);
-            turnCounter++;
-
-        }
 
         int counter = 0;
         const string ATTACKINITIAL = "initialTurn";
@@ -271,43 +264,148 @@ namespace DurakFormApp
             else if (round == DEFENDERTURN)
             {
 
-
-
-
-
-
-                CardBox.CardBox newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
-
-                playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
+                Card cardSelected = defender.playerHand.GetCard(int.Parse(txtHandInput.Text));
+                Card currentCard = playingField.getCurrentCard();
 
                 lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
 
-                if (defender == player1)
+                ////////////////////Card validation for valid play //////////////////////////
+                //checks the card in hand is equals to the trump suit
+                if (cardSelected.suit.Equals(trumpCard.suit))
                 {
-                    cards.RemoveAt(int.Parse(txtHandInput.Text));
-
-                    this.pnPlayerHand.Controls.Clear();
-
-                    for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
+                    //checks to see if the current card on the field is of the trump suit
+                    if (currentCard.suit.Equals(trumpCard.suit))
                     {
-                        cards[i].Left = (i * 20) + 100;
-                        this.pnPlayerHand.Controls.Add(cards[i]);
+                        //if the selected card rank is higher than the current card rank
+                        if (cardSelected.rank > currentCard.rank)
+                        {
+                            // card is played and leaves the loop (hand card is trump, field card is trump, hand card higher rank)
+                            CardBox.CardBox newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
 
+                            playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
+
+                            if (defender == player1)
+                            {
+                                cards.RemoveAt(int.Parse(txtHandInput.Text));
+
+                                this.pnPlayerHand.Controls.Clear();
+
+                                for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
+                                {
+                                    cards[i].Left = (i * 20) + 100;
+                                    this.pnPlayerHand.Controls.Add(cards[i]);
+
+                                }
+                            }
+                            else
+                            {
+                                lblAIhand.Text = defender.playerHand.displayHandGUI();
+                            }
+
+                            fieldCards.Add(newCardBox);
+
+                            //AddToPLayingField();
+                            DisplayPlayingField();
+                            lblPlayerTurn.Text = attacker.playerName + "'s turn.";
+                            counter++;
+                            round = ATTACKERTURN;
+                            lblErrorMsg.Text = "";
+                        }
+                        //otherwise the selected card's rank is too low, break out of this loop
+                        //(hand card is trump, field card is trump, field card higher rank)
+                        else
+                        {
+                            lblErrorMsg.Text = "rank is too low.(trump suit)";
+                        }
+                    }
+                    //the card is played (hand card is trump, field card is not trump) leaves the loop
+                    else
+                    {
+                        CardBox.CardBox newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
+
+                        playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
+
+                        if (defender == player1)
+                        {
+                            cards.RemoveAt(int.Parse(txtHandInput.Text));
+
+                            this.pnPlayerHand.Controls.Clear();
+
+                            for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
+                            {
+                                cards[i].Left = (i * 20) + 100;
+                                this.pnPlayerHand.Controls.Add(cards[i]);
+
+                            }
+                        }
+                        else
+                        {
+                            lblAIhand.Text = defender.playerHand.displayHandGUI();
+                        }
+
+                        fieldCards.Add(newCardBox);
+
+                        //AddToPLayingField();
+                        DisplayPlayingField();
+                        lblPlayerTurn.Text = attacker.playerName + "'s turn.";
+                        counter++;
+                        round = ATTACKERTURN;
+                        lblErrorMsg.Text = "";
                     }
                 }
+                //checks to see if played card suit is the field card suit
+                else if (cardSelected.suit == currentCard.suit)
+                {
+                    //checks to see if played card rank is higher than field card rank
+                    if (cardSelected.rank > currentCard.rank)
+                    {
+                        //plays the card and leaves the loop (hand card matches the field card suit but is higher rank)
+                        CardBox.CardBox newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
+
+                        playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
+
+                        if (defender == player1)
+                        {
+                            cards.RemoveAt(int.Parse(txtHandInput.Text));
+
+                            this.pnPlayerHand.Controls.Clear();
+
+                            for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
+                            {
+                                cards[i].Left = (i * 20) + 100;
+                                this.pnPlayerHand.Controls.Add(cards[i]);
+
+                            }
+                        }
+                        else
+                        {
+                            lblAIhand.Text = defender.playerHand.displayHandGUI();
+                        }
+
+                        fieldCards.Add(newCardBox);
+                        lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
+
+                        //AddToPLayingField();
+                        DisplayPlayingField();
+                        lblPlayerTurn.Text = attacker.playerName + "'s turn.";
+                        counter++;
+                        round = ATTACKERTURN;
+                        lblErrorMsg.Text = "";
+                    }
+                    //displays an error message and leaves the loop (hand card matches the field card suit but rank too low)
+                    else
+                    {
+                        lblErrorMsg.Text = "rank is too low.(non-trump)";
+                    }
+                }
+                //displays an error message and leaves the loop (hand card is not field card suit or trump suit)
                 else
                 {
-                    lblAIhand.Text = defender.playerHand.displayHandGUI();
+                    lblErrorMsg.Text = "You can only play the same suit or the trump suit.";
                 }
 
-                fieldCards.Add(newCardBox);
-                lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
-
-                //AddToPLayingField();
-                DisplayPlayingField();
-                lblPlayerTurn.Text = attacker.playerName + "'s turn.";
-                counter++;
-                round = ATTACKERTURN;
+                //////////////////////////////////////////////////////////////////////////////
+ 
             }
             else if (round == ATTACKERTURN)
             {
@@ -348,26 +446,6 @@ namespace DurakFormApp
 
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
