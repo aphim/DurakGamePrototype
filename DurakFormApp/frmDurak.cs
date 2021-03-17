@@ -110,7 +110,6 @@ namespace DurakFormApp
             //shuffle deck
             myDeck.Shuffle();
 
-
             btnStart.Visible = false;
 
             player1 = new Player("Player1");
@@ -221,36 +220,133 @@ namespace DurakFormApp
         {
 
             attacker.AttackerInitialTurnForm(playingField, trumpCard, txtHandInput.Text);
-
-
             turnCounter++;
 
         }
 
+        int counter = 0;
+        const string ATTACKINITIAL = "initialTurn";
+        const string ATTACKERTURN = "attacker";
+        const string DEFENDERTURN = "defender";
+        string round = ATTACKINITIAL;
+
         private void btnPlayCard_Click(object sender, EventArgs e)
         {
-            CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(int.Parse(txtHandInput.Text)));
 
-            playingField.cardPlayed(player1.playerHand.playCard(int.Parse(txtHandInput.Text)));
-
-            cards.RemoveAt(int.Parse(txtHandInput.Text));
-
-            lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
-
-            this.pnPlayerHand.Controls.Clear();
-
-            for (int i = player1.playerHand.gethandSize() - 1; i >= 0; i--)
+            if (round == ATTACKINITIAL)
             {
-                cards[i].Left = (i * 20) + 100;
-                this.pnPlayerHand.Controls.Add(cards[i]);
+                ///first player's turn
+                CardBox.CardBox newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(int.Parse(txtHandInput.Text)));
 
+                playingField.cardPlayed(attacker.playerHand.playCard(int.Parse(txtHandInput.Text)));
+
+                lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
+
+                if (attacker == player1)
+                {
+                    cards.RemoveAt(int.Parse(txtHandInput.Text));
+
+                    this.pnPlayerHand.Controls.Clear();
+
+                    for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
+                    {
+                        cards[i].Left = (i * 20) + 100;
+                        this.pnPlayerHand.Controls.Add(cards[i]);
+
+                    }
+                }
+                else
+                {
+                    lblAIhand.Text = attacker.playerHand.displayHandGUI();
+                }
+
+                fieldCards.Add(newCardBox);
+
+
+                //AddToPLayingField();
+                DisplayPlayingField();
+                lblPlayerTurn.Text = defender.playerName + "'s turn.";
+                round = DEFENDERTURN;
+            }
+            else if (round == DEFENDERTURN)
+            {
+
+
+
+
+
+
+                CardBox.CardBox newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
+
+                playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
+
+                lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
+
+                if (defender == player1)
+                {
+                    cards.RemoveAt(int.Parse(txtHandInput.Text));
+
+                    this.pnPlayerHand.Controls.Clear();
+
+                    for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
+                    {
+                        cards[i].Left = (i * 20) + 100;
+                        this.pnPlayerHand.Controls.Add(cards[i]);
+
+                    }
+                }
+                else
+                {
+                    lblAIhand.Text = defender.playerHand.displayHandGUI();
+                }
+
+                fieldCards.Add(newCardBox);
+                lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
+
+                //AddToPLayingField();
+                DisplayPlayingField();
+                lblPlayerTurn.Text = attacker.playerName + "'s turn.";
+                counter++;
+                round = ATTACKERTURN;
+            }
+            else if (round == ATTACKERTURN)
+            {
+
+                ///first player's turn
+                CardBox.CardBox newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(int.Parse(txtHandInput.Text)));
+
+                playingField.cardPlayed(attacker.playerHand.playCard(int.Parse(txtHandInput.Text)));
+
+                lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
+
+                if (attacker == player1)
+                {
+                    cards.RemoveAt(int.Parse(txtHandInput.Text));
+
+                    this.pnPlayerHand.Controls.Clear();
+
+                    for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
+                    {
+                        cards[i].Left = (i * 20) + 100;
+                        this.pnPlayerHand.Controls.Add(cards[i]);
+
+                    }
+                }
+                else
+                {
+                    lblAIhand.Text = attacker.playerHand.displayHandGUI();
+                }
+
+                fieldCards.Add(newCardBox);
+                lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
+
+                //AddToPLayingField();
+                DisplayPlayingField();
+                lblPlayerTurn.Text = defender.playerName + "'s turn.";
+                round = DEFENDERTURN;
             }
 
-            fieldCards.Add(newCardBox);
-            lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
 
-            //AddToPLayingField();
-            DisplayPlayingField();
         }
 
 

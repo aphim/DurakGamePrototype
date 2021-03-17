@@ -265,6 +265,111 @@ namespace Ch10CardLib
         }
 
         /// <summary>
+        /// Method used to produce an attacker's standard turn
+        /// </summary>
+        /// <param name="playingField"></param>
+        /// <param name="passFlag"></param>
+        /// <param name="trumpCard"></param>
+        public virtual void AttackerTurnGUI(Field playingField, PassFlag passFlag, Card trumpCard)
+        {
+            //initialize variables
+            int selectedCard = 0;
+            bool validCard = false;
+            string inputString;
+            this.playerHand.displayHand();
+
+            //input validations loop
+            do
+            {
+
+                inputString = Console.ReadLine();
+                //checks to see if input is a d or D and displays the discard pile if so. Restarts the loop
+                if (inputString.Equals("D") || inputString.Equals("d"))
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("The discard pile is:");
+                    playingField.displayDiscarded();
+                    continue;
+                }
+                //checks to see if the input is t or T and displays the trump card if so. Then restarts the loop
+                if (inputString.Equals("T") || inputString.Equals("t"))
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("The trump card is:");
+                    Console.WriteLine(trumpCard.ToString());
+                    continue;
+                }
+                //Checks to see if the input is a q or Q and ends the round. Breaks out of the loop and raises the 
+                //bypass flag and the defenderwin flag
+                if (inputString.Equals("Q") || inputString.Equals("q"))
+                {
+                    passFlag.passFlag = true;
+                    passFlag.defenderWin = true;
+
+                    break;
+                }
+
+                //checks to see if the selected card is within the player's handsize
+                int.TryParse(inputString, out selectedCard);
+                selectedCard = selectedCard - 1;
+
+                if (selectedCard > this.playerHand.gethandSize() || selectedCard < 0)
+                {
+                    Console.WriteLine("Invalid option please pick a card.");
+                }
+                else
+                {
+                    validCard = true;
+                }
+
+
+                Card tempCard;
+                //checks to see if passflag has been tripped
+                if (passFlag.passFlag == false)
+                {
+                    //select card from the hand
+                    Card cardSelected = this.playerHand.selectCard(selectedCard);
+
+                    //GET ALL CARDS ON FIELD
+                    bool matchFlag = true;
+
+                    //checks for matches on the field (Mainly used for chaining attacks)
+                    while (matchFlag)
+                    {
+                        for (int i = 0; i < playingField.getField().Count; i++)
+                        {
+                            tempCard = (Card)playingField.getField()[i];
+
+                            //checks to see if the card is the same rank
+                            if (tempCard.isSameRank(cardSelected))
+                            {
+
+                                matchFlag = false;
+                            }
+
+                        }
+                        // if a card has been matched, play the selected card
+                        if (matchFlag == false)
+                        {
+                            playingField.cardPlayed(this.playerHand.playCard(selectedCard));
+                            //playingField.displayField();
+                        }
+                        //otherwise displays a message telling them the cards cannot be played and breaks out of this loop
+                        else
+                        {
+                            Console.WriteLine("You can only play a card of the same rank as the cards on the field");
+                            validCard = false;
+                            break;
+                        }
+                    }
+                }
+
+            } while (!validCard);
+
+        }
+
+
+        /// <summary>
         /// Method used for the main logic of a defender's turn
         /// </summary>
         /// <param name="playingField"></param>
