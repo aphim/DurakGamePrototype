@@ -139,5 +139,19 @@ namespace Ch10CardLib
             }
         }
 
+        public string displayHandGUI()
+        {
+            String tempString = "";
+            //loops through the hand
+            for (int i = 0; i < this.gethandSize(); i++)
+            {
+                //displays the current card
+                Card tempCard = this.GetCard(i);
+                
+                tempString +=  tempCard.ToString();
+            }
+            return tempString;
+        }
+
     }
 }

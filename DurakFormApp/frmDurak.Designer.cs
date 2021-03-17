@@ -50,6 +50,7 @@
             this.txtHandInput = new System.Windows.Forms.TextBox();
             this.cbTrumpCard = new CardBox.CardBox();
             this.cardBox1 = new CardBox.CardBox();
+            this.lblAIhand = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -154,7 +155,7 @@
             this.mnuExit});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1092, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1090, 28);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -258,12 +259,22 @@
             this.cardBox1.Suit = Ch10CardLib.Suit.Diamonds;
             this.cardBox1.TabIndex = 15;
             // 
+            // lblAIhand
+            // 
+            this.lblAIhand.AutoSize = true;
+            this.lblAIhand.Location = new System.Drawing.Point(324, 590);
+            this.lblAIhand.Name = "lblAIhand";
+            this.lblAIhand.Size = new System.Drawing.Size(46, 17);
+            this.lblAIhand.TabIndex = 22;
+            this.lblAIhand.Text = "label2";
+            // 
             // frmDurak
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1092, 586);
+            this.ClientSize = new System.Drawing.Size(1090, 727);
+            this.Controls.Add(this.lblAIhand);
             this.Controls.Add(this.txtHandInput);
             this.Controls.Add(this.lblHand);
             this.Controls.Add(this.lblField);
@@ -316,6 +327,7 @@
         private System.Windows.Forms.Label lblField;
         private System.Windows.Forms.Label lblHand;
         private System.Windows.Forms.TextBox txtHandInput;
+        private System.Windows.Forms.Label lblAIhand;
     }
 }
 

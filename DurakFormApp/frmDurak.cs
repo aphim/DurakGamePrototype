@@ -138,6 +138,7 @@ namespace DurakFormApp
                 lblPlayerTurn.Text = playerAI.playerName + "'s turn.";
             }
 
+            lblAIhand.Text = playerAI.playerHand.displayHandGUI();
 
         }
 
@@ -251,6 +252,7 @@ namespace DurakFormApp
             //AddToPLayingField();
             DisplayPlayingField();
         }
+
 
 
 

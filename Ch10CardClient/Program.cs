@@ -25,14 +25,14 @@ namespace Ch10CardClient
 
             //creates a new deck object
             Deck myDeck = new Deck();
-            Player playerAI = new Player("AI", (PlayerStatus)1);
+            Player playerAI = new Player("AI");
             Player player1;
 
             Console.WriteLine("Please Enter you name");
 
             string playerName = Console.ReadLine();
 
-            player1 = new Player(playerName, (PlayerStatus)0);
+            player1 = new Player(playerName);
 
             //shuffles the deck object
             //myDeck.Shuffle();
