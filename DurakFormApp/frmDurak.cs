@@ -15,20 +15,24 @@ namespace DurakFormApp
 {
     public partial class frmDurak : Form
     {
+        //Global variables used to store a number of properties used in the game
         private List<CardBox.CardBox> cards = new List<CardBox.CardBox>();
         private List<CardBox.CardBox> fieldCards = new List<CardBox.CardBox>();
+        //create a deck object
         private Deck myDeck = new Deck();
+        // create player objects
         private AI playerAI = new AI("AI");
         private Player player1;
-        // create player objects
+        //create an attacker and a defender
         Player attacker;
         Player defender;
+        //setup counters and flags for the game logic
         int turnCounter = 0;
         bool endGame = false;
         PassFlag playerPassed = new PassFlag();
         //initialize the field
         Field playingField = new Field();
-
+        //
         Card trumpCard;
 
         public frmDurak()
@@ -90,7 +94,7 @@ namespace DurakFormApp
         }
 
         /// <summary>
-        /// On form load, displays cards values in card box objects
+        /// On form load, displays cards values in card box objects and various variables that we may need
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -105,6 +109,11 @@ namespace DurakFormApp
             this.cbTrumpCard.Card = theCard2;
         }
 
+        /// <summary>
+        /// Start game button that initializes the game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStart_Click(object sender, EventArgs e)
         {
             //shuffle deck
@@ -220,7 +229,7 @@ namespace DurakFormApp
         }
 
 
-/// /////////////////////////////////////////////// This Section will be used for the turn cycling ///////////////////////////////////////////////
+/////////////////////////////////////////////// This Section will be used for the turn cycling ///////////////////////////////////////////////
 
 
         //initialize counter for counting number of rounds ///////////TODO////////////
