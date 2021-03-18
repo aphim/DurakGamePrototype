@@ -208,6 +208,7 @@ namespace Ch10CardLib
             ArrayList validCardIndex = new ArrayList();
             bool equalsTrump = false;
             bool noTrump = false;
+            bool lose = false;
             //CHECK LAST PLACED CARD ON FIELD
             Card lastCard = playingField.getCurrentCard();
             bool validCard = false;
@@ -247,7 +248,7 @@ namespace Ch10CardLib
                 }
                 else
                 {
-                    if (tempCard.suit == lastCard.suit || tempCard.value > lastCard.value)
+                    if (tempCard.suit == lastCard.suit || tempCard.suit == trumpCard.suit && tempCard.value > lastCard.value)
                     {
                         validCards.Add(tempCard);
                         validCardIndex.Add(tempCardIndex);
@@ -262,7 +263,7 @@ namespace Ch10CardLib
             if (validCards.Count == 0)
             {
                 Console.WriteLine("YOU LOSE");
-
+                lose = true;
                 /*  passFlag.passFlag = true;
                   passFlag.attackerWin = true;*/
 
@@ -286,7 +287,7 @@ namespace Ch10CardLib
                 //If the last card played is trump card
                 if (equalsTrump)
                 {
-                    //LOOP THROUGH THE ARRAY LIST AND LOOK FOR THE LOWEST POSSIbLE TRUMP SUIT TO PLAY.
+
                     //if the validCards arraylist is greater than 0, looks for the the lowest card
                     if (validCards.Count > 0)
                     {
@@ -297,14 +298,14 @@ namespace Ch10CardLib
                         //loops through the hand
                         for (int i = 0; i < validCards.Count; i++)
                         {
-                            //CHECK IF THE CURRENT CARD IS GREATER THAN THE LAST PLAYED CARD
+
                             //checks if the value of the new card is lower than the current card
                             if (cardSelected.value > ((Card)validCards[i]).value)
                             {
                                 //sets the lowest card to new card if new card is lower than current card 
                                 if (cardSelected.value > lastCard.value)
                                 {
-                                 
+
                                     cardSelected = (Card)validCards[i];
                                     indexSelected = (int)validCardIndex[i];
 
@@ -330,7 +331,7 @@ namespace Ch10CardLib
                         {
 
                             //checks if the value of the new card is lower than the current card
-                            if (cardSelected.value > ((Card)validCards[i]).value)
+                            if (cardSelected.value < ((Card)validCards[i]).value && cardSelected.value > lastCard.value)
                             {
 
 
@@ -338,57 +339,88 @@ namespace Ch10CardLib
                                 if (cardSelected.suit == lastCard.suit)
                                 {
                                     //check if the selected card is greater than the last card on the field
-                                    if (cardSelected.value > lastCard.value)
+
+                                    cardSelected = (Card)validCards[i];
+                                    indexSelected = (int)validCardIndex[i];
+                                    validCard = false;
+
+
+                                }
+                                else
+                                {
+                                    validCard = true;
+                                }
+
+
+                            }
+                        }
+
+                        //Make the AI find the appropriate trump card to play TODO finish this part
+                        if (validCard)
+                        {
+                            for (int i = 0; i < playerHand.gethandSize(); i++)
+                            {
+
+                                Card tempCard = (Card)playerHand.GetCard(i);
+                                int tempCardIndex = i;
+
+                                //IF IS TRUMP CARD THEN CHECK TO SEE IF ANY CARDS MATCH THE SUIT AND IS HIGHER
+
+                                if (tempCard.suit == trumpCard.suit && tempCard.value > lastCard.value)
+                                {
+
+                                    //if the card is of the same rank, adds it to the validCards arrayList and breaks out of the current loop
+                                    validCards.Add(tempCard);
+                                    validCardIndex.Add(tempCardIndex);
+                                    break;
+                                }
+                                //declare a temp card as the current card
+
+
+                            }
+                            //sets the first card as the current lowest card 
+                            cardSelected = (Card)validCards[0];
+                            indexSelected = (int)validCardIndex[0];
+                            //loops through the hand
+                            for (int i = 0; i < validCards.Count; i++)
+                            {
+                                //TODO Re initialize the  valild cards array
+                                if (cardSelected.value > ((Card)validCards[i]).value)
+                                {
+                                    //sets the lowest card to new card if new card is lower than current card
+                                    //check if the current card suit is the same as the trump card suit
+                                    if (cardSelected.suit == trumpCard.suit && cardSelected.value > lastCard.value && cardSelected.value < ((Card)validCards[i + 1]).value)
                                     {
                                         cardSelected = (Card)validCards[i];
                                         indexSelected = (int)validCardIndex[i];
-                                        validCard = true;
+
 
                                     }
 
-
                                 }
-
-
                             }
                         }
 
-
                     }
-                    //Make the AI find the appropriate trump card to play TODO finish this part
-                    if (validCards.Count > 0 && !validCard)
-                    {
-                        //sets the first card as the current lowest card 
-                        cardSelected = (Card)validCards[0];
-                        indexSelected = (int)validCardIndex[0];
-                        //loops through the hand
-                        for (int i = 0; i < validCards.Count; i++)
-                        {
-                            //TODO Re initialize the  valild cards array
-                            if (cardSelected.value > ((Card)validCards[i]).value)
-                            {
-                                //sets the lowest card to new card if new card is lower than current card
-                                //check if the current card suit is the same as the trump card suit
-                                if (cardSelected.suit == trumpCard.suit)
-                                {
-                                    cardSelected = (Card)validCards[i];
-                                    indexSelected = (int)validCardIndex[i];
 
-
-                                }
-
-                            }
-                        }
-                    }
                 }
 
-                //play the card onto the field (removing it from the hand)
-                playingField.cardPlayed(playerHand.playCard(indexSelected));
+                if (!lose)
+                {
+                    //play the card onto the field (removing it from the hand)
+                    playingField.cardPlayed(playerHand.playCard(indexSelected));
+                }
+                else
+                {
+                    Console.WriteLine("YOU HAve LOST!!!");
+                }
+
             }
 
 
 
         }//END OF DEFENDER METHOD
+
 
 
 
