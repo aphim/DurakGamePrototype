@@ -61,10 +61,6 @@
       <Project>{e6113ba8-f041-401e-b602-007d6f9eba2d}</Project>
       <Name>Ch10CardLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tutorial8\Tutorial8.csproj">
-      <Project>{a38a189c-de86-4096-ad34-ce9698528912}</Project>
-      <Name>Tutorial8</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

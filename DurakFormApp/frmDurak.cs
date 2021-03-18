@@ -35,7 +35,7 @@ namespace DurakFormApp
         {
             InitializeComponent();
             //initiate variables
-            bool playAgain = false;
+            //bool playAgain = false;
             playerPassed.passFlag = false;
             playerPassed.attackerWin = false;
             playerPassed.defenderWin = false;
