@@ -44,7 +44,6 @@ namespace DurakFormApp
             playerPassed.attackerWin = false;
             playerPassed.defenderWin = false;
 
-
         }
 
 
@@ -133,6 +132,7 @@ namespace DurakFormApp
             lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
             this.cbTrumpCard.Card = trumpCard;
 
+            //1.Create cardbox controls 2.display them on the screen 3.Determine the starting player
             CreateControls();
             DisplayControls();
             DetermineStartingPlayer();
@@ -150,6 +150,9 @@ namespace DurakFormApp
 
         }
 
+        /// <summary>
+        /// Creates a list of CardBox controls and updates deck size value
+        /// </summary>
         private void CreateControls()
         {
             for (int i = 0; i < player1.playerHand.gethandSize(); i++)
@@ -160,8 +163,12 @@ namespace DurakFormApp
             lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
         }
 
+        /// <summary>
+        /// Displays the CardBox controls for a CardBox list
+        /// </summary>
         private void DisplayControls()
         {
+            //Decrements because incrementing will overlap cards in a false way 
             for (int i = player1.playerHand.gethandSize() - 1; i >= 0; i--)
             {
                 cards[i].Left = (i * 20) + 100;
@@ -170,6 +177,9 @@ namespace DurakFormApp
             }
         }
 
+        /// <summary>
+        /// Displays the playing field updating playing field panel
+        /// </summary>
         private void DisplayPlayingField()
         {
             ArrayList cardsToAdd = playingField.getField();

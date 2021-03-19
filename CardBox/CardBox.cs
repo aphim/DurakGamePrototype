@@ -155,6 +155,11 @@ namespace CardBox
 
         #endregion
 
+        /// <summary>
+        /// Event for picture box click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pbMyPictureBox_Click(object sender, EventArgs e)
         {
             if (Click != null)
