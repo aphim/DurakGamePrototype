@@ -645,6 +645,7 @@ namespace DurakFormApp
                 //clears the output list for player1 hand
                 cards.Clear();
 
+                //loops through and adds the player's hands to the hand display
                 for (int i = 0; i < player1.playerHand.gethandSize(); i++)
                 {
                     CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
@@ -655,6 +656,7 @@ namespace DurakFormApp
             }
             else
             {
+                //draws cards back to a full hand
                 playerAI.DrawCards(myDeck);
                 //refreshes the text for the AI's hand
                 lblAIhand.Text = playerAI.playerHand.displayHandGUI();
@@ -684,11 +686,12 @@ namespace DurakFormApp
 
             if (defender == player1)
             {
-                //adds all the cards in the arraylist to the defender's hand
+                //adds all the cards in the pickup list to the defender's hand
                 for (int i = 0; i < cardsToBePickedUp.Count; i++)
                 {
                     player1.playerHand.addCard((Card)cardsToBePickedUp[i]);
                 }
+
                 //loop until minimum hand size is reached for defender (*Note defender always draws second)
                 player1.DrawCards(myDeck);
 
@@ -698,6 +701,7 @@ namespace DurakFormApp
                 //clears the output list for player1 hand
                 cards.Clear();
 
+                //loops through and adds the player's hands to the hand display
                 for (int i = 0; i < player1.playerHand.gethandSize(); i++)
                 {
                     CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
@@ -708,12 +712,13 @@ namespace DurakFormApp
             }
             else
             {
-                //adds all the cards in the arraylist to the defender's hand
+                //adds all the cards in the pickup list to the defender's hand
                 for (int i = 0; i < cardsToBePickedUp.Count; i++)
                 {
                     playerAI.playerHand.addCard((Card)cardsToBePickedUp[i]);
                 }
-
+                
+                //draws hand back to 6
                 playerAI.DrawCards(myDeck);
                 //refreshes the text for the AI's hand
                 lblAIhand.Text = playerAI.playerHand.displayHandGUI();
@@ -792,6 +797,7 @@ namespace DurakFormApp
                 //clears the output list for player1 hand
                 cards.Clear();
 
+                //loops through and adds the player's hands to the hand display
                 for (int i = 0; i < player1.playerHand.gethandSize(); i++)
                 {
                     CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
@@ -802,6 +808,7 @@ namespace DurakFormApp
             }
             else
             {
+                //draws cards
                 playerAI.DrawCards(myDeck);
                 //refreshes the text for the AI's hand
                 lblAIhand.Text = playerAI.playerHand.displayHandGUI();
@@ -843,6 +850,7 @@ namespace DurakFormApp
                 //clears the output list for player1 hand
                 cards.Clear();
 
+                //loops through and adds the player's hands to the hand display
                 for (int i = 0; i < player1.playerHand.gethandSize(); i++)
                 {
                     CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
@@ -853,6 +861,7 @@ namespace DurakFormApp
             }
             else
             {
+                //draws cards
                 playerAI.DrawCards(myDeck);
                 //refreshes the text for the AI's hand
                 lblAIhand.Text = playerAI.playerHand.displayHandGUI();
@@ -914,6 +923,7 @@ namespace DurakFormApp
         /// <param name="e"></param>
         private void btnSkipTurn_Click(object sender, EventArgs e)
         {
+            //checks the current player and runs the corresponding end of round functions based on whom won
             if(currentPlayer == defender)
             {
                 AttackersWin();
