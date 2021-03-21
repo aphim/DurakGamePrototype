@@ -105,6 +105,7 @@
             this.btnSkipTurn.TabIndex = 6;
             this.btnSkipTurn.Text = "Skip Turn";
             this.btnSkipTurn.UseVisualStyleBackColor = true;
+            this.btnSkipTurn.Click += new System.EventHandler(this.btnSkipTurn_Click);
             // 
             // lblCardSelectedValue
             // 
