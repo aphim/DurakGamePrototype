@@ -47,7 +47,7 @@ namespace DurakFormApp
             playerPassed.passFlag = false;
             playerPassed.attackerWin = false;
             playerPassed.defenderWin = false;
-
+            btnSkipTurn.Enabled = false;
         }
 
 
@@ -313,6 +313,8 @@ namespace DurakFormApp
                 round = DEFENDERTURN;
                 //changes current player to the defender
                 currentPlayer = defender;
+                //enables the skip turn button
+                btnSkipTurn.Enabled = true;
             }
             //////////////////////////////// The defender's turn (can only play cards of the same suit higher rank or trump suit on non-trumps)////////////////////////////////////////////
             else if (round == DEFENDERTURN)
@@ -763,6 +765,8 @@ namespace DurakFormApp
             currentPlayer = attacker;
             round = ATTACKINITIAL;
             lblPlayerTurn.Text = currentPlayer.playerName + " is still attacker.";
+            //disable the skip turn function
+            btnSkipTurn.Enabled = false;
 
             //update the deck size
             lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
@@ -910,6 +914,8 @@ namespace DurakFormApp
             currentPlayer = attacker;
             round = ATTACKINITIAL;
             lblPlayerTurn.Text = currentPlayer.playerName + " is the new attacker.";
+            //disable the skip turn function
+            btnSkipTurn.Enabled = false;
 
             //update the deck size
             lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
