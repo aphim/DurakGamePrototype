@@ -44,6 +44,7 @@ namespace DurakFormApp
         string round = ATTACKINITIAL;
         //initialize a match flag
         bool matchFlag = false;
+        int playerCardIndex;
 
 
         const int MAXATTACKCHAIN = 6;
@@ -125,6 +126,8 @@ namespace DurakFormApp
             btnDiscardPile.Enabled = false;
             btnSkipTurn.Enabled = false;
             btnStart.Visible = true;
+
+           
         }
 
         /// <summary>
@@ -196,6 +199,7 @@ namespace DurakFormApp
             for (int i = 0; i < player1.playerHand.gethandSize(); i++)
             {
                 CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
+                newCardBox.Click += CardBox_Click;// Wire CardBox_Click
                 cards.Add(newCardBox);
             }
             lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
@@ -297,17 +301,17 @@ namespace DurakFormApp
                 if (attacker.playerHand.gethandSize() > 0)
                 {
                     //Creates a new cardbox object that will be set to the card the player selects
-                    CardBox.CardBox newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(int.Parse(txtHandInput.Text)));
+                    CardBox.CardBox newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(playerCardIndex));
 
                      //The card is played from the player's hand (removed) and played onto the field (added)
-                     playingField.cardPlayed(attacker.playerHand.playCard(int.Parse(txtHandInput.Text)));
+                     playingField.cardPlayed(attacker.playerHand.playCard(playerCardIndex));
 
 
                     //checks if the attacker is the player1 or player AI
                     if (attacker == player1)
                     {
                         //removes the card from the list that displays the hand of the player
-                        cards.RemoveAt(int.Parse(txtHandInput.Text));
+                        cards.RemoveAt(playerCardIndex);
 
                         //resets the list to remove the existing display
                         this.pnPlayerHand.Controls.Clear();
@@ -367,7 +371,7 @@ namespace DurakFormApp
                 if (attacker.playerHand.gethandSize() > 0)
                 {
                     //Sets a variable for the currently selected card used for comparsions
-                    Card cardSelected = defender.playerHand.GetCard(int.Parse(txtHandInput.Text));
+                    Card cardSelected = defender.playerHand.GetCard(playerCardIndex);
                     //Sets a variable for the current card in the playing field
                     Card currentCard = playingField.getCurrentCard();
 
@@ -381,16 +385,16 @@ namespace DurakFormApp
                             if (cardSelected.rank > currentCard.rank)
                             {
                                 //card is played and leaves the loop (hand card is trump, field card is trump, hand card higher rank)
-                                CardBox.CardBox newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
+                                CardBox.CardBox newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(playerCardIndex));
 
                                 //the card is played from the hand onto the field 
-                                playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
+                                playingField.cardPlayed(defender.playerHand.playCard(playerCardIndex));
 
                                 //checks if defender is player 1
                                 if (defender == player1)
                                 {
                                     //removes the card from the hand display
-                                    cards.RemoveAt(int.Parse(txtHandInput.Text));
+                                    cards.RemoveAt(playerCardIndex);
 
                                     //reset the display
                                     this.pnPlayerHand.Controls.Clear();
@@ -450,15 +454,15 @@ namespace DurakFormApp
                         else
                         {
                             //Sets a cardbox object for the selected card
-                            CardBox.CardBox newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
+                            CardBox.CardBox newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(playerCardIndex));
                             //the card is played from the hand onto the field
-                            playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
+                            playingField.cardPlayed(defender.playerHand.playCard(playerCardIndex));
 
                             //check if the defender is player 1 
                             if (defender == player1)
                             {
                                 //removes the card from the hand display list
-                                cards.RemoveAt(int.Parse(txtHandInput.Text));
+                                cards.RemoveAt(playerCardIndex);
 
                                 //refreshes the hand display
                                 this.pnPlayerHand.Controls.Clear();
@@ -514,16 +518,16 @@ namespace DurakFormApp
                         if (cardSelected.rank > currentCard.rank)
                         {
                             //plays the card and leaves the loop (hand card matches the field card suit but is higher rank)
-                            CardBox.CardBox newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
+                            CardBox.CardBox newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(playerCardIndex));
 
                             //plays the card from the hand onto the field
-                            playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
+                            playingField.cardPlayed(defender.playerHand.playCard(playerCardIndex));
 
                             //checks if the defender is player1
                             if (defender == player1)
                             {
                                 //removes the card played from the hand display list
-                                cards.RemoveAt(int.Parse(txtHandInput.Text));
+                                cards.RemoveAt(playerCardIndex);
 
                                 //resets the hand display
                                 this.pnPlayerHand.Controls.Clear();
@@ -604,7 +608,7 @@ namespace DurakFormApp
                     if (turnCounter < MAXATTACKCHAIN)
                     {
                         //creates a variable that holds the currently selected card
-                        Card cardSelected = attacker.playerHand.GetCard(int.Parse(txtHandInput.Text));
+                        Card cardSelected = attacker.playerHand.GetCard(playerCardIndex);
 
                         //creates a temperary card variable
                         Card tempCard;
@@ -627,16 +631,17 @@ namespace DurakFormApp
                         if (matchFlag == true)
                         {
                             //sets a cardbox object to be the selected card
-                            CardBox.CardBox newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(int.Parse(txtHandInput.Text)));
+                            CardBox.CardBox newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(playerCardIndex));
 
                             //plays the card from the hand to the field
-                            playingField.cardPlayed(attacker.playerHand.playCard(int.Parse(txtHandInput.Text)));
+                            playingField.cardPlayed(attacker.playerHand.playCard(playerCardIndex));
 
                             //checks to see if the attacker is player 1
                             if (attacker == player1)
                             {
                                 //removes the card from the hand display list
-                                cards.RemoveAt(int.Parse(txtHandInput.Text));
+                                //cards.RemoveAt(int.Parse(txtHandInput.Text));
+                                cards.RemoveAt(playerCardIndex);
 
                                 //resets the hand display
                                 this.pnPlayerHand.Controls.Clear();
@@ -1026,5 +1031,94 @@ namespace DurakFormApp
             //show the form
             frmdiscard.ShowDialog();
         }
+
+        void CardBox_Click(object sender, EventArgs e)
+        {
+
+            // Convert sender to a CardBox
+            CardBox.CardBox aCardBox = sender as CardBox.CardBox;
+
+            // If the conversion worked
+            if (aCardBox != null)
+            {
+                // if the card is in the home panel...
+                //if (aCardBox.Parent == pnPlayerHand)
+                //{
+                //    pnPlayerHand.Controls.Remove(aCardBox);// Remove the card from the home panel
+                //    pnPlayingField.Controls.Add(aCardBox);// Add the control to the play panel
+                //}
+                for(int i=0; i < player1.playerHand.gethandSize(); i ++)
+                {
+                    if(aCardBox.Card == player1.playerHand.GetCard(i))
+                    {
+                        playerCardIndex = i;
+                    }
+                }
+                lblCardSelected.Text = aCardBox.Card.ToString();
+
+
+                // Realign the cards 
+                //RealignCards(pnPlayerHand);
+                //RealignCards(pnPlayingField);
+
+            }
+
+        }
+        private void RealignCards(Panel panelHand)
+        {
+            const int POP = 25;
+            // Determine the number of cards/controls in the panel.
+            int myCount = panelHand.Controls.Count;
+
+            // If there are any cards in the panel
+            if (myCount > 0)
+            {
+                // Determine how wide one card/control is.
+                int cardWidth = panelHand.Controls[0].Width;
+                // Determine where the left-hand edge of a card/control placed 
+                // in the middle of the panel should be  
+                int startPoint = (panelHand.Width - cardWidth) / 2;
+                // An offset for the remaining cards
+                int offset = 0;
+                // If there are more than one cards/controls in the panel
+                if (myCount > 1)
+                {
+                    // Determine what the offset should be for each card based on the 
+                    // space available and the number of card/controls
+                    offset = (panelHand.Width - cardWidth - 2 * POP) / (myCount - 1);
+                    // If the offset is bigger than the card/control width, i.e. there is lots of room, 
+                    // set the offset to the card width. The cards/controls will not overlap at all.
+                    if (offset > cardWidth)
+                        offset = cardWidth;
+
+                    // Determine width of all the cards/controls 
+                    int allCardsWidth = (myCount - 1) * offset + cardWidth;
+                    // Set the start point to where the left-hand edge of the "first" card should be.
+                    startPoint = (panelHand.Width - allCardsWidth) / 2;
+                }
+
+                // Aligning the cards: Note that I align them in reserve order from how they
+                // are stored in the controls collection. This is so that cards on the left 
+                // appear underneath cards to the right. This allows the user to see the rank
+                // and suit more easily.
+                panelHand.Controls[myCount - 1].Top = POP;
+                System.Diagnostics.Debug.Write(panelHand.Controls[myCount - 1].Left.ToString() + "\n");
+                panelHand.Controls[myCount - 1].Left = startPoint;
+                // Align the "first" card (which is the last control in the collection)
+
+                // for each of the remaining controls, in reverse order.
+                for (int index = myCount - 2; index >= 0; index--)
+                {
+                    // Align the current card
+                    panelHand.Controls[index].Top = POP;
+                    panelHand.Controls[index].Left = (index * 20) + 100;
+                }
+            }
+
+
+        }
+
+
+
     }
 }

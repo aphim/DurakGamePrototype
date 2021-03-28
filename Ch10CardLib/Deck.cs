@@ -104,7 +104,6 @@ namespace Ch10CardLib
         public Card getTrumpcard()
         {
             Card trumpCard = new Card((Card)cards[0]);
-            cards.RemoveAt(0);
 
             return trumpCard;
         }
