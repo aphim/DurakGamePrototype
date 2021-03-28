@@ -60,7 +60,7 @@ namespace DurakFormApp
 
             }
         }
-
+        //calls the display discard pile on load
         private void frmDiscard_Load(object sender, EventArgs e)
         {
             DisplayDiscardPile();
