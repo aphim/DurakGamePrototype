@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmDiscard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDiscard.Designer.cs">
+      <DependentUpon>frmDiscard.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDurak.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmDiscard.resx">
+      <DependentUpon>frmDiscard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDurak.resx">
       <DependentUpon>frmDurak.cs</DependentUpon>
     </EmbeddedResource>

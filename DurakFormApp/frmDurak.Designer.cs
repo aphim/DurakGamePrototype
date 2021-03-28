@@ -184,6 +184,7 @@
             this.btnDiscardPile.TabIndex = 14;
             this.btnDiscardPile.Text = "Discard Pile";
             this.btnDiscardPile.UseVisualStyleBackColor = true;
+            this.btnDiscardPile.Click += new System.EventHandler(this.btnDiscardPile_Click);
             // 
             // btnStart
             // 

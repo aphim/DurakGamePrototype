@@ -1011,5 +1011,20 @@ namespace DurakFormApp
             cardBox1.Visible = false;
 
         }
+
+        /// <summary>
+        /// On click of the discardpile button will send the field object and call a new dialog box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDiscardPile_Click(object sender, EventArgs e)
+        {
+            //create new isntance of a form object
+            frmDiscard frmdiscard = new frmDiscard();
+            //send the field to the new form
+            frmDiscard.field = playingField;
+            //show the form
+            frmdiscard.ShowDialog();
+        }
     }
 }
