@@ -48,6 +48,8 @@ namespace DurakFormApp
         bool matchFlag = false;
         int playerCardIndex=0;
         bool showAIHand = false;
+        int playerOffset = 100;
+        int aiOffset = 100;
 
 
         const int MAXATTACKCHAIN = 6;
@@ -218,17 +220,21 @@ namespace DurakFormApp
         /// </summary>
         private void DisplayControls()
         {
+            playerOffset = playerOffset - (player1.playerHand.gethandSize() - 6) * 20 / 100;
+            aiOffset = aiOffset - (playerAI.playerHand.gethandSize() - 6) * 20 / 100;
             //Decrements because incrementing will overlap cards in a false way 
             for (int i = player1.playerHand.gethandSize() - 1; i >= 0; i--)
             {
-                cards[i].Left = (i * 20) + 100;
+
+                cards[i].Left = (i * 20) + playerOffset;
                 this.pnPlayerHand.Controls.Add(cards[i]);
             }
             //Decrements because incrementing will overlap cards in a false way 
             for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
             {
-                cardsAI[i].Left = (i * 20) + 100;
-                cardsAI[i].FaceUp = false;
+
+                cardsAI[i].Left = (i * 20) + aiOffset;
+                cardsAI[i].FaceUp = showAIHand;
                 this.pnAIHand.Controls.Add(cardsAI[i]);
             }
         }
@@ -328,6 +334,7 @@ namespace DurakFormApp
                         //Creates a new cardbox object that will be set to the card the player selects
                         newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(int.Parse(txtHandInput.Text)));
 
+                        newCardBox.FaceUp = true;
                         //The card is played from the player's hand (removed) and played onto the field (added)
                         playingField.cardPlayed(attacker.playerHand.playCard(int.Parse(txtHandInput.Text)));
                     }
@@ -404,6 +411,8 @@ namespace DurakFormApp
                             //Creates a new cardbox object that will be set to the card the player selects
                             newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
 
+                            newCardBox.FaceUp = true;
+
                             //The card is played from the player's hand (removed) and played onto the field (added)
                             playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
                         }
@@ -450,6 +459,7 @@ namespace DurakFormApp
                             //Creates a new cardbox object that will be set to the card the player selects
                             newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
 
+                            newCardBox.FaceUp = true;
                             //The card is played from the player's hand (removed) and played onto the field (added)
                             playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
                         }
@@ -507,6 +517,7 @@ namespace DurakFormApp
                                         //Creates a new cardbox object that will be set to the card the player selects
                                         newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
 
+                                        newCardBox.FaceUp = true;
                                         //The card is played from the player's hand (removed) and played onto the field (added)
                                         playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
                                     }
@@ -567,6 +578,7 @@ namespace DurakFormApp
                                     //Creates a new cardbox object that will be set to the card the player selects
                                     newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
 
+                                    newCardBox.FaceUp = true;
                                     //The card is played from the player's hand (removed) and played onto the field (added)
                                     playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
                                 }
@@ -622,6 +634,7 @@ namespace DurakFormApp
                                     //Creates a new cardbox object that will be set to the card the player selects
                                     newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(int.Parse(txtHandInput.Text)));
 
+                                    newCardBox.FaceUp = true;
                                     //The card is played from the player's hand (removed) and played onto the field (added)
                                     playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
                                 }
@@ -1108,15 +1121,16 @@ namespace DurakFormApp
                 //resets the list to remove the existing display
                 this.pnPlayerHand.Controls.Clear();
 
-                //loops through the player's new hand
-                for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
-                {
-                    //adds an offset to each card
-                    cards[i].Left = (i * 20) + 100;
-                    //displays the hand in the picturebox
-                    this.pnPlayerHand.Controls.Add(cards[i]);
+                DisplayControls();
+                ////loops through the player's new hand
+                //for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
+                //{
+                //    //adds an offset to each card
+                //    cards[i].Left = (i * 20) + 100;
+                //    //displays the hand in the picturebox
+                //    this.pnPlayerHand.Controls.Add(cards[i]);
 
-                }
+                //}
             }
             else
             {
@@ -1127,15 +1141,16 @@ namespace DurakFormApp
                 //resets the list to remove the existing display
                 this.pnAIHand.Controls.Clear();
 
-                //loops through the player's new hand
-                for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
-                {
-                    //adds an offset to each card
-                    cardsAI[i].Left = (i * 20) + 100;
-                    //displays the hand in the picturebox
-                    this.pnAIHand.Controls.Add(cardsAI[i]);
+                DisplayControls();
+                ////loops through the player's new hand
+                //for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
+                //{
+                //    //adds an offset to each card
+                //    cardsAI[i].Left = (i * 20) + 100;
+                //    //displays the hand in the picturebox
+                //    this.pnAIHand.Controls.Add(cardsAI[i]);
 
-                }
+                //}
             }
         }
 
@@ -1152,15 +1167,16 @@ namespace DurakFormApp
                 //reset the display
                 this.pnPlayerHand.Controls.Clear();
 
-                //loops through the current hand
-                for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
-                {
-                    //sets an offset
-                    cards[i].Left = (i * 20) + 100;
-                    //displays the new hand in the output
-                    this.pnPlayerHand.Controls.Add(cards[i]);
+                DisplayControls();
+                ////loops through the current hand
+                //for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
+                //{
+                //    //sets an offset
+                //    cards[i].Left = (i * 20) + 100;
+                //    //displays the new hand in the output
+                //    this.pnPlayerHand.Controls.Add(cards[i]);
 
-                }
+                //}
             }
             else
             {
@@ -1170,15 +1186,16 @@ namespace DurakFormApp
                 //resets the list to remove the existing display
                 this.pnAIHand.Controls.Clear();
 
-                //loops through the player's new hand
-                for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
-                {
-                    //adds an offset to each card
-                    cardsAI[i].Left = (i * 20) + 100;
-                    //displays the hand in the picturebox
-                    this.pnAIHand.Controls.Add(cardsAI[i]);
+                DisplayControls();
+                ////loops through the player's new hand
+                //for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
+                //{
+                //    //adds an offset to each card
+                //    cardsAI[i].Left = (i * 20) + 100;
+                //    //displays the hand in the picturebox
+                //    this.pnAIHand.Controls.Add(cardsAI[i]);
 
-                }
+                //}
             }
 
         }
@@ -1354,6 +1371,7 @@ namespace DurakFormApp
         //toggles AI hand to show or hide cards
         private void chkAIHandToggle_CheckedChanged(object sender, EventArgs e)
         {
+            //checks if the hand is currently shown or not
             if (showAIHand == false)
             {
                 showAIHand = true;
@@ -1366,16 +1384,17 @@ namespace DurakFormApp
             //resets the list to remove the existing display
             this.pnAIHand.Controls.Clear();
 
-            //loops through the player's new hand
-            for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
-            {
-                //adds an offset to each card
-                cardsAI[i].Left = (i * 20) + 100;
-                cardsAI[i].FaceUp = showAIHand;
-                //displays the hand in the picturebox
-                this.pnAIHand.Controls.Add(cardsAI[i]);
+            DisplayControls();
+            ////loops through the player's new hand
+            //for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
+            //{
+            //    //adds an offset to each card
+            //    cardsAI[i].Left = (i * 20) + 100;
+            //    cardsAI[i].FaceUp = showAIHand;
+            //    //displays the hand in the picturebox
+            //    this.pnAIHand.Controls.Add(cardsAI[i]);
 
-            }
+            //}
         }
     }
 }
