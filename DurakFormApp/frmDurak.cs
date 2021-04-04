@@ -17,6 +17,7 @@ namespace DurakFormApp
     {
         //Global variables used to store a number of properties used in the game
         private List<CardBox.CardBox> cards = new List<CardBox.CardBox>();
+        private List<CardBox.CardBox> cardsAI = new List<CardBox.CardBox>();
         private List<CardBox.CardBox> fieldCards = new List<CardBox.CardBox>();
         //create a deck object
         private Deck myDeck = new Deck();
@@ -46,6 +47,7 @@ namespace DurakFormApp
         //initialize a match flag
         bool matchFlag = false;
         int playerCardIndex=0;
+        bool showAIHand = false;
 
 
         const int MAXATTACKCHAIN = 6;
@@ -142,10 +144,12 @@ namespace DurakFormApp
             turnCounter = 0;
             endGame = false;
             cards = new List<CardBox.CardBox>();
+            cardsAI = new List<CardBox.CardBox>();
             fieldCards = new List<CardBox.CardBox>();
             round = ATTACKINITIAL;
             matchFlag = false;
             pnPlayerHand.Controls.Clear();
+            pnAIHand.Controls.Clear();
             cards.Clear();
             playingField = new Field();
             pnPlayingField.Controls.Clear();
@@ -183,8 +187,6 @@ namespace DurakFormApp
                 lblPlayerTurn.Text = playerAI.playerName + "'s turn.";
             }
 
-            lblAIhand.Text = playerAI.playerHand.displayHandGUI();
-
             btnPlayCard.Enabled = true;
             btnDiscardPile.Enabled = true;
             btnStart.Visible = false;
@@ -203,6 +205,11 @@ namespace DurakFormApp
                 newCardBox.Click += CardBox_Click;// Wire CardBox_Click
                 cards.Add(newCardBox);
             }
+            for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+            {
+                CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
+                cardsAI.Add(newCardBox);
+            }
             lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
         }
 
@@ -216,7 +223,13 @@ namespace DurakFormApp
             {
                 cards[i].Left = (i * 20) + 100;
                 this.pnPlayerHand.Controls.Add(cards[i]);
-
+            }
+            //Decrements because incrementing will overlap cards in a false way 
+            for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
+            {
+                cardsAI[i].Left = (i * 20) + 100;
+                cardsAI[i].FaceUp = false;
+                this.pnAIHand.Controls.Add(cardsAI[i]);
             }
         }
 
@@ -319,31 +332,8 @@ namespace DurakFormApp
                         playingField.cardPlayed(attacker.playerHand.playCard(int.Parse(txtHandInput.Text)));
                     }
 
-                    //checks if the attacker is the player1 or player AI
-                    if (attacker == player1)
-                    {
-                        //removes the card from the list that displays the hand of the player
-                        cards.RemoveAt(playerCardIndex);
-                       
-
-                        //resets the list to remove the existing display
-                        this.pnPlayerHand.Controls.Clear();
-
-                        //loops through the player's new hand
-                        for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
-                        {
-                            //adds an offset to each card
-                            cards[i].Left = (i * 20) + 100;
-                            //displays the hand in the picturebox
-                            this.pnPlayerHand.Controls.Add(cards[i]);
-
-                        }
-                    }
-                    else
-                    {
-                        //If it is player AI's turn, refeshes the text displaying their hand (TEMP FOR 2P testing) 
-                        lblAIhand.Text = attacker.playerHand.displayHandGUI();
-                    }
+                    //refreshes attacker's hands and display
+                    AttackerHandRefresh();
 
                     //Cards that are played are added to the field output
                     fieldCards.Add(newCardBox);
@@ -418,30 +408,8 @@ namespace DurakFormApp
                             playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
                         }
 
-                        //checks if defender is player 1
-                        if (defender == player1)
-                        {
-                            //removes the card from the hand display
-                            cards.RemoveAt(playerCardIndex);
-
-                            //reset the display
-                            this.pnPlayerHand.Controls.Clear();
-
-                            //loops through the current hand
-                            for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
-                            {
-                                //sets an offset
-                                cards[i].Left = (i * 20) + 100;
-                                //displays the new hand in the output
-                                this.pnPlayerHand.Controls.Add(cards[i]);
-
-                            }
-                        }
-                        else
-                        {
-                            //refreshes the text for the AI's hand
-                            lblAIhand.Text = defender.playerHand.displayHandGUI();
-                        }
+                        //refreshes defender hand and display
+                        DefenderHandRefresh();
 
                         //adds the cards to the field display object
                         fieldCards.Add(newCardBox);
@@ -486,30 +454,9 @@ namespace DurakFormApp
                             playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
                         }
 
-                        //checks if defender is player 1
-                        if (defender == player1)
-                        {
-                            //removes the card from the hand display
-                            cards.RemoveAt(playerCardIndex);
 
-                            //reset the display
-                            this.pnPlayerHand.Controls.Clear();
-
-                            //loops through the current hand
-                            for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
-                            {
-                                //sets an offset
-                                cards[i].Left = (i * 20) + 100;
-                                //displays the new hand in the output
-                                this.pnPlayerHand.Controls.Add(cards[i]);
-
-                            }
-                        }
-                        else
-                        {
-                            //refreshes the text for the AI's hand
-                            lblAIhand.Text = defender.playerHand.displayHandGUI();
-                        }
+                        //refreshes defender hand and display
+                        DefenderHandRefresh();
 
                         //adds the cards to the field display object
                         fieldCards.Add(newCardBox);
@@ -564,30 +511,9 @@ namespace DurakFormApp
                                         playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
                                     }
 
-                                    //checks if defender is player 1
-                                    if (defender == player1)
-                                    {
-                                        //removes the card from the hand display
-                                        cards.RemoveAt(playerCardIndex);
 
-                                        //reset the display
-                                        this.pnPlayerHand.Controls.Clear();
-
-                                        //loops through the current hand
-                                        for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
-                                        {
-                                            //sets an offset
-                                            cards[i].Left = (i * 20) + 100;
-                                            //displays the new hand in the output
-                                            this.pnPlayerHand.Controls.Add(cards[i]);
-
-                                        }
-                                    }
-                                    else
-                                    {
-                                        //refreshes the text for the AI's hand
-                                        lblAIhand.Text = defender.playerHand.displayHandGUI();
-                                    }
+                                    //refreshes defender hand and display
+                                    DefenderHandRefresh();
 
                                     //adds the cards to the field display object
                                     fieldCards.Add(newCardBox);
@@ -644,30 +570,9 @@ namespace DurakFormApp
                                     //The card is played from the player's hand (removed) and played onto the field (added)
                                     playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
                                 }
-                                //check if the defender is player 1 
-                                if (defender == player1)
-                                {
-                                    //removes the card from the hand display list
-                                    cards.RemoveAt(playerCardIndex);
 
-                                    //refreshes the hand display
-                                    this.pnPlayerHand.Controls.Clear();
-
-                                    //loops through the hand
-                                    for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
-                                    {
-                                        //sets an offset
-                                        cards[i].Left = (i * 20) + 100;
-                                        //adds the cards into the display
-                                        this.pnPlayerHand.Controls.Add(cards[i]);
-
-                                    }
-                                }
-                                else
-                                {
-                                    //refreshes the text for AI hand (TESTING PURPOSES ONLY)
-                                    lblAIhand.Text = defender.playerHand.displayHandGUI();
-                                }
+                                //refreshes defender hand and display
+                                DefenderHandRefresh();
 
                                 //adds the cards to the new field display list
                                 fieldCards.Add(newCardBox);
@@ -721,30 +626,8 @@ namespace DurakFormApp
                                     playingField.cardPlayed(defender.playerHand.playCard(int.Parse(txtHandInput.Text)));
                                 }
 
-                                //checks if the defender is player1
-                                if (defender == player1)
-                                {
-                                    //removes the card played from the hand display list
-                                    cards.RemoveAt(playerCardIndex);
-
-                                    //resets the hand display
-                                    this.pnPlayerHand.Controls.Clear();
-
-                                    //loops through the hand
-                                    for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
-                                    {
-                                        //sets an offset
-                                        cards[i].Left = (i * 20) + 100;
-                                        //adds the cards to the hand display
-                                        this.pnPlayerHand.Controls.Add(cards[i]);
-
-                                    }
-                                }
-                                else
-                                {
-                                    //refreshes the text for the AI hand (TEMP)
-                                    lblAIhand.Text = defender.playerHand.displayHandGUI();
-                                }
+                                //refreshes defender hand and display
+                                DefenderHandRefresh();
 
                                 //Adds the new cards into the field display list
                                 fieldCards.Add(newCardBox);
@@ -855,30 +738,8 @@ namespace DurakFormApp
                                 playingField.cardPlayed(attacker.playerHand.playCard(int.Parse(txtHandInput.Text)));
                             }
 
-                            //checks to see if the attacker is player 1
-                            if (attacker == player1)
-                            {
-                                //removes the card from the hand display list
-                                cards.RemoveAt(playerCardIndex);
-
-                                //resets the hand display
-                                this.pnPlayerHand.Controls.Clear();
-
-                                //loops through the hand 
-                                for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
-                                {
-                                    //sets an offset on the hand
-                                    cards[i].Left = (i * 20) + 100;
-                                    //adds the cards to the display
-                                    this.pnPlayerHand.Controls.Add(cards[i]);
-
-                                }
-                            }
-                            else
-                            {
-                                //refreshes the text for the player AI's hand (TEMP)
-                                lblAIhand.Text = attacker.playerHand.displayHandGUI();
-                            }
+                            //refreshes attacker's hands and display
+                            AttackerHandRefresh();
 
                             //adds the cards to the field cards list
                             fieldCards.Add(newCardBox);
@@ -963,8 +824,20 @@ namespace DurakFormApp
             {
                 //draws cards back to a full hand
                 playerAI.DrawCards(myDeck);
-                //refreshes the text for the AI's hand
-                lblAIhand.Text = playerAI.playerHand.displayHandGUI();
+                //reset the display
+                this.pnAIHand.Controls.Clear();
+
+                //clears the output list for player1 hand
+                cardsAI.Clear();
+
+                //loops through and adds the player's hands to the hand display
+                for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                {
+                    CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
+                    cardsAI.Add(newCardBox);
+                }
+
+                DisplayControls();
             }
 
             //sets the endgame flag
@@ -1017,8 +890,21 @@ namespace DurakFormApp
                 
                 //draws hand back to 6
                 playerAI.DrawCards(myDeck);
-                //refreshes the text for the AI's hand
-                lblAIhand.Text = playerAI.playerHand.displayHandGUI();
+
+                //reset the display
+                this.pnAIHand.Controls.Clear();
+
+                //clears the output list for player1 hand
+                cardsAI.Clear();
+
+                //loops through and adds the player's hands to the hand display
+                for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                {
+                    CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
+                    cardsAI.Add(newCardBox);
+                }
+
+                DisplayControls();
             }
 
 
@@ -1053,6 +939,8 @@ namespace DurakFormApp
             lblPlayerTurn.Text = currentPlayer.playerName + " is still attacker.";
             //disable the skip turn function
             btnSkipTurn.Enabled = false;
+            playerCardIndex = 0;
+            lblCardSelected.Text = player1.playerHand.GetCard(playerCardIndex).ToString();
 
             //update the deck size
             lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
@@ -1101,8 +989,21 @@ namespace DurakFormApp
             {
                 //draws cards
                 playerAI.DrawCards(myDeck);
-                //refreshes the text for the AI's hand
-                lblAIhand.Text = playerAI.playerHand.displayHandGUI();
+
+                //reset the display
+                this.pnAIHand.Controls.Clear();
+
+                //clears the output list for player1 hand
+                cardsAI.Clear();
+
+                //loops through and adds the player's hands to the hand display
+                for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                {
+                    CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
+                    cardsAI.Add(newCardBox);
+                }
+
+                DisplayControls();
             }
 
 
@@ -1145,8 +1046,21 @@ namespace DurakFormApp
             {
                 //draws cards
                 playerAI.DrawCards(myDeck);
-                //refreshes the text for the AI's hand
-                lblAIhand.Text = playerAI.playerHand.displayHandGUI();
+
+                //reset the display
+                this.pnAIHand.Controls.Clear();
+
+                //clears the output list for player1 hand
+                cardsAI.Clear();
+
+                //loops through and adds the player's hands to the hand display
+                for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                {
+                    CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
+                    cardsAI.Add(newCardBox);
+                }
+
+                DisplayControls();
             }
 
 
@@ -1178,6 +1092,97 @@ namespace DurakFormApp
             lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
 
         }
+
+        /// <summary>
+        /// Function that refreshes the hand and display on an attacker's turn
+        /// </summary>
+        private void AttackerHandRefresh()
+        {
+            //checks if the attacker is the player1 or player AI
+            if (attacker == player1)
+            {
+                //removes the card from the list that displays the hand of the player
+                cards.RemoveAt(playerCardIndex);
+
+
+                //resets the list to remove the existing display
+                this.pnPlayerHand.Controls.Clear();
+
+                //loops through the player's new hand
+                for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
+                {
+                    //adds an offset to each card
+                    cards[i].Left = (i * 20) + 100;
+                    //displays the hand in the picturebox
+                    this.pnPlayerHand.Controls.Add(cards[i]);
+
+                }
+            }
+            else
+            {
+                //removes the card from the list that displays the hand of the player
+                cardsAI.RemoveAt(int.Parse(txtHandInput.Text));
+
+
+                //resets the list to remove the existing display
+                this.pnAIHand.Controls.Clear();
+
+                //loops through the player's new hand
+                for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
+                {
+                    //adds an offset to each card
+                    cardsAI[i].Left = (i * 20) + 100;
+                    //displays the hand in the picturebox
+                    this.pnAIHand.Controls.Add(cardsAI[i]);
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// Function that refreshes defender hand and display
+        /// </summary>
+        private void DefenderHandRefresh()
+        {
+            if (defender == player1)
+            {
+                //removes the card from the hand display
+                cards.RemoveAt(playerCardIndex);
+
+                //reset the display
+                this.pnPlayerHand.Controls.Clear();
+
+                //loops through the current hand
+                for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
+                {
+                    //sets an offset
+                    cards[i].Left = (i * 20) + 100;
+                    //displays the new hand in the output
+                    this.pnPlayerHand.Controls.Add(cards[i]);
+
+                }
+            }
+            else
+            {
+                //removes the card from the list that displays the hand of the player
+                cardsAI.RemoveAt(int.Parse(txtHandInput.Text));
+
+                //resets the list to remove the existing display
+                this.pnAIHand.Controls.Clear();
+
+                //loops through the player's new hand
+                for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
+                {
+                    //adds an offset to each card
+                    cardsAI[i].Left = (i * 20) + 100;
+                    //displays the hand in the picturebox
+                    this.pnAIHand.Controls.Add(cardsAI[i]);
+
+                }
+            }
+
+        }
+
 
         /// <summary>
         /// Function for skipping the turn
@@ -1261,6 +1266,11 @@ namespace DurakFormApp
             }
         }
 
+        /// <summary>
+        /// Function usd for the click of a cardbox object
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void CardBox_Click(object sender, EventArgs e)
         {
 
@@ -1270,12 +1280,7 @@ namespace DurakFormApp
             // If the conversion worked
             if (aCardBox != null)
             {
-                // if the card is in the home panel...
-                //if (aCardBox.Parent == pnPlayerHand)
-                //{
-                //    pnPlayerHand.Controls.Remove(aCardBox);// Remove the card from the home panel
-                //    pnPlayingField.Controls.Add(aCardBox);// Add the control to the play panel
-                //}
+
                 for(int i=0; i < player1.playerHand.gethandSize(); i ++)
                 {
                     if(aCardBox.Card == player1.playerHand.GetCard(i))
@@ -1283,16 +1288,16 @@ namespace DurakFormApp
                         playerCardIndex = i;
                     }
                 }
-                lblCardSelected.Text = aCardBox.Card.ToString() + " "+ playerCardIndex;
+                lblCardSelected.Text = aCardBox.Card.ToString();
                  
-
-                // Realign the cards 
-                //RealignCards(pnPlayerHand);
-                //RealignCards(pnPlayingField);
 
             }
 
         }
+        /// <summary>
+        /// Function used to realign the cards in a hand.
+        /// </summary>
+        /// <param name="panelHand"></param>
         private void RealignCards(Panel panelHand)
         {
             const int POP = 25;
@@ -1344,10 +1349,33 @@ namespace DurakFormApp
                 }
             }
 
-
         }
 
+        //toggles AI hand to show or hide cards
+        private void chkAIHandToggle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (showAIHand == false)
+            {
+                showAIHand = true;
+            }
+            else
+            {
+                showAIHand = false;
+            }
 
+            //resets the list to remove the existing display
+            this.pnAIHand.Controls.Clear();
 
+            //loops through the player's new hand
+            for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
+            {
+                //adds an offset to each card
+                cardsAI[i].Left = (i * 20) + 100;
+                cardsAI[i].FaceUp = showAIHand;
+                //displays the hand in the picturebox
+                this.pnAIHand.Controls.Add(cardsAI[i]);
+
+            }
+        }
     }
 }
