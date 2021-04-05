@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Ch10CardLib.Card card1 = new Ch10CardLib.Card();
-            Ch10CardLib.Card card2 = new Ch10CardLib.Card();
+            Ch10CardLib.Card card5 = new Ch10CardLib.Card();
+            Ch10CardLib.Card card6 = new Ch10CardLib.Card();
             this.lblDeckSize = new System.Windows.Forms.Label();
             this.lblDeckSizeValue = new System.Windows.Forms.Label();
             this.pnPlayerHand = new System.Windows.Forms.Panel();
@@ -83,7 +83,7 @@
             this.pnPlayerHand.Location = new System.Drawing.Point(318, 530);
             this.pnPlayerHand.Margin = new System.Windows.Forms.Padding(4);
             this.pnPlayerHand.Name = "pnPlayerHand";
-            this.pnPlayerHand.Size = new System.Drawing.Size(760, 134);
+            this.pnPlayerHand.Size = new System.Drawing.Size(996, 134);
             this.pnPlayerHand.TabIndex = 4;
             // 
             // btnPlayCard
@@ -111,7 +111,7 @@
             // lblCardSelected
             // 
             this.lblCardSelected.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCardSelected.Location = new System.Drawing.Point(499, 489);
+            this.lblCardSelected.Location = new System.Drawing.Point(718, 490);
             this.lblCardSelected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCardSelected.Name = "lblCardSelected";
             this.lblCardSelected.Size = new System.Drawing.Size(577, 37);
@@ -125,7 +125,7 @@
             this.pnPlayingField.Location = new System.Drawing.Point(316, 216);
             this.pnPlayingField.Margin = new System.Windows.Forms.Padding(4);
             this.pnPlayingField.Name = "pnPlayingField";
-            this.pnPlayingField.Size = new System.Drawing.Size(760, 268);
+            this.pnPlayingField.Size = new System.Drawing.Size(998, 268);
             this.pnPlayingField.TabIndex = 9;
             // 
             // label1
@@ -148,21 +148,21 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1091, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1348, 28);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // mnuHowToPlay
             // 
             this.mnuHowToPlay.Name = "mnuHowToPlay";
-            this.mnuHowToPlay.Size = new System.Drawing.Size(105, 26);
+            this.mnuHowToPlay.Size = new System.Drawing.Size(105, 24);
             this.mnuHowToPlay.Text = "How To Play";
             this.mnuHowToPlay.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // mnuExit
             // 
             this.mnuExit.Name = "mnuExit";
-            this.mnuExit.Size = new System.Drawing.Size(47, 26);
+            this.mnuExit.Size = new System.Drawing.Size(47, 24);
             this.mnuExit.Text = "Exit";
             this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
             // 
@@ -192,7 +192,7 @@
             // 
             this.lblPlayerTurn.AutoSize = true;
             this.lblPlayerTurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayerTurn.Location = new System.Drawing.Point(615, 178);
+            this.lblPlayerTurn.Location = new System.Drawing.Point(830, 179);
             this.lblPlayerTurn.Name = "lblPlayerTurn";
             this.lblPlayerTurn.Size = new System.Drawing.Size(138, 29);
             this.lblPlayerTurn.TabIndex = 18;
@@ -228,8 +228,8 @@
             // 
             // cbTrumpCard
             // 
-            card1.FaceUp = false;
-            this.cbTrumpCard.Card = card1;
+            card5.FaceUp = false;
+            this.cbTrumpCard.Card = card5;
             this.cbTrumpCard.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cbTrumpCard.FaceUp = false;
             this.cbTrumpCard.Location = new System.Drawing.Point(27, 89);
@@ -242,8 +242,8 @@
             // 
             // cardBox1
             // 
-            card2.FaceUp = false;
-            this.cardBox1.Card = card2;
+            card6.FaceUp = false;
+            this.cardBox1.Card = card6;
             this.cardBox1.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cardBox1.FaceUp = false;
             this.cardBox1.Location = new System.Drawing.Point(19, 441);
@@ -269,7 +269,7 @@
             this.pnAIHand.Location = new System.Drawing.Point(316, 27);
             this.pnAIHand.Margin = new System.Windows.Forms.Padding(4);
             this.pnAIHand.Name = "pnAIHand";
-            this.pnAIHand.Size = new System.Drawing.Size(760, 134);
+            this.pnAIHand.Size = new System.Drawing.Size(998, 134);
             this.pnAIHand.TabIndex = 24;
             // 
             // chkAIHandToggle
@@ -288,7 +288,7 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1091, 683);
+            this.ClientSize = new System.Drawing.Size(1348, 683);
             this.Controls.Add(this.chkAIHandToggle);
             this.Controls.Add(this.pnPlayingField);
             this.Controls.Add(this.pnAIHand);

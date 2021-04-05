@@ -48,8 +48,8 @@ namespace DurakFormApp
         bool matchFlag = false;
         int playerCardIndex=0;
         bool showAIHand = false;
-        int playerOffset = 100;
-        int aiOffset = 100;
+        int playerOffset = 215;
+        int aiOffset = 215;
 
 
         const int MAXATTACKCHAIN = 6;
@@ -131,7 +131,7 @@ namespace DurakFormApp
             btnDiscardPile.Enabled = false;
             btnSkipTurn.Enabled = false;
             btnStart.Visible = true;
-
+            chkAIHandToggle.Enabled = false;
            
         }
 
@@ -157,6 +157,7 @@ namespace DurakFormApp
             pnPlayingField.Controls.Clear();
             cbTrumpCard.Visible = true;
             cardBox1.Visible = true;
+            chkAIHandToggle.Enabled = true;
 
 
             //shuffle deck
@@ -225,14 +226,12 @@ namespace DurakFormApp
             //Decrements because incrementing will overlap cards in a false way 
             for (int i = player1.playerHand.gethandSize() - 1; i >= 0; i--)
             {
-
                 cards[i].Left = (i * 20) + playerOffset;
                 this.pnPlayerHand.Controls.Add(cards[i]);
             }
             //Decrements because incrementing will overlap cards in a false way 
             for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
             {
-
                 cardsAI[i].Left = (i * 20) + aiOffset;
                 cardsAI[i].FaceUp = showAIHand;
                 this.pnAIHand.Controls.Add(cardsAI[i]);
@@ -1384,17 +1383,19 @@ namespace DurakFormApp
             //resets the list to remove the existing display
             this.pnAIHand.Controls.Clear();
 
-            DisplayControls();
-            ////loops through the player's new hand
-            //for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
-            //{
-            //    //adds an offset to each card
-            //    cardsAI[i].Left = (i * 20) + 100;
-            //    cardsAI[i].FaceUp = showAIHand;
-            //    //displays the hand in the picturebox
-            //    this.pnAIHand.Controls.Add(cardsAI[i]);
-
-            //}
+            //Decrements because incrementing will overlap cards in a false way 
+            for (int i = player1.playerHand.gethandSize() - 1; i >= 0; i--)
+            {
+                cards[i].Left = (i * 20) + playerOffset;
+                this.pnPlayerHand.Controls.Add(cards[i]);
+            }
+            //Decrements because incrementing will overlap cards in a false way 
+            for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
+            {
+                cardsAI[i].Left = (i * 20) + aiOffset;
+                cardsAI[i].FaceUp = showAIHand;
+                this.pnAIHand.Controls.Add(cardsAI[i]);
+            }
         }
     }
 }
