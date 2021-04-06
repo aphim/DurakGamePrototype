@@ -15,13 +15,38 @@ namespace Ch10CardLib
             playerName = name;
         }
 
+
+        public int AITurnCycle(Card TrumpCard, Field PlayingField, string round)
+        {
+            const string ATTACKINITIAL = "initialTurn";
+            const string ATTACKERTURN = "attacker";
+            const string DEFENDERTURN = "defender";
+            if (round == ATTACKINITIAL)
+            {
+                return AIAttackerInitialTurn(TrumpCard);
+            }
+            else if(round == ATTACKERTURN)
+            {
+                return AIAttackerTurn(PlayingField, TrumpCard);
+            }
+            else if( round == DEFENDERTURN )
+            {
+                return 0;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+
         /// <summary>
         /// Method used to control the AI's decisions while making the initial attack (Will play the lowest value card)
         /// </summary>
         /// <param name="playingField"></param>
         /// <param name="handAI"></param>
         /// <param name="trumpCard"></param>
-        public override void AttackerInitialTurn(Field playingField, Card trumpCard)
+        public int AIAttackerInitialTurn(Card trumpCard)
         {
 
             ////////// CHECKS FOR THE LOWEST "VALUE" CARD IN THE HAND WITH TRUMP SUIT CARDS GETTING MORE VALUE THAN OTHER CARDS ///////////
@@ -66,8 +91,9 @@ namespace Ch10CardLib
 
             //////////////////// Plays the lowest value card ///////////////////////////////
 
-            //play the card onto the field (removing it from the hand)
-            playingField.cardPlayed(playerHand.playCard(lowestcardIndex));
+            //play the card onto the field (removing it from the hand)'
+            //playingField.cardPlayed(playerHand.playCard(lowestcardIndex));
+            return lowestcardIndex;
 
         }
 
@@ -78,11 +104,12 @@ namespace Ch10CardLib
         /// <param name="passFlag"></param>
         /// <param name="trumpCard"></param>
         /// <param name="handAI"></param>
-        public override void AttackerTurn(Field playingField, PassFlag passFlag, Card trumpCard)
+        public int AIAttackerTurn(Field playingField, Card trumpCard)
         {
             //check the playingfield
             ArrayList validCards = new ArrayList();
             ArrayList validCardIndex = new ArrayList();
+            bool passFlag = false;
 
             //loop through the hand of the AI
             for (int i = 0;  i < playerHand.gethandSize(); i++ )
@@ -114,15 +141,15 @@ namespace Ch10CardLib
             //If there are no valid cards, setup bypass flag and defender win flag
             if (validCards.Count == 0)
             {
-                passFlag.passFlag = true;
-                passFlag.defenderWin = true;
+                passFlag = true;
+                
             }
             
 
             /////// If moves are valid //////////////////////////////////////////
 
             //checks to see if there are any moves available
-            if (passFlag.passFlag == false)
+            if (passFlag == false)
             {
                 //initialize some arraylists
                 ArrayList trumpSuits = new ArrayList();
@@ -194,8 +221,12 @@ namespace Ch10CardLib
                 }
 
                 //play the card onto the field 
-                playingField.cardPlayed(playerHand.playCard(indexSelected));
-
+               // playingField.cardPlayed(playerHand.playCard(indexSelected));
+                return indexSelected;
+            }
+            else
+            {
+                return -1;
             }
         }
 
