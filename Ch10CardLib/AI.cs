@@ -18,6 +18,10 @@ namespace Ch10CardLib
 
         public int AITurnCycle(Card TrumpCard, Field PlayingField, string round)
         {
+            if( playerHand.gethandSize() == 0)
+            {
+                return -1;
+            }
             const string ATTACKINITIAL = "initialTurn";
             const string ATTACKERTURN = "attacker";
             const string DEFENDERTURN = "defender";
@@ -31,7 +35,7 @@ namespace Ch10CardLib
             }
             else if( round == DEFENDERTURN )
             {
-                return 0;
+                return AIDefenderTurn(PlayingField, TrumpCard);
             }
             else
             {
@@ -142,7 +146,6 @@ namespace Ch10CardLib
             if (validCards.Count == 0)
             {
                 passFlag = true;
-                
             }
             
 
@@ -237,26 +240,21 @@ namespace Ch10CardLib
         /// <param name="playingField"></param>
         /// <param name="trumpCard"></param>
         /// <param name="passFlag"></param>
-        public override void DefenderTurn(Field playingField, Card trumpCard, PassFlag passFlag)
+        public int AIDefenderTurn(Field playingField, Card trumpCard)
         {
             this.playerHand.displayHand();
             ArrayList validCards = new ArrayList();
             ArrayList validCardIndex = new ArrayList();
+            ArrayList equalRank = new ArrayList();
+            ArrayList equalRankIndex = new ArrayList();
+            bool passFlag = false;
             bool equalsTrump = false;
-            bool noTrump = false;
-            bool lose = false;
             //Find the last card played on the field by the attacker
-            Card lastCard = playingField.getCurrentCard();
-            bool validCard = false;
 
             //check if the last placed card on the field is the same suit as the trump suit
-            if (lastCard.suit == trumpCard.suit)
+            if (playingField.getCurrentCard().suit == trumpCard.suit)
             {
                 equalsTrump = true;
-            }
-            else
-            {
-                equalsTrump = false;
             }
 
             //loop through ai hand
@@ -266,53 +264,50 @@ namespace Ch10CardLib
                 Card tempCard = (Card)playerHand.GetCard(i);
                 int tempCardIndex = i;
 
-
                 //Run if the last placed card on the field is of the trump suit
-                if (equalsTrump)
+                if (equalsTrump == true)
                 {
-
                     //check if the suit of the current card in the hand has the same suit as the trump card and is higher in value than the last placed card
-                    if (tempCard.suit == trumpCard.suit && tempCard.value > lastCard.value)
+                    if (tempCard.suit == trumpCard.suit && tempCard.rank > playingField.getCurrentCard().rank)
                     {
-
                         //adds the card to the validCards arrayList and breaks out of the current loop
                         validCards.Add(tempCard);
                         validCardIndex.Add(tempCardIndex);
-                        break;
                     }
 
                 }
                 else//run if the last placed card was not a trump suit
                 {
-                    //run if the tempCard's suit is the same as the last placed card's suit OR if the suit is the same as the trump suit 
-                    //and is greater in value compared to the last placed card
-                    if (tempCard.suit == lastCard.suit || tempCard.suit == trumpCard.suit && tempCard.value > lastCard.value)
+                    //run if the tempCard's suit is the same as the last placed card's suit is greater in value compared to the last placed card
+                    if (tempCard.suit == playingField.getCurrentCard().suit && tempCard.rank > playingField.getCurrentCard().rank)
                     {
                         //adds the card to the validCards arrayList and breaks out of the current loop
                         validCards.Add(tempCard);
                         validCardIndex.Add(tempCardIndex);
-                        break;
+                    }
+                    //checks if the suit is the same as the trump suit
+                    else if (tempCard.suit == trumpCard.suit)
+                    {
+                        //adds the card to the validCards arrayList and breaks out of the current loop
+                        validCards.Add(tempCard);
+                        validCardIndex.Add(tempCardIndex);
                     }
                 }
             }
 
             ////////// Ends the turn if no cards are valid ////////////////////////
 
-            //If there are no valid cards, setup bypass flag and Attacker win flag
+            //If there are no valid cards, setup bypass flag
             if (validCards.Count == 0)
             {
-                Console.WriteLine("YOU LOSE");
-                lose = true;
-                /*  passFlag.passFlag = true;
-                  passFlag.attackerWin = true;*/
-
+                passFlag = true;
             }
 
 
             /////// If moves are valid //////////////////////////////////////////
 
             //checks to see if there are any moves available
-            if (passFlag.passFlag == false)
+            if (passFlag == false)
             {
                 //initialize some arraylists
                 ArrayList trumpSuits = new ArrayList();
@@ -325,143 +320,85 @@ namespace Ch10CardLib
                 int indexSelected = 0;
 
                 //If the last card played is a trump card
-                if (equalsTrump)
+                if (equalsTrump == true)
                 {
+                    //sets cardSelected as the first card in the arrayList
+                    cardSelected = (Card)validCards[0];
+                    indexSelected = (int)validCardIndex[0];
 
-                    //run if the validCards arraylist is greater than 0
-                    if (validCards.Count > 0)
+                    //loops through the hand
+                    for (int i = 0; i < validCards.Count; i++)
                     {
-                        //sets cardSelected as the first card in the arrayList
-                        cardSelected = (Card)validCards[0];
-                        indexSelected = (int)validCardIndex[0];
 
-                        //loops through the hand
-                        for (int i = 0; i < validCards.Count; i++)
+                        //checks if the value of the cardSelected is greater than the value of the next card in the array
+                        if (cardSelected.rank > ((Card)validCards[i]).rank)
                         {
-
-                            //checks if the value of the cardSelected is greater than the value of the next card in the array
-                            if (cardSelected.value > ((Card)validCards[i]).value)
-                            {
-                                //checks if cardSelected's value is greater than the last placed card's value
-                                if (cardSelected.value > lastCard.value)
-                                {
-                                    //set cardSelected to the current card in the arrayList
-                                    cardSelected = (Card)validCards[i];
-                                    indexSelected = (int)validCardIndex[i];
-
-                                }
-
-                            }
+                            //set cardSelected to the current card in the arrayList
+                            cardSelected = (Card)validCards[i];
+                            indexSelected = (int)validCardIndex[i];
                         }
-
                     }
-
+                    return indexSelected;
                 }
                 else// run if the last card played was not a trump card
                 {
-                    validCard = false;
-                    //run if the validCards arrayList is not empty
+                    //loops through the hand
+                    for (int i = 0; i < validCards.Count; i++)
+                    {
+                        //seperates the trump cards from the non-trump cards in the list of valid cards
+                        if (((Card)validCards[0]).suit == trumpCard.suit)
+                        {
+                            trumpSuits.Add((Card)validCards[i]);
+                            trumpSuitIndex.Add((int)validCardIndex[i]);
+                            validCards.RemoveAt(i);
+                            validCardIndex.RemoveAt(i);
+                        }
+                    }
+                    //checks if there are any non-trump valid cards
                     if (validCards.Count > 0)
                     {
-                        //sets the first card in the array as cardSelected
+                        //set cardSelected to the current card in the arrayList
                         cardSelected = (Card)validCards[0];
                         indexSelected = (int)validCardIndex[0];
 
-                        //loops through the hand
+                        //loop through the hand
                         for (int i = 0; i < validCards.Count; i++)
                         {
-
-                            //checks if the value of the cardSelected is lower than the next card in the array and if the cardSelected's value is greater than the last placed card
-                            if (cardSelected.value < ((Card)validCards[i]).value && cardSelected.value > lastCard.value)
+                            //if the tempCard's suit is the same as the trump suit and the value is greater than the last placed card's value
+                            if (cardSelected.rank > ((Card)validCards[i]).rank)
                             {
-
-
-                                //checks is the suit of the last card is the same as the selected card
-                                if (cardSelected.suit == lastCard.suit)
-                                {
-                                    //set cardSelected to the current card in the array
-
-                                    cardSelected = (Card)validCards[i];
-                                    indexSelected = (int)validCardIndex[i];
-                                    validCard = false;
-
-
-                                }
-                                else //set validCard to true if there is no valid non trump suit cards to play
-                                {
-                                    validCard = true;
-                                }
-
-
+                                cardSelected = (Card)validCards[i];
+                                indexSelected = (int)validCardIndex[i];
                             }
+
                         }
-
-                        //Make the AI find the appropriate trump card to play if the last placed card was not a trump card but no cards of the same suit that are greater exist in the hand
-                        if (validCard)
-                        {
-                            //loop through the hand
-                            for (int i = 0; i < playerHand.gethandSize(); i++)
-                            {
-                                //set tempCard as the current card in the array
-                                Card tempCard = (Card)playerHand.GetCard(i);
-                                int tempCardIndex = i;
-
-                                
-                                //if the tempCard's suit is the same as the trump suit and the value is greater than the last placed card's value
-                                if (tempCard.suit == trumpCard.suit && tempCard.value > lastCard.value)
-                                {
-
-                                    //add the card to the valid cards array
-                                    validCards.Add(tempCard);
-                                    validCardIndex.Add(tempCardIndex);
-                                    break;
-                                }
-                              
-
-
-                            }
-                            //sets the first card as the current selected card 
-                            cardSelected = (Card)validCards[0];
-                            indexSelected = (int)validCardIndex[0];
-                            //loops through the hand
-                            for (int i = 0; i < validCards.Count; i++)
-                            {
-                                //if the value of the selected card is greater than the next card
-                                if (cardSelected.value > ((Card)validCards[i]).value)
-                                {
-                                   
-                                    //if the card selected has the same suit as the trump card and if the card selected's value is graeter than the 
-                                    //last placed cards value and it the card selected's value is less than the next cards value
-                                    if (cardSelected.suit == trumpCard.suit && cardSelected.value > lastCard.value && cardSelected.value < ((Card)validCards[i + 1]).value)
-                                    {
-                                        //set the curruent card as cardSelected
-                                        cardSelected = (Card)validCards[i];
-                                        indexSelected = (int)validCardIndex[i];
-
-
-                                    }
-
-                                }
-                            }
-                        }
-
+                        return indexSelected;
                     }
+                    else
+                    {
+                        //set cardSelected to the current card in the arrayList
+                        cardSelected = (Card)trumpSuits[0];
+                        indexSelected = (int)trumpSuitIndex[0];
 
-                }
-                //If the lose flag was not triggered play the card
-                if (!lose)
-                {
-                    //play the card onto the field (removing it from the hand)
-                    playingField.cardPlayed(playerHand.playCard(indexSelected));
-                }
-                else// output lose message. (Change to end turn)
-                {
-                    Console.WriteLine("YOU HAVE LOST!!!");
-                }
+                        //loop through the hand
+                        for (int i = 0; i < trumpSuits.Count; i++)
+                        {
+                            //if the tempCard's suit is the same as the trump suit and the value is greater than the last placed card's value
+                            if (cardSelected.rank > ((Card)trumpSuits[i]).rank)
+                            {
+                                cardSelected = (Card)trumpSuits[i];
+                                indexSelected = (int)trumpSuitIndex[i];
+                            }
 
+                        }
+                        return indexSelected;
+                    }       
+                }
             }
-
-
+            else
+            { 
+                return -1; 
+            }
 
         }//END OF DEFENDER METHOD
 

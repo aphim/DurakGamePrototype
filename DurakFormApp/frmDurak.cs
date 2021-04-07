@@ -254,6 +254,7 @@ namespace DurakFormApp
             for (int i = cardsToAdd.Count - 1; i >= 0; i--)
             {
                 fieldCards[i].Left = (i * 20) + 100;
+                fieldCards[i].FaceUp = true;
                 this.pnPlayingField.Controls.Add(fieldCards[i]);
 
             }
@@ -1445,6 +1446,18 @@ namespace DurakFormApp
                 if(playerAI.AITurnCycle(trumpCard,playingField,round) == -1)
                 {
                     DefendersWin();
+                }
+                else
+                {
+                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round);
+                    TurnCycle();
+                }
+            }
+            if (currentPlayer == playerAI && round == DEFENDERTURN)
+            {
+                if (playerAI.AITurnCycle(trumpCard, playingField, round) == -1)
+                {
+                    AttackersWin();
                 }
                 else
                 {
