@@ -16,7 +16,7 @@ namespace Ch10CardLib
         }
 
 
-        public int AITurnCycle(Card TrumpCard, Field PlayingField, string round)
+        public int AITurnCycle(Card TrumpCard, Field PlayingField, string round, bool firstdefence)
         {
             if( playerHand.gethandSize() == 0)
             {
@@ -35,7 +35,7 @@ namespace Ch10CardLib
             }
             else if( round == DEFENDERTURN )
             {
-                return AIDefenderTurn(PlayingField, TrumpCard);
+                return AIDefenderTurn(PlayingField, TrumpCard, firstdefence);
             }
             else
             {
@@ -240,7 +240,7 @@ namespace Ch10CardLib
         /// <param name="playingField"></param>
         /// <param name="trumpCard"></param>
         /// <param name="passFlag"></param>
-        public int AIDefenderTurn(Field playingField, Card trumpCard)
+        public int AIDefenderTurn(Field playingField, Card trumpCard, bool firstDefence)
         {
             this.playerHand.displayHand();
             ArrayList validCards = new ArrayList();
@@ -257,6 +257,50 @@ namespace Ch10CardLib
                 equalsTrump = true;
             }
 
+
+            //loop through ai hand ///////////////////////For turn swapping mechanic///////////////
+            if (firstDefence == true)
+            {
+                for (int i = 0; i < playerHand.gethandSize(); i++)
+                {
+                    //declare a temp card as the current card
+                    Card tempCard = (Card)playerHand.GetCard(i);
+                    int tempCardIndex = i;
+
+                    if (tempCard.rank == ((Card)playingField.getCurrentCard()).rank)
+                    {
+                        equalRank.Add((Card)playerHand.GetCard(i));
+                        equalRankIndex.Add(tempCardIndex);
+                    }
+                }
+
+                //if there are matching cards
+                if (equalRank.Count > 0)
+                {
+                    //check to see if there are more than one match
+                    if (equalRank.Count > 1)
+                    {
+                        Card equalCard = (Card)equalRank[0];
+                        int equalCardIndex = 0;
+
+                        for (int i = 0; i < equalRank.Count; i++)
+                        {
+                            //check for if any of the cards are trump suit
+                            if (((Card)equalRank[i]).suit != trumpCard.suit)
+                            {
+                                equalCard = (Card)equalRank[i];
+                                equalCardIndex = (int)equalRankIndex[i];
+                            }
+                        }
+                        return equalCardIndex;
+                    }
+                    else
+                    {
+                        return (int)equalRankIndex[0];
+                    }
+                }
+            }
+            //////////////////////////////////////////////////////////////////////////////////////////
             //loop through ai hand
             for (int i = 0; i < playerHand.gethandSize(); i++)
             {

@@ -33,6 +33,7 @@ namespace DurakFormApp
         int turnCounter = 0;
         bool endGame = false;
         bool perevodnoyFlag = false;
+        bool firstDefence = false;
         PassFlag playerPassed = new PassFlag();
         //initialize the field
         Field playingField = new Field();
@@ -191,7 +192,7 @@ namespace DurakFormApp
             else
             {
                
-                AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round);
+                AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, firstDefence);
 
                 TurnCycle();
                
@@ -391,6 +392,7 @@ namespace DurakFormApp
 
                  }
 
+                firstDefence = true;
             }
             //////////////////////////////// The defender's turn (can only play cards of the same suit higher rank or trump suit on non-trumps)////////////////////////////////////////////
             else if (round == DEFENDERTURN)
@@ -803,6 +805,7 @@ namespace DurakFormApp
                             lblErrorMsg.Text = "";
                             //sets the current player to the defender
                             currentPlayer = defender;
+                            firstDefence = false;
                         }
                         //otherwise displays a message telling them the cards cannot be played and breaks out of this loop
                         else
@@ -1254,7 +1257,7 @@ namespace DurakFormApp
             {
                 DefendersWin();
             }
-            AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round);
+            AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, firstDefence);
 
             TurnCycle();
         }
@@ -1443,25 +1446,25 @@ namespace DurakFormApp
         {
             if(currentPlayer == playerAI && round == ATTACKERTURN)
             { 
-                if(playerAI.AITurnCycle(trumpCard,playingField,round) == -1)
+                if(playerAI.AITurnCycle(trumpCard,playingField,round, firstDefence) == -1)
                 {
                     DefendersWin();
                 }
                 else
                 {
-                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round);
+                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, firstDefence);
                     TurnCycle();
                 }
             }
             if (currentPlayer == playerAI && round == DEFENDERTURN)
             {
-                if (playerAI.AITurnCycle(trumpCard, playingField, round) == -1)
+                if (playerAI.AITurnCycle(trumpCard, playingField, round, firstDefence) == -1)
                 {
                     AttackersWin();
                 }
                 else
                 {
-                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round);
+                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, firstDefence);
                     TurnCycle();
                 }
             }
