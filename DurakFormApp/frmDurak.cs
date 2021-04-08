@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Ch10CardLib;
-
+using System.IO;
 
 namespace DurakFormApp
 {
@@ -66,6 +66,8 @@ namespace DurakFormApp
             playerPassed.attackerWin = false;
             playerPassed.defenderWin = false;
             btnSkipTurn.Enabled = false;
+            String folder = @"D:\Projects\OOP4200\DurakGamePrototype\test.txt";
+            File.WriteAllText(folder, "hi");
         }
 
 
@@ -134,6 +136,7 @@ namespace DurakFormApp
             btnDiscardPile.Enabled = false;
             btnSkipTurn.Enabled = false;
             btnStart.Visible = true;
+            txtNameInput.Visible = true;
             chkAIHandToggle.Enabled = false;
            
         }
@@ -161,12 +164,21 @@ namespace DurakFormApp
             cbTrumpCard.Visible = true;
             cardBox1.Visible = true;
             chkAIHandToggle.Enabled = true;
-
+         
 
             //shuffle deck
             myDeck.Shuffle();
 
-            player1 = new Player("Player1");
+            if(String.IsNullOrEmpty(txtNameInput.Text))
+            {
+                player1 = new Player("Player 1");
+            }
+            else
+            {
+                player1 = new Player(txtNameInput.Text);
+            }
+
+            
 
 
             //Reset variables for a new game
@@ -201,6 +213,7 @@ namespace DurakFormApp
             btnPlayCard.Enabled = true;
             btnDiscardPile.Enabled = true;
             btnStart.Visible = false;
+            txtNameInput.Visible = false;
      
             
         }
@@ -346,12 +359,16 @@ namespace DurakFormApp
                     }
                     else
                     {
+                        
                         //Creates a new cardbox object that will be set to the card the player selects
                         newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(AICardIndex));
 
                         newCardBox.FaceUp = true;
                         //The card is played from the player's hand (removed) and played onto the field (added)
+                        
                         playingField.cardPlayed(attacker.playerHand.playCard(AICardIndex));
+                        
+
                     }
 
                     //refreshes attacker's hands and display
@@ -359,10 +376,11 @@ namespace DurakFormApp
 
                     //Cards that are played are added to the field output
                     fieldCards.Add(newCardBox);
+                    
                 }
                 //The display for the field is refreshed to update new cards added
                 DisplayPlayingField();
-
+                
                 //sets the endgame flag
                 if (myDeck.getCardsRemaining() == 0)
                 {
@@ -1278,6 +1296,7 @@ namespace DurakFormApp
                 btnDiscardPile.Enabled = false;
                 btnSkipTurn.Enabled = false;
                 btnStart.Visible = true;
+                txtNameInput.Visible = true;
             }
             //checks the handsize of the player to see if it is zero
             else if (player1.playerHand.gethandSize() == 0)
@@ -1460,6 +1479,7 @@ namespace DurakFormApp
             {
                 if (playerAI.AITurnCycle(trumpCard, playingField, round, firstDefence) == -1)
                 {
+                    //System.Threading.Thread.Sleep(3000);
                     AttackersWin();
                 }
                 else
@@ -1469,5 +1489,12 @@ namespace DurakFormApp
                 }
             }
         }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+      
     }
 }

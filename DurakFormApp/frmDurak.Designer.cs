@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             Ch10CardLib.Card card1 = new Ch10CardLib.Card();
             Ch10CardLib.Card card2 = new Ch10CardLib.Card();
             this.lblDeckSize = new System.Windows.Forms.Label();
@@ -52,6 +53,8 @@
             this.lblErrorMsg = new System.Windows.Forms.Label();
             this.pnAIHand = new System.Windows.Forms.Panel();
             this.chkAIHandToggle = new System.Windows.Forms.CheckBox();
+            this.txtNameInput = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -278,12 +281,26 @@
             this.chkAIHandToggle.UseVisualStyleBackColor = true;
             this.chkAIHandToggle.CheckedChanged += new System.EventHandler(this.chkAIHandToggle_CheckedChanged);
             // 
+            // txtNameInput
+            // 
+            this.txtNameInput.Location = new System.Drawing.Point(56, 272);
+            this.txtNameInput.Name = "txtNameInput";
+            this.txtNameInput.Size = new System.Drawing.Size(100, 20);
+            this.txtNameInput.TabIndex = 26;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
             // frmDurak
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1011, 555);
+            this.Controls.Add(this.txtNameInput);
             this.Controls.Add(this.chkAIHandToggle);
             this.Controls.Add(this.pnPlayingField);
             this.Controls.Add(this.pnAIHand);
@@ -339,6 +356,8 @@
         private System.Windows.Forms.Label lblErrorMsg;
         private System.Windows.Forms.Panel pnAIHand;
         private System.Windows.Forms.CheckBox chkAIHandToggle;
+        private System.Windows.Forms.TextBox txtNameInput;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 
