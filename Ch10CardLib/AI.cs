@@ -16,31 +16,30 @@ namespace Ch10CardLib
         }
 
 
-        public int AITurnCycle(Card TrumpCard, Field PlayingField, string round, bool firstdefence)
+        public int AITurnCycle(Card TrumpCard, Field PlayingField, string round, bool perevodnoyFlag)
         {
-            if( playerHand.gethandSize() == 0)
-            {
-                return -1;
-            }
-            const string ATTACKINITIAL = "initialTurn";
-            const string ATTACKERTURN = "attacker";
-            const string DEFENDERTURN = "defender";
-            if (round == ATTACKINITIAL)
-            {
-                return AIAttackerInitialTurn(TrumpCard);
-            }
-            else if(round == ATTACKERTURN)
-            {
-                return AIAttackerTurn(PlayingField, TrumpCard);
-            }
-            else if( round == DEFENDERTURN )
-            {
-                return AIDefenderTurn(PlayingField, TrumpCard, firstdefence);
-            }
-            else
-            {
-                return -1;
-            }
+
+
+                const string ATTACKINITIAL = "initialTurn";
+                const string ATTACKERTURN = "attacker";
+                const string DEFENDERTURN = "defender";
+                if (round == ATTACKINITIAL)
+                {
+                    return AIAttackerInitialTurn(TrumpCard);
+                }
+                else if (round == ATTACKERTURN)
+                {
+                    return AIAttackerTurn(PlayingField, TrumpCard);
+                }
+                else if (round == DEFENDERTURN)
+                {
+                    return AIDefenderTurn(PlayingField, TrumpCard, perevodnoyFlag);
+                }
+                else
+                {
+                    return -1;
+                }
+            
         }
 
 
@@ -240,7 +239,7 @@ namespace Ch10CardLib
         /// <param name="playingField"></param>
         /// <param name="trumpCard"></param>
         /// <param name="passFlag"></param>
-        public int AIDefenderTurn(Field playingField, Card trumpCard, bool firstDefence)
+        public int AIDefenderTurn(Field playingField, Card trumpCard, bool perevodnoyFlag)
         {
             this.playerHand.displayHand();
             ArrayList validCards = new ArrayList();
@@ -259,7 +258,7 @@ namespace Ch10CardLib
 
 
             //loop through ai hand ///////////////////////For turn swapping mechanic///////////////
-            if (firstDefence == true)
+            if (perevodnoyFlag == true)
             {
                 for (int i = 0; i < playerHand.gethandSize(); i++)
                 {
@@ -299,7 +298,9 @@ namespace Ch10CardLib
                         return (int)equalRankIndex[0];
                     }
                 }
+
             }
+
             //////////////////////////////////////////////////////////////////////////////////////////
             //loop through ai hand
             for (int i = 0; i < playerHand.gethandSize(); i++)
@@ -336,6 +337,7 @@ namespace Ch10CardLib
                         validCards.Add(tempCard);
                         validCardIndex.Add(tempCardIndex);
                     }
+
                 }
             }
 
@@ -346,7 +348,10 @@ namespace Ch10CardLib
             {
                 passFlag = true;
             }
-
+            else
+            {
+                passFlag = false;
+            }
 
             /////// If moves are valid //////////////////////////////////////////
 
@@ -416,7 +421,7 @@ namespace Ch10CardLib
                             }
 
                         }
-                        return indexSelected;
+
                     }
                     else
                     {
@@ -435,13 +440,13 @@ namespace Ch10CardLib
                             }
 
                         }
-                        return indexSelected;
-                    }       
+                    }
+                    return indexSelected;
                 }
             }
             else
-            { 
-                return -1; 
+            {
+                return -1;
             }
 
         }//END OF DEFENDER METHOD

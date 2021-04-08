@@ -33,7 +33,6 @@ namespace DurakFormApp
         int turnCounter = 0;
         bool endGame = false;
         bool perevodnoyFlag = false;
-        bool firstDefence = false;
         PassFlag playerPassed = new PassFlag();
         //initialize the field
         Field playingField = new Field();
@@ -66,8 +65,8 @@ namespace DurakFormApp
             playerPassed.attackerWin = false;
             playerPassed.defenderWin = false;
             btnSkipTurn.Enabled = false;
-            String folder = @"D:\Projects\OOP4200\DurakGamePrototype\test.txt";
-            File.WriteAllText(folder, "hi");
+            //String folder = @"D:\Projects\OOP4200\DurakGamePrototype\test.txt";
+            //File.WriteAllText(folder, "hi");
         }
 
 
@@ -136,7 +135,7 @@ namespace DurakFormApp
             btnDiscardPile.Enabled = false;
             btnSkipTurn.Enabled = false;
             btnStart.Visible = true;
-            txtNameInput.Visible = true;
+            //txtNameInput.Visible = true;
             chkAIHandToggle.Enabled = false;
            
         }
@@ -169,14 +168,14 @@ namespace DurakFormApp
             //shuffle deck
             myDeck.Shuffle();
 
-            if(String.IsNullOrEmpty(txtNameInput.Text))
-            {
-                player1 = new Player("Player 1");
-            }
-            else
-            {
-                player1 = new Player(txtNameInput.Text);
-            }
+            //if(String.IsNullOrEmpty(txtNameInput.Text))
+            //{
+               player1 = new Player("Player 1");
+            //}
+            //else
+            //{
+            //    player1 = new Player(txtNameInput.Text);
+            //}
 
             
 
@@ -198,13 +197,13 @@ namespace DurakFormApp
 
             if (attacker == player1)
             {
-                lblPlayerTurn.Text = player1.playerName + "'s turn.";
+                lblPlayerTurn.Text = player1.playerName + " is the initial attacker.";
                 btnSkipTurn.Enabled = false;
             }
             else
             {
                
-                AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, firstDefence);
+                AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag);
 
                 TurnCycle();
                
@@ -213,7 +212,7 @@ namespace DurakFormApp
             btnPlayCard.Enabled = true;
             btnDiscardPile.Enabled = true;
             btnStart.Visible = false;
-            txtNameInput.Visible = false;
+            //txtNameInput.Visible = false;
      
             
         }
@@ -321,9 +320,6 @@ namespace DurakFormApp
                 currentPlayer = attacker;
             }
 
-       
-         
-
         }
 
 
@@ -337,7 +333,15 @@ namespace DurakFormApp
         private void btnPlayCard_Click(object sender, EventArgs e)
         {
             TurnCycle();
+            playerCardIndex = 0;
+            Card aCard = player1.playerHand.GetCard(playerCardIndex);
+
+            lblCardSelected.Text = aCard.ToString();
         }
+
+        /// <summary>
+        /// This function holds the logic for the turn cycling of the game
+        /// </summary>
         private void TurnCycle()
         {
             //update the deck size
@@ -397,20 +401,19 @@ namespace DurakFormApp
                 round = DEFENDERTURN;
                 //changes current player to the defender
                 currentPlayer = defender;
+                perevodnoyFlag = true;
                 //changes the message to reflect the next player's turn
-                lblPlayerTurn.Text = currentPlayer.playerName + "'s turn.";
+                lblPlayerTurn.Text = currentPlayer.playerName + " is defending.";
                 lblPlayerTurn.Refresh();
-                Console.WriteLine(currentPlayer.playerName + "'s turn.");
-                
-                 if (player1.playerHand.gethandSize() != 0 && playerAI.playerHand.gethandSize() != 0)
+
+
+                if (player1.playerHand.gethandSize() != 0 && playerAI.playerHand.gethandSize() != 0)
                  {
                      //enables the skip turn button
                      btnSkipTurn.Enabled = true;
 
-
                  }
 
-                firstDefence = true;
             }
             //////////////////////////////// The defender's turn (can only play cards of the same suit higher rank or trump suit on non-trumps)////////////////////////////////////////////
             else if (round == DEFENDERTURN)
@@ -460,8 +463,6 @@ namespace DurakFormApp
                         //adds the cards to the field display object
                         fieldCards.Add(newCardBox);
 
-                        perevodnoyFlag = true;
-
                         SwapRoles();
 
                         
@@ -470,7 +471,7 @@ namespace DurakFormApp
 
                         //refreshes the field to display the new card
                         DisplayPlayingField();
-
+                        perevodnoyFlag = true;
                         //sets the new defender as the next turn
                         round = DEFENDERTURN;
                         //empty error message
@@ -478,9 +479,11 @@ namespace DurakFormApp
                         //changes current player to the new made defender
                         currentPlayer = defender;
 
-                      /*  //sets the message for the next player's turn
-                        lblPlayerTurn.Text = currentPlayer.playerName + "'s turn as new defender.";
-                        Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
+                        /*  //sets the message for the next player's turn
+                          lblPlayerTurn.Text = currentPlayer.playerName + "'s turn as new defender.";
+                          Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
+                        lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
+                        lblPlayerTurn.Refresh();
 
                     }
                     else if (perevodnoyFlag == true && cardSelected.rank == currentCard.rank)
@@ -530,6 +533,9 @@ namespace DurakFormApp
                         lblErrorMsg.Text = "";
                         //changes current player to the new made defender
                         currentPlayer = defender;
+
+                        lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
+                        lblPlayerTurn.Refresh();
                     }
                     //////////////////////////////////////////////////Perevodnoy additional rules ABOVE//////////////////////////////////////////////////
                     else
@@ -593,6 +599,10 @@ namespace DurakFormApp
                                         lblErrorMsg.Text = "";
                                         //changes current player to attacker
                                         currentPlayer = attacker;
+                                        perevodnoyFlag = false;
+
+                                        lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
+                                        lblPlayerTurn.Refresh();
                                     }
 
                                 }
@@ -652,10 +662,11 @@ namespace DurakFormApp
                                     lblErrorMsg.Text = "";
                                     //changes current player to attacker
                                     currentPlayer = attacker;
+                                    perevodnoyFlag = false;
+
+                                    lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
+                                    lblPlayerTurn.Refresh();
                                 }
-                         /*       //sets the message to the next player's turn
-                                lblPlayerTurn.Text = attacker.playerName + "'s turn.";
-                                Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
                             }
                         }
                         //checks to see if played card suit is the field card suit
@@ -709,6 +720,10 @@ namespace DurakFormApp
                                     lblErrorMsg.Text = "";
                                     //changes current player to attacker
                                     currentPlayer = attacker;
+                                    perevodnoyFlag = false;
+
+                                    lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
+                                    lblPlayerTurn.Refresh();
                                 }
                                 //sets the message for the next player's turn
                                 /*lblPlayerTurn.Text = attacker.playerName + "'s turn.";
@@ -725,6 +740,7 @@ namespace DurakFormApp
                         {
                             lblErrorMsg.Text = "You can only play the same suit or the trump suit.";
                         }
+
                     }
                 }
 
@@ -740,9 +756,6 @@ namespace DurakFormApp
                     EndGameCheck();
                 }
 
-                lblPlayerTurn.Text = currentPlayer.playerName + "'s turn.";
-                lblPlayerTurn.Refresh();
-                Console.WriteLine(currentPlayer.playerName + "'s turn.");
 
             }
             ///////////////////////////////////ATTACKER STANDARD TURN///////////////////////////////////////////
@@ -823,7 +836,10 @@ namespace DurakFormApp
                             lblErrorMsg.Text = "";
                             //sets the current player to the defender
                             currentPlayer = defender;
-                            firstDefence = false;
+                            perevodnoyFlag = false;
+
+                            //sets the message to the next player's turn
+                            lblPlayerTurn.Text = currentPlayer.playerName + " is defending.";
                         }
                         //otherwise displays a message telling them the cards cannot be played and breaks out of this loop
                         else
@@ -844,9 +860,6 @@ namespace DurakFormApp
                 {
                     EndGameCheck();
                 }
-
-                //sets the message to the next player's turn
-                lblPlayerTurn.Text = currentPlayer.playerName + "'s turn.";
             }
 
             //////////////////////////END OF ROUND LOGIC STARTS HERE ///////////////////////////////////////////////
@@ -1006,6 +1019,7 @@ namespace DurakFormApp
             turnCounter = 0;
             currentPlayer = attacker;
             round = ATTACKINITIAL;
+            perevodnoyFlag = false;
             lblPlayerTurn.Text = currentPlayer.playerName + " is still attacker.";
             //disable the skip turn function
             btnSkipTurn.Enabled = false;
@@ -1154,6 +1168,7 @@ namespace DurakFormApp
             turnCounter = 0;
             currentPlayer = attacker;
             round = ATTACKINITIAL;
+            perevodnoyFlag = false;
             lblPlayerTurn.Text = currentPlayer.playerName + " is the new attacker.";
             //disable the skip turn function
             btnSkipTurn.Enabled = false;
@@ -1179,15 +1194,6 @@ namespace DurakFormApp
                 this.pnPlayerHand.Controls.Clear();
 
                 DisplayControls();
-                ////loops through the player's new hand
-                //for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
-                //{
-                //    //adds an offset to each card
-                //    cards[i].Left = (i * 20) + 100;
-                //    //displays the hand in the picturebox
-                //    this.pnPlayerHand.Controls.Add(cards[i]);
-
-                //}
             }
             else
             {
@@ -1199,15 +1205,6 @@ namespace DurakFormApp
                 this.pnAIHand.Controls.Clear();
 
                 DisplayControls();
-                ////loops through the player's new hand
-                //for (int i = attacker.playerHand.gethandSize() - 1; i >= 0; i--)
-                //{
-                //    //adds an offset to each card
-                //    cardsAI[i].Left = (i * 20) + 100;
-                //    //displays the hand in the picturebox
-                //    this.pnAIHand.Controls.Add(cardsAI[i]);
-
-                //}
             }
         }
 
@@ -1225,15 +1222,7 @@ namespace DurakFormApp
                 this.pnPlayerHand.Controls.Clear();
 
                 DisplayControls();
-                ////loops through the current hand
-                //for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
-                //{
-                //    //sets an offset
-                //    cards[i].Left = (i * 20) + 100;
-                //    //displays the new hand in the output
-                //    this.pnPlayerHand.Controls.Add(cards[i]);
 
-                //}
             }
             else
             {
@@ -1244,15 +1233,7 @@ namespace DurakFormApp
                 this.pnAIHand.Controls.Clear();
 
                 DisplayControls();
-                ////loops through the player's new hand
-                //for (int i = defender.playerHand.gethandSize() - 1; i >= 0; i--)
-                //{
-                //    //adds an offset to each card
-                //    cardsAI[i].Left = (i * 20) + 100;
-                //    //displays the hand in the picturebox
-                //    this.pnAIHand.Controls.Add(cardsAI[i]);
 
-                //}
             }
 
         }
@@ -1275,7 +1256,7 @@ namespace DurakFormApp
             {
                 DefendersWin();
             }
-            AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, firstDefence);
+            AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag);
 
             TurnCycle();
         }
@@ -1290,7 +1271,7 @@ namespace DurakFormApp
             {
                 //declare winner
                 MessageBox.Show("GAME OVER.");
-                lblPlayerTurn.Text = player1.playerName +" loses. Try again?";
+                //lblPlayerTurn.Text = player1.playerName +" loses. Try again?";
                 //enables and disables buttons
                 btnPlayCard.Enabled = false;
                 btnDiscardPile.Enabled = false;
@@ -1303,7 +1284,7 @@ namespace DurakFormApp
             {
                 //declare the winner
                 MessageBox.Show(player1.playerName + " Wins!");
-                lblPlayerTurn.Text = player1.playerName + " wins! Try again?";
+                //lblPlayerTurn.Text = player1.playerName + " wins! Try again?";
                 //enables and disables buttons
                 btnPlayCard.Enabled = false;
                 btnDiscardPile.Enabled = false;
@@ -1311,7 +1292,22 @@ namespace DurakFormApp
                 btnStart.Visible = true;
             }
             cardBox1.Visible = false;
-
+            myDeck = new Deck();
+            turnCounter = 0;
+            endGame = false;
+            cards = new List<CardBox.CardBox>();
+            cardsAI = new List<CardBox.CardBox>();
+            fieldCards = new List<CardBox.CardBox>();
+            round = ATTACKINITIAL;
+            matchFlag = false;
+            pnPlayerHand.Controls.Clear();
+            pnAIHand.Controls.Clear();
+            cards.Clear();
+            playingField = new Field();
+            pnPlayingField.Controls.Clear();
+            cbTrumpCard.Visible = true;
+            cardBox1.Visible = true;
+            chkAIHandToggle.Enabled = true;
         }
 
         /// <summary>
@@ -1373,62 +1369,6 @@ namespace DurakFormApp
             }
 
         }
-        /// <summary>
-        /// Function used to realign the cards in a hand.
-        /// </summary>
-        /// <param name="panelHand"></param>
-        private void RealignCards(Panel panelHand)
-        {
-            const int POP = 25;
-            // Determine the number of cards/controls in the panel.
-            int myCount = panelHand.Controls.Count;
-
-            // If there are any cards in the panel
-            if (myCount > 0)
-            {
-                // Determine how wide one card/control is.
-                int cardWidth = panelHand.Controls[0].Width;
-                // Determine where the left-hand edge of a card/control placed 
-                // in the middle of the panel should be  
-                int startPoint = (panelHand.Width - cardWidth) / 2;
-                // An offset for the remaining cards
-                int offset = 0;
-                // If there are more than one cards/controls in the panel
-                if (myCount > 1)
-                {
-                    // Determine what the offset should be for each card based on the 
-                    // space available and the number of card/controls
-                    offset = (panelHand.Width - cardWidth - 2 * POP) / (myCount - 1);
-                    // If the offset is bigger than the card/control width, i.e. there is lots of room, 
-                    // set the offset to the card width. The cards/controls will not overlap at all.
-                    if (offset > cardWidth)
-                        offset = cardWidth;
-
-                    // Determine width of all the cards/controls 
-                    int allCardsWidth = (myCount - 1) * offset + cardWidth;
-                    // Set the start point to where the left-hand edge of the "first" card should be.
-                    startPoint = (panelHand.Width - allCardsWidth) / 2;
-                }
-
-                // Aligning the cards: Note that I align them in reserve order from how they
-                // are stored in the controls collection. This is so that cards on the left 
-                // appear underneath cards to the right. This allows the user to see the rank
-                // and suit more easily.
-                panelHand.Controls[myCount - 1].Top = POP;
-                System.Diagnostics.Debug.Write(panelHand.Controls[myCount - 1].Left.ToString() + "\n");
-                panelHand.Controls[myCount - 1].Left = startPoint;
-                // Align the "first" card (which is the last control in the collection)
-
-                // for each of the remaining controls, in reverse order.
-                for (int index = myCount - 2; index >= 0; index--)
-                {
-                    // Align the current card
-                    panelHand.Controls[index].Top = POP;
-                    panelHand.Controls[index].Left = (index * 20) + 100;
-                }
-            }
-
-        }
 
         //toggles AI hand to show or hide cards
         private void chkAIHandToggle_CheckedChanged(object sender, EventArgs e)
@@ -1461,38 +1401,39 @@ namespace DurakFormApp
             }
         }
 
+        /// <summary>
+        /// Function that calls an AI turn on the message change of the turns
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lblPlayerTurn_TextChanged(object sender, EventArgs e)
         {
-            if(currentPlayer == playerAI && round == ATTACKERTURN)
+            if (currentPlayer == playerAI && round == ATTACKERTURN)
             { 
-                if(playerAI.AITurnCycle(trumpCard,playingField,round, firstDefence) == -1)
+                if(playerAI.AITurnCycle(trumpCard,playingField,round, perevodnoyFlag) == -1)
                 {
                     DefendersWin();
                 }
                 else
                 {
-                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, firstDefence);
+                    perevodnoyFlag = false;
+                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag);
                     TurnCycle();
                 }
             }
             if (currentPlayer == playerAI && round == DEFENDERTURN)
             {
-                if (playerAI.AITurnCycle(trumpCard, playingField, round, firstDefence) == -1)
+                if (playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag) == -1)
                 {
                     //System.Threading.Thread.Sleep(3000);
                     AttackersWin();
                 }
                 else
                 {
-                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, firstDefence);
+                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag);
                     TurnCycle();
                 }
             }
-        }
-
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
-
         }
 
       
