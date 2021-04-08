@@ -50,11 +50,12 @@ namespace DurakFormApp
         bool showAIHand = false;
         int playerOffset = 215;
         int aiOffset = 215;
-
-
+        DateTime today = DateTime.Now;
         const int MAXATTACKCHAIN = 6;
 
         int AICardIndex = 0;
+
+        string filePath = @"../../GameLog.txt";
 
         public frmDurak()
         {
@@ -65,8 +66,14 @@ namespace DurakFormApp
             playerPassed.attackerWin = false;
             playerPassed.defenderWin = false;
             btnSkipTurn.Enabled = false;
-            //String folder = @"D:\Projects\OOP4200\DurakGamePrototype\test.txt";
-            //File.WriteAllText(folder, "hi");
+
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                writer.WriteLine("Application has started");
+                writer.WriteLine("Game Started At: " + today.ToString("F"));
+            }
+            
+
         }
 
 
@@ -135,7 +142,7 @@ namespace DurakFormApp
             btnDiscardPile.Enabled = false;
             btnSkipTurn.Enabled = false;
             btnStart.Visible = true;
-            //txtNameInput.Visible = true;
+            txtNameInput.Visible = true;
             chkAIHandToggle.Enabled = false;
            
         }
@@ -168,17 +175,20 @@ namespace DurakFormApp
             //shuffle deck
             myDeck.Shuffle();
 
-            //if(String.IsNullOrEmpty(txtNameInput.Text))
-            //{
+            if(String.IsNullOrEmpty(txtNameInput.Text))
+            {
                player1 = new Player("Player 1");
-            //}
-            //else
-            //{
-            //    player1 = new Player(txtNameInput.Text);
-            //}
+            }
+            else
+            {
+                player1 = new Player(txtNameInput.Text);
+            }
 
-            
 
+          /*  using (StreamWriter writer = new StreamWriter(filePath,true))
+            {
+                writer.WriteLine("Name has been set to " + player1.playerName);
+            }*/
 
             //Reset variables for a new game
             player1.playerHand = new Hand(myDeck);
@@ -190,6 +200,14 @@ namespace DurakFormApp
             lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
             this.cbTrumpCard.Card = trumpCard;
 
+            //Prints the trump card and players hands to the log file
+            using (StreamWriter writer = new StreamWriter(filePath, true))
+            {
+                writer.WriteLine("Trump Card: " + trumpCard.ToString());
+                writer.WriteLine(player1.playerName+ "'s hand:" + player1.playerHand.displayHandGUI());
+                writer.WriteLine(playerAI.playerName + "'s hand:" + playerAI.playerHand.displayHandGUI());
+            }
+
             //1.Create cardbox controls 2.display them on the screen 3.Determine the starting player
             CreateControls();
             DisplayControls();
@@ -199,12 +217,13 @@ namespace DurakFormApp
             {
                 lblPlayerTurn.Text = player1.playerName + " is the initial attacker.";
                 btnSkipTurn.Enabled = false;
+                writeGameLog(player1.playerName + " is the initial attacker.");
             }
             else
             {
                
                 AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag);
-
+                writeGameLog(playerAI.playerName + " is the initial attacker.");
                 TurnCycle();
                
             }
@@ -212,7 +231,7 @@ namespace DurakFormApp
             btnPlayCard.Enabled = true;
             btnDiscardPile.Enabled = true;
             btnStart.Visible = false;
-            //txtNameInput.Visible = false;
+            txtNameInput.Visible = false;
      
             
         }
@@ -249,7 +268,7 @@ namespace DurakFormApp
                 cards[i].Left = (i * 20) + playerOffset;
                 this.pnPlayerHand.Controls.Add(cards[i]);
             }
-            //Decrements because incrementing will overlap cards in a false way 
+            //Decrements because incrementing will overlap cards in a false way TODO (CHECK THIS)
             for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
             {
                 cardsAI[i].Left = (i * 20) + aiOffset;
@@ -353,28 +372,42 @@ namespace DurakFormApp
                 if (attacker.playerHand.gethandSize() > 0)
                 {
                     CardBox.CardBox newCardBox;
+                    
                     if (attacker == player1)
                     {
                         //Creates a new cardbox object that will be set to the card the player selects
                         newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(playerCardIndex));
+                        
+                        //Prints the card played for player initial attack to the log
+                        writeGameLog(attacker.playerName + " attacked with: " + attacker.playerHand.GetCard(playerCardIndex).ToString()); 
 
                         //The card is played from the player's hand (removed) and played onto the field (added)
                         playingField.cardPlayed(attacker.playerHand.playCard(playerCardIndex));
+
+                        
+
                     }
                     else
                     {
-                        
+
                         //Creates a new cardbox object that will be set to the card the player selects
                         newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(AICardIndex));
 
                         newCardBox.FaceUp = true;
+
+
+                        //Prints the card played for AI initial attack to the log
+                        writeGameLog(attacker.playerName + " attacked with: " + attacker.playerHand.GetCard(AICardIndex).ToString());
+
                         //The card is played from the player's hand (removed) and played onto the field (added)
-                        
+
                         playingField.cardPlayed(attacker.playerHand.playCard(AICardIndex));
+
                         
+
 
                     }
-
+                   
                     //refreshes attacker's hands and display
                     AttackerHandRefresh();
 
@@ -382,7 +415,7 @@ namespace DurakFormApp
                     fieldCards.Add(newCardBox);
                     
                 }
-                //The display for the field is refreshed to update new cards added
+              
                 DisplayPlayingField();
                 
                 //sets the endgame flag
@@ -404,6 +437,7 @@ namespace DurakFormApp
                 perevodnoyFlag = true;
                 //changes the message to reflect the next player's turn
                 lblPlayerTurn.Text = currentPlayer.playerName + " is defending.";
+                writeGameLog(defender.playerName + " is defending.");
                 lblPlayerTurn.Refresh();
 
 
@@ -443,6 +477,8 @@ namespace DurakFormApp
                             //Creates a new cardbox object that will be set to the card the player selects
                             newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(playerCardIndex));
 
+                            //Prints the card played for player defense to the log
+                            writeGameLog(defender.playerName + " defended with: " + defender.playerHand.GetCard(playerCardIndex).ToString());
                             //The card is played from the player's hand (removed) and played onto the field (added)
                             playingField.cardPlayed(defender.playerHand.playCard(playerCardIndex));
                         }
@@ -452,6 +488,9 @@ namespace DurakFormApp
                             newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(AICardIndex));
 
                             newCardBox.FaceUp = true;
+
+                            //Prints the card played for AI defense to the log
+                            writeGameLog(defender.playerName + " defended with: " + defender.playerHand.GetCard(AICardIndex).ToString());
 
                             //The card is played from the player's hand (removed) and played onto the field (added)
                             playingField.cardPlayed(defender.playerHand.playCard(AICardIndex));
@@ -483,6 +522,8 @@ namespace DurakFormApp
                           lblPlayerTurn.Text = currentPlayer.playerName + "'s turn as new defender.";
                           Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
                         lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
+                        writeGameLog("Roles Swapped");
+                        writeGameLog(defender.playerName + " is now defending.");
                         lblPlayerTurn.Refresh();
 
                     }
@@ -494,6 +535,8 @@ namespace DurakFormApp
                             //Creates a new cardbox object that will be set to the card the player selects
                             newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(playerCardIndex));
 
+                            //Prints the card played for player defense to the log
+                            writeGameLog(defender.playerName + " defended with: " + defender.playerHand.GetCard(playerCardIndex).ToString());
                             //The card is played from the player's hand (removed) and played onto the field (added)
                             playingField.cardPlayed(defender.playerHand.playCard(playerCardIndex));
                         }
@@ -503,6 +546,9 @@ namespace DurakFormApp
                             newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(AICardIndex));
 
                             newCardBox.FaceUp = true;
+
+                            //Prints the card played for AI defense to the log
+                            writeGameLog(defender.playerName + " defended with: " + defender.playerHand.GetCard(AICardIndex).ToString());
                             //The card is played from the player's hand (removed) and played onto the field (added)
                             playingField.cardPlayed(defender.playerHand.playCard(AICardIndex));
                         }
@@ -535,6 +581,7 @@ namespace DurakFormApp
                         currentPlayer = defender;
 
                         lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
+                        writeGameLog(defender.playerName + " is now defending.");
                         lblPlayerTurn.Refresh();
                     }
                     //////////////////////////////////////////////////Perevodnoy additional rules ABOVE//////////////////////////////////////////////////
@@ -556,6 +603,9 @@ namespace DurakFormApp
                                         //Creates a new cardbox object that will be set to the card the player selects
                                         newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(playerCardIndex));
 
+                                        //Writes player defense to the log
+                                        writeGameLog(defender.playerName + " defended with: " + defender.playerHand.GetCard(playerCardIndex).ToString());
+
                                         //The card is played from the player's hand (removed) and played onto the field (added)
                                         playingField.cardPlayed(defender.playerHand.playCard(playerCardIndex));
                                     }
@@ -565,6 +615,10 @@ namespace DurakFormApp
                                         newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(AICardIndex));
 
                                         newCardBox.FaceUp = true;
+
+                                        //Writes AI defense to the log
+                                        writeGameLog(defender.playerName + " defended with: " + defender.playerHand.GetCard(AICardIndex).ToString());
+
                                         //The card is played from the player's hand (removed) and played onto the field (added)
                                         playingField.cardPlayed(defender.playerHand.playCard(AICardIndex));
                                     }
@@ -602,6 +656,7 @@ namespace DurakFormApp
                                         perevodnoyFlag = false;
 
                                         lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
+                                        writeGameLog(attacker.playerName + " is attacking.");
                                         lblPlayerTurn.Refresh();
                                     }
 
@@ -622,6 +677,9 @@ namespace DurakFormApp
                                     //Creates a new cardbox object that will be set to the card the player selects
                                     newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(playerCardIndex));
 
+                                    //Writes Player defense to the log
+                                    writeGameLog(defender.playerName + " defended with: " + defender.playerHand.GetCard(playerCardIndex).ToString());
+
                                     //The card is played from the player's hand (removed) and played onto the field (added)
                                     playingField.cardPlayed(defender.playerHand.playCard(playerCardIndex));
                                 }
@@ -631,6 +689,8 @@ namespace DurakFormApp
                                     newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(AICardIndex));
 
                                     newCardBox.FaceUp = true;
+                                    //Writes AI defense to the log
+                                    writeGameLog(defender.playerName + " defended with: " + defender.playerHand.GetCard(AICardIndex).ToString());
                                     //The card is played from the player's hand (removed) and played onto the field (added)
                                     playingField.cardPlayed(defender.playerHand.playCard(AICardIndex));
                                 }
@@ -665,6 +725,7 @@ namespace DurakFormApp
                                     perevodnoyFlag = false;
 
                                     lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
+                                    writeGameLog(attacker.playerName + " is attacking.");
                                     lblPlayerTurn.Refresh();
                                 }
                             }
@@ -680,7 +741,8 @@ namespace DurakFormApp
                                 {
                                     //Creates a new cardbox object that will be set to the card the player selects
                                     newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(playerCardIndex));
-
+                                    //Writes Player defense to the log
+                                    writeGameLog(defender.playerName + " defended with: " + defender.playerHand.GetCard(playerCardIndex).ToString());
                                     //The card is played from the player's hand (removed) and played onto the field (added)
                                     playingField.cardPlayed(defender.playerHand.playCard(playerCardIndex));
                                 }
@@ -690,6 +752,10 @@ namespace DurakFormApp
                                     newCardBox = new CardBox.CardBox(defender.playerHand.GetCard(AICardIndex));
 
                                     newCardBox.FaceUp = true;
+
+                                    //Writes AI defense to the log
+                                    writeGameLog(defender.playerName + " defended with: " + defender.playerHand.GetCard(AICardIndex).ToString());
+
                                     //The card is played from the player's hand (removed) and played onto the field (added)
                                     playingField.cardPlayed(defender.playerHand.playCard(AICardIndex));
                                 }
@@ -723,6 +789,7 @@ namespace DurakFormApp
                                     perevodnoyFlag = false;
 
                                     lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
+                                    writeGameLog(attacker.playerName + " is attacking.");
                                     lblPlayerTurn.Refresh();
                                 }
                                 //sets the message for the next player's turn
@@ -802,6 +869,9 @@ namespace DurakFormApp
                                 //Creates a new cardbox object that will be set to the card the player selects
                                 newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(playerCardIndex));
 
+                                //Writes Player attack to the log
+                                writeGameLog(attacker.playerName + " attacked with: " + attacker.playerHand.GetCard(playerCardIndex).ToString());
+
                                 //The card is played from the player's hand (removed) and played onto the field (added)
                                 playingField.cardPlayed(attacker.playerHand.playCard(playerCardIndex));
                             }
@@ -809,6 +879,9 @@ namespace DurakFormApp
                             {
                                 //Creates a new cardbox object that will be set to the card the player selects
                                 newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(AICardIndex));
+
+                                //Writes Player attack to the log
+                                writeGameLog(attacker.playerName + " attacked with: " + attacker.playerHand.GetCard(AICardIndex).ToString());
 
                                 //The card is played from the player's hand (removed) and played onto the field (added)
                                 playingField.cardPlayed(attacker.playerHand.playCard(AICardIndex));
@@ -840,6 +913,7 @@ namespace DurakFormApp
 
                             //sets the message to the next player's turn
                             lblPlayerTurn.Text = currentPlayer.playerName + " is defending.";
+                            writeGameLog(defender.playerName + " is defending.");
                         }
                         //otherwise displays a message telling them the cards cannot be played and breaks out of this loop
                         else
@@ -1021,6 +1095,7 @@ namespace DurakFormApp
             round = ATTACKINITIAL;
             perevodnoyFlag = false;
             lblPlayerTurn.Text = currentPlayer.playerName + " is still attacker.";
+            writeGameLog(currentPlayer.playerName + " is still attacker.");
             //disable the skip turn function
             btnSkipTurn.Enabled = false;
             playerCardIndex = 0;
@@ -1170,6 +1245,7 @@ namespace DurakFormApp
             round = ATTACKINITIAL;
             perevodnoyFlag = false;
             lblPlayerTurn.Text = currentPlayer.playerName + " is the new attacker.";
+            writeGameLog(attacker.playerName + " is the new attacker.");
             //disable the skip turn function
             btnSkipTurn.Enabled = false;
 
@@ -1436,6 +1512,20 @@ namespace DurakFormApp
             }
         }
 
-      
+        private void frmDurak_FormClosing(object sender, FormClosingEventArgs e)
+        {
+           
+        }
+
+        public void writeGameLog(string msg)
+        {
+            using (StreamWriter writer = new StreamWriter(filePath, true))
+            {
+
+                writer.WriteLine(msg);
+
+            }
+        }
+
     }
 }

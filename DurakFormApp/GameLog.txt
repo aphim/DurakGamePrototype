@@ -1,0 +1,11 @@
+Application has started
+Game Started At: April 8, 2021 7:11:37 PM
+Trump Card: The Ten of Spades
+Player 1's hand: The Six of Diamonds The Seven of Clubs The Jack of Hearts The Seven of Diamonds The King of Spades The Ace of Diamonds
+AI's hand: The Ten of Clubs The King of Hearts The Seven of Spades The Eight of Hearts The Ace of Spades The Nine of Clubs
+Player 1 is the initial attacker.
+Player 1 attacked with: The Seven of Clubs
+AI defended with: The Seven of Spades
+Roles Swapped
+Player 1 is now defending.
+Player 1 is defending.

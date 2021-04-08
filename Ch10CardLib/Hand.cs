@@ -148,7 +148,7 @@ namespace Ch10CardLib
                 //displays the current card
                 Card tempCard = this.GetCard(i);
                 
-                tempString +=  tempCard.ToString();
+                tempString +=   " "+ tempCard.ToString();
             }
             return tempString;
         }
