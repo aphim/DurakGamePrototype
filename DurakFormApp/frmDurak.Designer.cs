@@ -315,7 +315,6 @@
             this.Name = "frmDurak";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Durak";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmDurak_FormClosing);
             this.Load += new System.EventHandler(this.frmDurak_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

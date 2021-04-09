@@ -269,13 +269,17 @@ namespace DurakFormApp
                 cards[i].Left = (i * 20) + playerOffset;
                 this.pnPlayerHand.Controls.Add(cards[i]);
             }
-            //Decrements because incrementing will overlap cards in a false way TODO (CHECK THIS)
-            for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
+            if (cardsAI.Count > 0)
             {
-                cardsAI[i].Left = (i * 20) + aiOffset;
-                cardsAI[i].FaceUp = showAIHand;
-                this.pnAIHand.Controls.Add(cardsAI[i]);
+                //Decrements because incrementing will overlap cards in a false way TODO (CHECK THIS)
+                for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
+                {
+                    cardsAI[i].Left = (i * 20) + aiOffset;
+                    cardsAI[i].FaceUp = showAIHand;
+                    this.pnAIHand.Controls.Add(cardsAI[i]);
+                }
             }
+
         }
 
         /// <summary>
@@ -1284,14 +1288,17 @@ namespace DurakFormApp
             }
             else
             {
-                //removes the card from the list that displays the hand of the player
-                cardsAI.RemoveAt(AICardIndex);
+                if (cardsAI.Count > 0)
+                {
+                    //removes the card from the list that displays the hand of the player
+                    cardsAI.RemoveAt(AICardIndex);
 
 
-                //resets the list to remove the existing display
-                this.pnAIHand.Controls.Clear();
+                    //resets the list to remove the existing display
+                    this.pnAIHand.Controls.Clear();
 
-                DisplayControls();
+                    DisplayControls();
+                }
             }
         }
 
@@ -1313,13 +1320,16 @@ namespace DurakFormApp
             }
             else
             {
-                //removes the card from the list that displays the hand of the player
-                cardsAI.RemoveAt(AICardIndex);
+                if (cardsAI.Count > 0)
+                {
+                    //removes the card from the list that displays the hand of the player
+                    cardsAI.RemoveAt(AICardIndex);
 
-                //resets the list to remove the existing display
-                this.pnAIHand.Controls.Clear();
+                    //resets the list to remove the existing display
+                    this.pnAIHand.Controls.Clear();
 
-                DisplayControls();
+                    DisplayControls();
+                }
 
             }
 
@@ -1404,22 +1414,14 @@ namespace DurakFormApp
                 btnSkipTurn.Enabled = false;
                 btnStart.Visible = true;
 
-                //myDeck = new Deck();
-                //turnCounter = 0;
-                //endGame = false;
-                //cards = new List<CardBox.CardBox>();
-                //cardsAI = new List<CardBox.CardBox>();
-                //fieldCards = new List<CardBox.CardBox>();
-                //round = ATTACKINITIAL;
-                //matchFlag = false;
-                //pnPlayerHand.Controls.Clear();
-                //pnAIHand.Controls.Clear();
-                //cards.Clear();
-                //playingField = new Field();
-                //pnPlayingField.Controls.Clear();
-                //cbTrumpCard.Visible = true;
-                //cardBox1.Visible = true;
-                //chkAIHandToggle.Enabled = true;
+                round = "gameover";
+                turnCounter = 10;
+                myDeck = new Deck();
+                endGame = false;
+                cardsAI = new List<CardBox.CardBox>();
+                cardsAI.Clear();
+                playerAI.playerHand.removeHand();
+                pnAIHand.Controls.Clear();
 
             }
             cardBox1.Visible = false;
@@ -1563,11 +1565,6 @@ namespace DurakFormApp
                     TurnCycle();
                 }
             }
-        }
-
-        private void frmDurak_FormClosing(object sender, FormClosingEventArgs e)
-        {
-           
         }
 
         public void writeGameLog(string msg)

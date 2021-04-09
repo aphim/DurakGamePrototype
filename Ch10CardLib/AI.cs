@@ -20,7 +20,15 @@ namespace Ch10CardLib
             playerName = name;
         }
 
-
+        /// <summary>
+        /// this function checks which turn it is and directs it to the proper turn function
+        /// </summary>
+        /// <param name="TrumpCard"></param>
+        /// <param name="PlayingField"></param>
+        /// <param name="round"></param>
+        /// <param name="perevodnoyFlag"></param>
+        /// <param name="gameOver"></param>
+        /// <returns></returns>
         public int AITurnCycle(Card TrumpCard, Field PlayingField, string round, bool perevodnoyFlag, bool gameOver)
         {
 

@@ -107,6 +107,15 @@ namespace Ch10CardLib
             }
         }
 
+        public void removeHand()
+        {
+            //loops through the hand
+            for (int i = 0; i < this.gethandSize(); i++)
+            {
+                hand.RemoveAt(i);
+            }
+        }
+
 
         /// <summary>
         /// adds a card to the hand
