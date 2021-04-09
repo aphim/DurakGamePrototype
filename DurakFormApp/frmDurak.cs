@@ -52,6 +52,7 @@ namespace DurakFormApp
         int aiOffset = 215;
         DateTime today = DateTime.Now;
         const int MAXATTACKCHAIN = 6;
+        bool flagGameOver = false;
 
         int AICardIndex = 0;
 
@@ -222,7 +223,7 @@ namespace DurakFormApp
             else
             {
                
-                AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag);
+                AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver);
                 writeGameLog(playerAI.playerName + " is the initial attacker.");
                 TurnCycle();
                
@@ -1332,7 +1333,7 @@ namespace DurakFormApp
             {
                 DefendersWin();
             }
-            AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag);
+            AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver);
 
             TurnCycle();
         }
@@ -1386,22 +1387,22 @@ namespace DurakFormApp
                 btnSkipTurn.Enabled = false;
                 btnStart.Visible = true;
 
-                myDeck = new Deck();
-                turnCounter = 0;
-                endGame = false;
-                cards = new List<CardBox.CardBox>();
-                cardsAI = new List<CardBox.CardBox>();
-                fieldCards = new List<CardBox.CardBox>();
-                round = ATTACKINITIAL;
-                matchFlag = false;
-                pnPlayerHand.Controls.Clear();
-                pnAIHand.Controls.Clear();
-                cards.Clear();
-                playingField = new Field();
-                pnPlayingField.Controls.Clear();
-                cbTrumpCard.Visible = true;
-                cardBox1.Visible = true;
-                chkAIHandToggle.Enabled = true;
+                //myDeck = new Deck();
+                //turnCounter = 0;
+                //endGame = false;
+                //cards = new List<CardBox.CardBox>();
+                //cardsAI = new List<CardBox.CardBox>();
+                //fieldCards = new List<CardBox.CardBox>();
+                //round = ATTACKINITIAL;
+                //matchFlag = false;
+                //pnPlayerHand.Controls.Clear();
+                //pnAIHand.Controls.Clear();
+                //cards.Clear();
+                //playingField = new Field();
+                //pnPlayingField.Controls.Clear();
+                //cbTrumpCard.Visible = true;
+                //cardBox1.Visible = true;
+                //chkAIHandToggle.Enabled = true;
 
             }
             cardBox1.Visible = false;
@@ -1506,29 +1507,42 @@ namespace DurakFormApp
         /// <param name="e"></param>
         private void lblPlayerTurn_TextChanged(object sender, EventArgs e)
         {
+            //checks to see if a player wins during the endgame
+            if (endGame)
+            {
+                EndGameCheck();
+            }
             if (currentPlayer == playerAI && round == ATTACKERTURN)
             { 
-                if(playerAI.AITurnCycle(trumpCard,playingField,round, perevodnoyFlag) == -1)
+                if(playerAI.AITurnCycle(trumpCard,playingField,round, perevodnoyFlag, flagGameOver) == -1)
                 {
                     DefendersWin();
+                }
+                else if (playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver) == -2)
+                {
+
                 }
                 else
                 {
                     perevodnoyFlag = false;
-                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag);
+                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver);
                     TurnCycle();
                 }
             }
             if (currentPlayer == playerAI && round == DEFENDERTURN)
             {
-                if (playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag) == -1)
+                if (playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver) == -1)
                 {
                     //System.Threading.Thread.Sleep(3000);
                     AttackersWin();
                 }
+                else if(playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver) == -2)
+                {
+                    
+                }
                 else
                 {
-                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag);
+                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver);
                     TurnCycle();
                 }
             }

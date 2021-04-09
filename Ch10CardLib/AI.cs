@@ -16,10 +16,11 @@ namespace Ch10CardLib
         }
 
 
-        public int AITurnCycle(Card TrumpCard, Field PlayingField, string round, bool perevodnoyFlag)
+        public int AITurnCycle(Card TrumpCard, Field PlayingField, string round, bool perevodnoyFlag, bool gameOver)
         {
 
-
+            if(!gameOver)
+            {
                 const string ATTACKINITIAL = "initialTurn";
                 const string ATTACKERTURN = "attacker";
                 const string DEFENDERTURN = "defender";
@@ -39,6 +40,13 @@ namespace Ch10CardLib
                 {
                     return -1;
                 }
+            }
+            else
+            {
+                return -2;
+            }
+
+                
             
         }
 
