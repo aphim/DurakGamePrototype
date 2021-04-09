@@ -437,7 +437,7 @@ namespace DurakFormApp
                 perevodnoyFlag = true;
                 //changes the message to reflect the next player's turn
                 lblPlayerTurn.Text = currentPlayer.playerName + " is defending.";
-                writeGameLog(defender.playerName + " is defending.");
+                //writeGameLog(defender.playerName + " is defending.");
                 lblPlayerTurn.Refresh();
 
 
@@ -523,7 +523,7 @@ namespace DurakFormApp
                           Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
                         lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
                         writeGameLog("Roles Swapped");
-                        writeGameLog(defender.playerName + " is now defending.");
+                       // writeGameLog(defender.playerName + " is now defending.");
                         lblPlayerTurn.Refresh();
 
                     }
@@ -581,7 +581,7 @@ namespace DurakFormApp
                         currentPlayer = defender;
 
                         lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
-                        writeGameLog(defender.playerName + " is now defending.");
+                        //writeGameLog(defender.playerName + " is now defending.");
                         lblPlayerTurn.Refresh();
                     }
                     //////////////////////////////////////////////////Perevodnoy additional rules ABOVE//////////////////////////////////////////////////
@@ -656,7 +656,7 @@ namespace DurakFormApp
                                         perevodnoyFlag = false;
 
                                         lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
-                                        writeGameLog(attacker.playerName + " is attacking.");
+                                       // writeGameLog(attacker.playerName + " is attacking.");
                                         lblPlayerTurn.Refresh();
                                     }
 
@@ -725,7 +725,7 @@ namespace DurakFormApp
                                     perevodnoyFlag = false;
 
                                     lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
-                                    writeGameLog(attacker.playerName + " is attacking.");
+                                  //  writeGameLog(attacker.playerName + " is attacking.");
                                     lblPlayerTurn.Refresh();
                                 }
                             }
@@ -789,7 +789,7 @@ namespace DurakFormApp
                                     perevodnoyFlag = false;
 
                                     lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
-                                    writeGameLog(attacker.playerName + " is attacking.");
+                                   // writeGameLog(attacker.playerName + " is attacking.");
                                     lblPlayerTurn.Refresh();
                                 }
                                 //sets the message for the next player's turn
@@ -913,7 +913,7 @@ namespace DurakFormApp
 
                             //sets the message to the next player's turn
                             lblPlayerTurn.Text = currentPlayer.playerName + " is defending.";
-                            writeGameLog(defender.playerName + " is defending.");
+                           // writeGameLog(defender.playerName + " is defending.");
                         }
                         //otherwise displays a message telling them the cards cannot be played and breaks out of this loop
                         else
@@ -1354,6 +1354,25 @@ namespace DurakFormApp
                 btnSkipTurn.Enabled = false;
                 btnStart.Visible = true;
                 txtNameInput.Visible = true;
+
+
+                myDeck = new Deck();
+                turnCounter = 0;
+                endGame = false;
+                cards = new List<CardBox.CardBox>();
+                cardsAI = new List<CardBox.CardBox>();
+                fieldCards = new List<CardBox.CardBox>();
+                round = ATTACKINITIAL;
+                matchFlag = false;
+                pnPlayerHand.Controls.Clear();
+                pnAIHand.Controls.Clear();
+                cards.Clear();
+                playingField = new Field();
+                pnPlayingField.Controls.Clear();
+                cbTrumpCard.Visible = true;
+                cardBox1.Visible = true;
+                chkAIHandToggle.Enabled = true;
+
             }
             //checks the handsize of the player to see if it is zero
             else if (player1.playerHand.gethandSize() == 0)
@@ -1366,24 +1385,27 @@ namespace DurakFormApp
                 btnDiscardPile.Enabled = false;
                 btnSkipTurn.Enabled = false;
                 btnStart.Visible = true;
+
+                myDeck = new Deck();
+                turnCounter = 0;
+                endGame = false;
+                cards = new List<CardBox.CardBox>();
+                cardsAI = new List<CardBox.CardBox>();
+                fieldCards = new List<CardBox.CardBox>();
+                round = ATTACKINITIAL;
+                matchFlag = false;
+                pnPlayerHand.Controls.Clear();
+                pnAIHand.Controls.Clear();
+                cards.Clear();
+                playingField = new Field();
+                pnPlayingField.Controls.Clear();
+                cbTrumpCard.Visible = true;
+                cardBox1.Visible = true;
+                chkAIHandToggle.Enabled = true;
+
             }
             cardBox1.Visible = false;
-            myDeck = new Deck();
-            turnCounter = 0;
-            endGame = false;
-            cards = new List<CardBox.CardBox>();
-            cardsAI = new List<CardBox.CardBox>();
-            fieldCards = new List<CardBox.CardBox>();
-            round = ATTACKINITIAL;
-            matchFlag = false;
-            pnPlayerHand.Controls.Clear();
-            pnAIHand.Controls.Clear();
-            cards.Clear();
-            playingField = new Field();
-            pnPlayingField.Controls.Clear();
-            cbTrumpCard.Visible = true;
-            cardBox1.Visible = true;
-            chkAIHandToggle.Enabled = true;
+
         }
 
         /// <summary>

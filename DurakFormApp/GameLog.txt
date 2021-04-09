@@ -1,11 +1,76 @@
 Application has started
-Game Started At: April 8, 2021 7:11:37 PM
-Trump Card: The Ten of Spades
-Player 1's hand: The Six of Diamonds The Seven of Clubs The Jack of Hearts The Seven of Diamonds The King of Spades The Ace of Diamonds
-AI's hand: The Ten of Clubs The King of Hearts The Seven of Spades The Eight of Hearts The Ace of Spades The Nine of Clubs
-Player 1 is the initial attacker.
-Player 1 attacked with: The Seven of Clubs
-AI defended with: The Seven of Spades
+Game Started At: April 8, 2021 10:54:35 PM
+Trump Card: The Ace of Hearts
+Ya boi's hand: The Ace of Spades The Eight of Spades The Jack of Spades The Queen of Spades The Six of Spades The Six of Clubs
+AI's hand: The Nine of Diamonds The Ten of Diamonds The Six of Hearts The Ace of Clubs The Seven of Clubs The Seven of Hearts
+Ya boi is the initial attacker.
+Ya boi attacked with: The Six of Clubs
+AI defended with: The Six of Hearts
 Roles Swapped
-Player 1 is now defending.
-Player 1 is defending.
+Ya boi defended with: The Six of Spades
+AI defended with: The Seven of Hearts
+AI is the new attacker.
+AI attacked with: The Seven of Clubs
+Ya boi defended with: The Nine of Clubs
+AI attacked with: The Nine of Diamonds
+Ya boi defended with: The Ten of Hearts
+AI attacked with: The Ten of Diamonds
+AI is still attacker.
+AI attacked with: The Eight of Diamonds
+Ya boi defended with: The Nine of Diamonds
+Ya boi is the new attacker.
+Ya boi attacked with: The Seven of Clubs
+AI defended with: The Eight of Hearts
+Ya boi attacked with: The Eight of Spades
+AI defended with: The King of Spades
+AI is the new attacker.
+AI attacked with: The Seven of Spades
+Ya boi defended with: The Jack of Spades
+Ya boi is the new attacker.
+Ya boi attacked with: The Ten of Diamonds
+AI defended with: The Queen of Diamonds
+Ya boi attacked with: The Queen of Spades
+AI defended with: The Queen of Hearts
+Ya boi attacked with: The Ten of Hearts
+Ya boi is still attacker.
+Ya boi attacked with: The Nine of Clubs
+AI defended with: The Nine of Spades
+Roles Swapped
+Ya boi defended with: The Ace of Spades
+AI attacked with: The Ace of Diamonds
+AI is still attacker.
+AI attacked with: The Ten of Diamonds
+Ya boi defended with: The Jack of Hearts
+AI attacked with: The Ten of Hearts
+Ya boi defended with: The King of Hearts
+Ya boi is the new attacker.
+Ya boi attacked with: The Jack of Clubs
+AI defended with: The Queen of Clubs
+AI is the new attacker.
+AI attacked with: The Seven of Diamonds
+AI is still attacker.
+AI attacked with: The Jack of Diamonds
+Ya boi defended with: The Ace of Diamonds
+AI attacked with: The Ace of Clubs
+AI is still attacker.
+AI attacked with: The Six of Diamonds
+Ya boi defended with: The Seven of Diamonds
+Ya boi is the new attacker.
+Ya boi attacked with: The Nine of Clubs
+AI defended with: The Nine of Hearts
+Roles Swapped
+Ya boi defended with: The Nine of Spades
+AI defended with: The Queen of Spades
+AI is the new attacker.
+AI attacked with: The Eight of Clubs
+Ya boi defended with: The King of Clubs
+AI attacked with: The King of Diamonds
+Ya boi defended with: The Ace of Diamonds
+AI attacked with: The Ace of Hearts
+AI is still attacker.
+AI attacked with: The Ten of Clubs
+Ya boi defended with: The Ten of Spades
+AI defended with: The Queen of Hearts
+Roles Swapped
+AI is the new attacker.
+AI attacked with: The Queen of Diamonds
