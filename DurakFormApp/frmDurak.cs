@@ -504,7 +504,7 @@ namespace DurakFormApp
                         fieldCards.Add(newCardBox);
 
                         SwapRoles();
-
+                        writeGameLog("Roles Swapped");    
                         
                         //add 1 to the counter (for counting 6 rounds)
                         turnCounter++;
@@ -523,13 +523,14 @@ namespace DurakFormApp
                           lblPlayerTurn.Text = currentPlayer.playerName + "'s turn as new defender.";
                           Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
                         lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
-                        writeGameLog("Roles Swapped");
+                       // writeGameLog("Roles Swapped");
                        // writeGameLog(defender.playerName + " is now defending.");
                         lblPlayerTurn.Refresh();
 
                     }
                     else if (perevodnoyFlag == true && cardSelected.rank == currentCard.rank)
                     {
+                       // writeGameLog("Roles Swapped");
                         CardBox.CardBox newCardBox;
                         if (defender == player1)
                         {
@@ -564,6 +565,7 @@ namespace DurakFormApp
                         perevodnoyFlag = true;
 
                         SwapRoles();
+                        writeGameLog("Roles Swapped");
 
                       /*  //sets the message for the next player's turn
                         lblPlayerTurn.Text = defender.playerName + "'s turn as new defender.";
@@ -582,6 +584,7 @@ namespace DurakFormApp
                         currentPlayer = defender;
 
                         lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
+                        //writeGameLog("Roles Swapped");
                         //writeGameLog(defender.playerName + " is now defending.");
                         lblPlayerTurn.Refresh();
                     }
@@ -1013,12 +1016,15 @@ namespace DurakFormApp
 
             if (defender == player1)
             {
+                string tempString="";
                 //adds all the cards in the pickup list to the defender's hand
                 for (int i = 0; i < cardsToBePickedUp.Count; i++)
                 {
                     player1.playerHand.addCard((Card)cardsToBePickedUp[i]);
+                   tempString += " " + cardsToBePickedUp[i].ToString();
+                   
                 }
-
+                writeGameLog(player1.playerName + " picked up:" + tempString);
                 //loop until minimum hand size is reached for defender (*Note defender always draws second)
                 player1.DrawCards(myDeck);
 
@@ -1040,12 +1046,15 @@ namespace DurakFormApp
             }
             else
             {
+               string tempString = "";
                 //adds all the cards in the pickup list to the defender's hand
                 for (int i = 0; i < cardsToBePickedUp.Count; i++)
                 {
                     playerAI.playerHand.addCard((Card)cardsToBePickedUp[i]);
+                    tempString += " " + cardsToBePickedUp[i].ToString();
+                   
                 }
-                
+                writeGameLog(playerAI.playerName + " picked up:" + tempString);
                 //draws hand back to 6
                 playerAI.DrawCards(myDeck);
 
@@ -1096,6 +1105,7 @@ namespace DurakFormApp
             round = ATTACKINITIAL;
             perevodnoyFlag = false;
             lblPlayerTurn.Text = currentPlayer.playerName + " is still attacker.";
+            writeGameLog("Round End");
             writeGameLog(currentPlayer.playerName + " is still attacker.");
             //disable the skip turn function
             btnSkipTurn.Enabled = false;
@@ -1238,7 +1248,7 @@ namespace DurakFormApp
 
             //checks the roles and swaps them
             SwapRoles();
-
+            writeGameLog("Roles Swapped");        
 
             //reset counters and attributes
             turnCounter = 0;
@@ -1326,11 +1336,16 @@ namespace DurakFormApp
             //checks the current player and runs the corresponding end of round functions based on whom won
             if(currentPlayer == defender)
             {
+                writeGameLog(defender.playerName + " skipped.");
+                writeGameLog("Round End");
                 AttackersWin();
-            
+                
+               
             }
             else if (currentPlayer == attacker)
             {
+                writeGameLog(attacker.playerName + " skipped.");
+                writeGameLog("Round End");
                 DefendersWin();
             }
             AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver);
@@ -1346,6 +1361,7 @@ namespace DurakFormApp
             //checks the hand size of the AI player to see if it is zero
             if (playerAI.playerHand.gethandSize() == 0)
             {
+                writeGameLog(playerAI.playerName + " won the game!!");
                 //declare winner
                 MessageBox.Show("GAME OVER.");
                 //lblPlayerTurn.Text = player1.playerName +" loses. Try again?";
@@ -1380,6 +1396,7 @@ namespace DurakFormApp
             {
                 //declare the winner
                 MessageBox.Show(player1.playerName + " Wins!");
+                writeGameLog(player1.playerName + " won the game!!");
                 //lblPlayerTurn.Text = player1.playerName + " wins! Try again?";
                 //enables and disables buttons
                 btnPlayCard.Enabled = false;

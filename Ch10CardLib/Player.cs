@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -506,6 +507,8 @@ namespace Ch10CardLib
         public void DrawCards(Deck myDeck)
         {
             bool attackerDraw = true;
+            string filePath = @"../../GameLog.txt";
+            string tempString = "";
             //check the remaining deck size
 
             while (attackerDraw)
@@ -517,7 +520,12 @@ namespace Ch10CardLib
                     int attackerHandSize = this.playerHand.gethandSize();
                     if (attackerHandSize < 6)
                     {
-                        this.playerHand.addCard(myDeck.drawCard());
+                        Card drawnCard = myDeck.drawCard();
+                        tempString += " " + drawnCard.ToString();
+                        //output what card the player drew
+                     
+                        this.playerHand.addCard(drawnCard);
+                    
 
                     }
                     else
@@ -532,6 +540,17 @@ namespace Ch10CardLib
 
                 }
             }
+            if(tempString != "")
+            {
+                using (StreamWriter writer = new StreamWriter(filePath, true))
+                {
+
+                    writer.WriteLine(this.playerName + " drew:" + tempString);
+
+                }
+            }
+          
+
         }
 
 

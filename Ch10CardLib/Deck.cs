@@ -117,7 +117,7 @@ namespace Ch10CardLib
             Card drawnCard = new Card((Card)cards[cards.Count - 1]);
 
             cards.RemoveAt(cards.Count - 1);
-
+            
             return drawnCard;
         }
 
