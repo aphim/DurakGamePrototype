@@ -9,6 +9,11 @@ namespace Ch10CardLib
 {
     public class AI : Player
     {
+
+        const int TURNSKIPPED = -1;
+        const int GAMEENDED = -2;
+
+
         //constructor for making an instance of an AI object
         public AI (string name) : base(name)
         {
@@ -38,12 +43,12 @@ namespace Ch10CardLib
                 }
                 else
                 {
-                    return -1;
+                    return TURNSKIPPED;
                 }
             }
             else
             {
-                return -2;
+                return GAMEENDED;
             }
 
                 
@@ -236,7 +241,7 @@ namespace Ch10CardLib
             }
             else
             {
-                return -1;
+                return TURNSKIPPED;
             }
         }
 
@@ -454,7 +459,7 @@ namespace Ch10CardLib
             }
             else
             {
-                return -1;
+                return TURNSKIPPED;
             }
 
         }//END OF DEFENDER METHOD
