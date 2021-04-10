@@ -171,7 +171,7 @@ namespace DurakFormApp
             cbTrumpCard.Visible = true;
             cardBox1.Visible = true;
             chkAIHandToggle.Enabled = true;
-         
+            flagGameOver = false;
 
             //shuffle deck
             myDeck.Shuffle();
@@ -185,11 +185,6 @@ namespace DurakFormApp
                 player1 = new Player(txtNameInput.Text);
             }
 
-
-          /*  using (StreamWriter writer = new StreamWriter(filePath,true))
-            {
-                writer.WriteLine("Name has been set to " + player1.playerName);
-            }*/
 
             //Reset variables for a new game
             player1.playerHand = new Hand(myDeck);
@@ -242,18 +237,22 @@ namespace DurakFormApp
         /// </summary>
         private void CreateControls()
         {
-            for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+
+            if (flagGameOver == false)
             {
-                CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
-                newCardBox.Click += CardBox_Click;// Wire CardBox_Click
-                cards.Add(newCardBox);
+                for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                {
+                    CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
+                    newCardBox.Click += CardBox_Click;// Wire CardBox_Click
+                    cards.Add(newCardBox);
+                }
+                for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                {
+                    CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
+                    cardsAI.Add(newCardBox);
+                }
+                lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
             }
-            for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
-            {
-                CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
-                cardsAI.Add(newCardBox);
-            }
-            lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
         }
 
         /// <summary>
@@ -261,22 +260,25 @@ namespace DurakFormApp
         /// </summary>
         private void DisplayControls()
         {
-            playerOffset = playerOffset - (player1.playerHand.gethandSize() - 6) * 20 / 100;
-            aiOffset = aiOffset - (playerAI.playerHand.gethandSize() - 6) * 20 / 100;
-            //Decrements because incrementing will overlap cards in a false way 
-            for (int i = player1.playerHand.gethandSize() - 1; i >= 0; i--)
+            if (flagGameOver == false)
             {
-                cards[i].Left = (i * 20) + playerOffset;
-                this.pnPlayerHand.Controls.Add(cards[i]);
-            }
-            if (cardsAI.Count > 0)
-            {
-                //Decrements because incrementing will overlap cards in a false way TODO (CHECK THIS)
-                for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
+                playerOffset = playerOffset - (player1.playerHand.gethandSize() - 6) * 20 / 100;
+                aiOffset = aiOffset - (playerAI.playerHand.gethandSize() - 6) * 20 / 100;
+                //Decrements because incrementing will overlap cards in a false way 
+                for (int i = player1.playerHand.gethandSize() - 1; i >= 0; i--)
                 {
-                    cardsAI[i].Left = (i * 20) + aiOffset;
-                    cardsAI[i].FaceUp = showAIHand;
-                    this.pnAIHand.Controls.Add(cardsAI[i]);
+                    cards[i].Left = (i * 20) + playerOffset;
+                    this.pnPlayerHand.Controls.Add(cards[i]);
+                }
+                if (cardsAI.Count > 0)
+                {
+                    //Decrements because incrementing will overlap cards in a false way TODO (CHECK THIS)
+                    for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
+                    {
+                        cardsAI[i].Left = (i * 20) + aiOffset;
+                        cardsAI[i].FaceUp = showAIHand;
+                        this.pnAIHand.Controls.Add(cardsAI[i]);
+                    }
                 }
             }
 
@@ -374,22 +376,24 @@ namespace DurakFormApp
             //////////////////////////// The attacking player's initial turn (no restrictions on playable cards) /////////////////////////////
             if (round == ATTACKINITIAL)
             {
+                if (flagGameOver == false)
+                { 
                 if (attacker.playerHand.gethandSize() > 0)
                 {
                     CardBox.CardBox newCardBox;
-                    
+
                     if (attacker == player1)
                     {
                         //Creates a new cardbox object that will be set to the card the player selects
                         newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(playerCardIndex));
-                        
+
                         //Prints the card played for player initial attack to the log
-                        writeGameLog(attacker.playerName + " attacked with: " + attacker.playerHand.GetCard(playerCardIndex).ToString()); 
+                        writeGameLog(attacker.playerName + " attacked with: " + attacker.playerHand.GetCard(playerCardIndex).ToString());
 
                         //The card is played from the player's hand (removed) and played onto the field (added)
                         playingField.cardPlayed(attacker.playerHand.playCard(playerCardIndex));
 
-                        
+
 
                     }
                     else
@@ -408,21 +412,21 @@ namespace DurakFormApp
 
                         playingField.cardPlayed(attacker.playerHand.playCard(AICardIndex));
 
-                        
+
 
 
                     }
-                   
+
                     //refreshes attacker's hands and display
                     AttackerHandRefresh();
 
                     //Cards that are played are added to the field output
                     fieldCards.Add(newCardBox);
-                    
+
                 }
-              
+
                 DisplayPlayingField();
-                
+
                 //sets the endgame flag
                 if (myDeck.getCardsRemaining() == 0)
                 {
@@ -434,29 +438,32 @@ namespace DurakFormApp
                 {
                     EndGameCheck();
                 }
-
-                //sets the next turn in the round
-                round = DEFENDERTURN;
-                //changes current player to the defender
-                currentPlayer = defender;
-                perevodnoyFlag = true;
-                //changes the message to reflect the next player's turn
-                lblPlayerTurn.Text = currentPlayer.playerName + " is defending.";
-                //writeGameLog(defender.playerName + " is defending.");
-                lblPlayerTurn.Refresh();
-
+                    if (flagGameOver == false)
+                    {
+                        //sets the next turn in the round
+                        round = DEFENDERTURN;
+                        //changes current player to the defender
+                        currentPlayer = defender;
+                        perevodnoyFlag = true;
+                        //changes the message to reflect the next player's turn
+                        lblPlayerTurn.Text = currentPlayer.playerName + " is defending.";
+                        //writeGameLog(defender.playerName + " is defending.");
+                        lblPlayerTurn.Refresh();
+                    }
 
                 if (player1.playerHand.gethandSize() != 0 && playerAI.playerHand.gethandSize() != 0)
-                 {
-                     //enables the skip turn button
-                     btnSkipTurn.Enabled = true;
+                {
+                    //enables the skip turn button
+                    btnSkipTurn.Enabled = true;
 
-                 }
-
+                }
+            }
             }
             //////////////////////////////// The defender's turn (can only play cards of the same suit higher rank or trump suit on non-trumps)////////////////////////////////////////////
             else if (round == DEFENDERTURN)
             {
+                if (flagGameOver == false)
+                { 
                 if (defender.playerHand.gethandSize() > 0)
                 {
                     Card cardSelected;
@@ -500,41 +507,44 @@ namespace DurakFormApp
                             //The card is played from the player's hand (removed) and played onto the field (added)
                             playingField.cardPlayed(defender.playerHand.playCard(AICardIndex));
                         }
+                            //checks to see if a player wins during the endgame
+                            if (endGame)
+                            {
+                                EndGameCheck();
+                            }
+                            if (flagGameOver == false)
+                            {
+                                //refreshes defender hand and display
+                                DefenderHandRefresh();
 
-                        //refreshes defender hand and display
-                        DefenderHandRefresh();
+                                //adds the cards to the field display object
+                                fieldCards.Add(newCardBox);
 
-                        //adds the cards to the field display object
-                        fieldCards.Add(newCardBox);
+                                SwapRoles();
+                                writeGameLog("Roles Swapped");
 
-                        SwapRoles();
-                        writeGameLog("Roles Swapped");    
-                        
-                        //add 1 to the counter (for counting 6 rounds)
-                        turnCounter++;
+                                //add 1 to the counter (for counting 6 rounds)
+                                turnCounter++;
 
-                        //refreshes the field to display the new card
-                        DisplayPlayingField();
-                        perevodnoyFlag = true;
-                        //sets the new defender as the next turn
-                        round = DEFENDERTURN;
-                        //empty error message
-                        lblErrorMsg.Text = "";
-                        //changes current player to the new made defender
-                        currentPlayer = defender;
+                                //refreshes the field to display the new card
+                                DisplayPlayingField();
+                                perevodnoyFlag = true;
+                                //sets the new defender as the next turn
+                                round = DEFENDERTURN;
+                                //empty error message
+                                lblErrorMsg.Text = "";
+                                //changes current player to the new made defender
+                                currentPlayer = defender;
 
-                        /*  //sets the message for the next player's turn
-                          lblPlayerTurn.Text = currentPlayer.playerName + "'s turn as new defender.";
-                          Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
-                        lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
-                       // writeGameLog("Roles Swapped");
-                       // writeGameLog(defender.playerName + " is now defending.");
-                        lblPlayerTurn.Refresh();
-
+                                lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
+                                // writeGameLog("Roles Swapped");
+                                // writeGameLog(defender.playerName + " is now defending.");
+                                lblPlayerTurn.Refresh();
+                            }
                     }
                     else if (perevodnoyFlag == true && cardSelected.rank == currentCard.rank)
                     {
-                       // writeGameLog("Roles Swapped");
+                        // writeGameLog("Roles Swapped");
                         CardBox.CardBox newCardBox;
                         if (defender == player1)
                         {
@@ -558,39 +568,46 @@ namespace DurakFormApp
                             //The card is played from the player's hand (removed) and played onto the field (added)
                             playingField.cardPlayed(defender.playerHand.playCard(AICardIndex));
                         }
+                            //checks to see if a player wins during the endgame
+                            if (endGame)
+                            {
+                                EndGameCheck();
+                            }
+                            if (flagGameOver == false)
+                            {
 
+                                //refreshes defender hand and display
+                                DefenderHandRefresh();
 
-                        //refreshes defender hand and display
-                        DefenderHandRefresh();
+                                //adds the cards to the field display object
+                                fieldCards.Add(newCardBox);
 
-                        //adds the cards to the field display object
-                        fieldCards.Add(newCardBox);
+                                perevodnoyFlag = true;
 
-                        perevodnoyFlag = true;
+                                SwapRoles();
+                                writeGameLog("Roles Swapped");
 
-                        SwapRoles();
-                        writeGameLog("Roles Swapped");
+                                /*  //sets the message for the next player's turn
+                                  lblPlayerTurn.Text = defender.playerName + "'s turn as new defender.";
+                                  Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
+                                //add 1 to the counter (for counting 6 rounds)
+                                turnCounter++;
 
-                      /*  //sets the message for the next player's turn
-                        lblPlayerTurn.Text = defender.playerName + "'s turn as new defender.";
-                        Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
-                        //add 1 to the counter (for counting 6 rounds)
-                        turnCounter++;
+                                //refreshes the field to display the new card
+                                DisplayPlayingField();
 
-                        //refreshes the field to display the new card
-                        DisplayPlayingField();
+                                //sets the new defender as the next turn
+                                round = DEFENDERTURN;
+                                //empty error message
+                                lblErrorMsg.Text = "";
+                                //changes current player to the new made defender
+                                currentPlayer = defender;
 
-                        //sets the new defender as the next turn
-                        round = DEFENDERTURN;
-                        //empty error message
-                        lblErrorMsg.Text = "";
-                        //changes current player to the new made defender
-                        currentPlayer = defender;
-
-                        lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
-                        //writeGameLog("Roles Swapped");
-                        //writeGameLog(defender.playerName + " is now defending.");
-                        lblPlayerTurn.Refresh();
+                                lblPlayerTurn.Text = currentPlayer.playerName + " is now defending.";
+                                //writeGameLog("Roles Swapped");
+                                //writeGameLog(defender.playerName + " is now defending.");
+                                lblPlayerTurn.Refresh();
+                            }
                     }
                     //////////////////////////////////////////////////Perevodnoy additional rules ABOVE//////////////////////////////////////////////////
                     else
@@ -630,43 +647,49 @@ namespace DurakFormApp
                                         //The card is played from the player's hand (removed) and played onto the field (added)
                                         playingField.cardPlayed(defender.playerHand.playCard(AICardIndex));
                                     }
+                                        //checks to see if a player wins during the endgame
+                                        if (endGame)
+                                        {
+                                            EndGameCheck();
+                                        }
+                                        if (flagGameOver == false)
+                                        {
+                                            //refreshes defender hand and display
+                                            DefenderHandRefresh();
 
+                                            //adds the cards to the field display object
+                                            fieldCards.Add(newCardBox);
 
-                                    //refreshes defender hand and display
-                                    DefenderHandRefresh();
+                                            //refreshes the field to display the new card
+                                            DisplayPlayingField();
 
-                                    //adds the cards to the field display object
-                                    fieldCards.Add(newCardBox);
+                                            /* //sets the message for the next player's turn
+                                             lblPlayerTurn.Text = attacker.playerName + "'s turn.";
+                                             Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
+                                            //add 1 to the counter (for counting 6 rounds)
+                                            turnCounter++;
+                                            //check if max attack chain has been reached
+                                            if (turnCounter >= MAXATTACKCHAIN)
+                                            {
+                                                currentPlayer = attacker;
+                                                DefendersWin();
+                                            }
+                                            else
+                                            {
 
-                                    //refreshes the field to display the new card
-                                    DisplayPlayingField();
+                                                //sets the attacker as the next turn
+                                                round = ATTACKERTURN;
+                                                //empty error message
+                                                lblErrorMsg.Text = "";
+                                                //changes current player to attacker
+                                                currentPlayer = attacker;
+                                                perevodnoyFlag = false;
 
-                                   /* //sets the message for the next player's turn
-                                    lblPlayerTurn.Text = attacker.playerName + "'s turn.";
-                                    Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
-                                    //add 1 to the counter (for counting 6 rounds)
-                                    turnCounter++;
-                                    //check if max attack chain has been reached
-                                    if (turnCounter >= MAXATTACKCHAIN)
-                                    {
-                                        currentPlayer = attacker;
-                                        DefendersWin();
-                                    }
-                                    else
-                                    {
-
-                                        //sets the attacker as the next turn
-                                        round = ATTACKERTURN;
-                                        //empty error message
-                                        lblErrorMsg.Text = "";
-                                        //changes current player to attacker
-                                        currentPlayer = attacker;
-                                        perevodnoyFlag = false;
-
-                                        lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
-                                       // writeGameLog(attacker.playerName + " is attacking.");
-                                        lblPlayerTurn.Refresh();
-                                    }
+                                                lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
+                                                // writeGameLog(attacker.playerName + " is attacking.");
+                                                lblPlayerTurn.Refresh();
+                                            }
+                                        }
 
                                 }
                                 //otherwise the selected card's rank is too low, break out of this loop
@@ -713,29 +736,37 @@ namespace DurakFormApp
                                 //Refreshes the field display to add the new cards
                                 DisplayPlayingField();
 
-                             
+
                                 //increment the counter
                                 turnCounter++;
-                                //check if max attack chain has been reached
-                                if (turnCounter >= MAXATTACKCHAIN)
-                                {
-                                    currentPlayer = attacker;
-                                    DefendersWin();
-                                }
-                                else
-                                {
-                                    //sets the attacker as the next turn
-                                    round = ATTACKERTURN;
-                                    //empty error message
-                                    lblErrorMsg.Text = "";
-                                    //changes current player to attacker
-                                    currentPlayer = attacker;
-                                    perevodnoyFlag = false;
+                                    //checks to see if a player wins during the endgame
+                                    if (endGame)
+                                    {
+                                        EndGameCheck();
+                                    }
+                                    if (flagGameOver == false)
+                                    {
+                                        //check if max attack chain has been reached
+                                        if (turnCounter >= MAXATTACKCHAIN)
+                                        {
+                                            currentPlayer = attacker;
+                                            DefendersWin();
+                                        }
+                                        else
+                                        {
+                                            //sets the attacker as the next turn
+                                            round = ATTACKERTURN;
+                                            //empty error message
+                                            lblErrorMsg.Text = "";
+                                            //changes current player to attacker
+                                            currentPlayer = attacker;
+                                            perevodnoyFlag = false;
 
-                                    lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
-                                  //  writeGameLog(attacker.playerName + " is attacking.");
-                                    lblPlayerTurn.Refresh();
-                                }
+                                            lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
+                                            //  writeGameLog(attacker.playerName + " is attacking.");
+                                            lblPlayerTurn.Refresh();
+                                        }
+                                    }
                             }
                         }
                         //checks to see if played card suit is the field card suit
@@ -777,32 +808,37 @@ namespace DurakFormApp
                                 //refreshes the field display to display the new cards
                                 DisplayPlayingField();
 
-                              
-                                //increments the counter
-                                turnCounter++;
-                                //check is max attack chain has been reached
-                                if (turnCounter >= MAXATTACKCHAIN)
-                                {
-                                    currentPlayer = attacker;
-                                    DefendersWin();
-                                }
-                                else
-                                {
-                                    //sets the attacker as the next turn
-                                    round = ATTACKERTURN;
-                                    //empty error message
-                                    lblErrorMsg.Text = "";
-                                    //changes current player to attacker
-                                    currentPlayer = attacker;
-                                    perevodnoyFlag = false;
+                                    //checks to see if a player wins during the endgame
+                                    if (endGame)
+                                    {
+                                        EndGameCheck();
+                                    }
+                                    if (flagGameOver == false)
+                                    {
+                                        //increments the counter
+                                        turnCounter++;
+                                        //check is max attack chain has been reached
+                                        if (turnCounter >= MAXATTACKCHAIN)
+                                        {
+                                            currentPlayer = attacker;
+                                            DefendersWin();
+                                        }
+                                        else
+                                        {
+                                            //sets the attacker as the next turn
+                                            round = ATTACKERTURN;
+                                            //empty error message
+                                            lblErrorMsg.Text = "";
+                                            //changes current player to attacker
+                                            currentPlayer = attacker;
+                                            perevodnoyFlag = false;
 
-                                    lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
-                                   // writeGameLog(attacker.playerName + " is attacking.");
-                                    lblPlayerTurn.Refresh();
-                                }
-                                //sets the message for the next player's turn
-                                /*lblPlayerTurn.Text = attacker.playerName + "'s turn.";
-                                Console.WriteLine(currentPlayer.playerName + "'s turn.");*/
+                                            lblPlayerTurn.Text = currentPlayer.playerName + " is attacking.";
+                                            // writeGameLog(attacker.playerName + " is attacking.");
+                                            lblPlayerTurn.Refresh();
+                                        }
+
+                                    }
                             }
                             //displays an error message and leaves the loop (hand card matches the field card suit but rank too low)
                             else
@@ -830,107 +866,190 @@ namespace DurakFormApp
                 {
                     EndGameCheck();
                 }
-
+            }
 
             }
             ///////////////////////////////////ATTACKER STANDARD TURN///////////////////////////////////////////
             else if (round == ATTACKERTURN)
             {
-                if (attacker.playerHand.gethandSize() > 0)
+                if (flagGameOver == false)
                 {
-                    if (turnCounter < MAXATTACKCHAIN)
+
+                    if (attacker.playerHand.gethandSize() > 0)
                     {
-                        //creates a variable that holds the currently selected card
-                        Card cardSelected;
-                        if (attacker == player1)
+                        if (turnCounter < MAXATTACKCHAIN)
                         {
-                            cardSelected = attacker.playerHand.GetCard(playerCardIndex);
-                        }
-                        else
-                        {
-                            cardSelected = attacker.playerHand.GetCard(AICardIndex);
-                        }
-
-                        //creates a temperary card variable
-                        Card tempCard;
-
-                        //loops through all the cards on the field
-                        for (int i = 0; i < playingField.getField().Count; i++)
-                        {
-                            //sets the temp card equal to the card on the field
-                            tempCard = (Card)playingField.getField()[i];
-
-                            //checks to see if the card is the same rank
-                            if (tempCard.isSameRank(cardSelected))
-                            {
-                                //sets the match flag to equal true
-                                matchFlag = true;
-                            }
-
-                        }
-                        // if a card has been matched, plays the selected card
-                        if (matchFlag == true)
-                        {
-                            CardBox.CardBox newCardBox;
+                            //creates a variable that holds the currently selected card
+                            Card cardSelected;
                             if (attacker == player1)
                             {
-                                //Creates a new cardbox object that will be set to the card the player selects
-                                newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(playerCardIndex));
-
-                                //Writes Player attack to the log
-                                writeGameLog(attacker.playerName + " attacked with: " + attacker.playerHand.GetCard(playerCardIndex).ToString());
-
-                                //The card is played from the player's hand (removed) and played onto the field (added)
-                                playingField.cardPlayed(attacker.playerHand.playCard(playerCardIndex));
+                                cardSelected = attacker.playerHand.GetCard(playerCardIndex);
                             }
                             else
                             {
-                                //Creates a new cardbox object that will be set to the card the player selects
-                                newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(AICardIndex));
-
-                                //Writes Player attack to the log
-                                writeGameLog(attacker.playerName + " attacked with: " + attacker.playerHand.GetCard(AICardIndex).ToString());
-
-                                //The card is played from the player's hand (removed) and played onto the field (added)
-                                playingField.cardPlayed(attacker.playerHand.playCard(AICardIndex));
+                                cardSelected = attacker.playerHand.GetCard(AICardIndex);
                             }
 
-                            //refreshes attacker's hands and display
-                            AttackerHandRefresh();
+                            //creates a temperary card variable
+                            Card tempCard;
 
-                            //adds the cards to the field cards list
-                            fieldCards.Add(newCardBox);
+                            //loops through all the cards on the field
+                            for (int i = 0; i < playingField.getField().Count; i++)
+                            {
+                                //sets the temp card equal to the card on the field
+                                tempCard = (Card)playingField.getField()[i];
 
-                            //refreshes the field display to add the new card
-                            DisplayPlayingField();
+                                //checks to see if the card is the same rank
+                                if (tempCard.isSameRank(cardSelected))
+                                {
+                                    //sets the match flag to equal true
+                                    matchFlag = true;
+                                }
 
-                           
-                            //sets the next roung
-                            round = DEFENDERTURN;
+                            }
+                            // if a card has been matched, plays the selected card
+                            if (matchFlag == true)
+                            {
+                                CardBox.CardBox newCardBox;
+                                if (attacker == player1)
+                                {
+                                    //Creates a new cardbox object that will be set to the card the player selects
+                                    newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(playerCardIndex));
 
-                            /*//sets the message to the next player's turn
-                            lblPlayerTurn.Text = currentPlayer.playerName + "'s turn.";*/
+                                    //Writes Player attack to the log
+                                    writeGameLog(attacker.playerName + " attacked with: " + attacker.playerHand.GetCard(playerCardIndex).ToString());
 
-                            //resets the match flag
-                            matchFlag = false;
-                            //resets the error message
-                            lblErrorMsg.Text = "";
-                            //sets the current player to the defender
-                            currentPlayer = defender;
-                            perevodnoyFlag = false;
+                                    //The card is played from the player's hand (removed) and played onto the field (added)
+                                    playingField.cardPlayed(attacker.playerHand.playCard(playerCardIndex));
+                                }
+                                else
+                                {
+                                    //Creates a new cardbox object that will be set to the card the player selects
+                                    newCardBox = new CardBox.CardBox(attacker.playerHand.GetCard(AICardIndex));
 
-                            //sets the message to the next player's turn
-                            lblPlayerTurn.Text = currentPlayer.playerName + " is defending.";
-                           // writeGameLog(defender.playerName + " is defending.");
-                        }
-                        //otherwise displays a message telling them the cards cannot be played and breaks out of this loop
-                        else
-                        {
-                            lblErrorMsg.Text = "You can only play a card of the same rank as the cards on the field";
+                                    //Writes Player attack to the log
+                                    writeGameLog(attacker.playerName + " attacked with: " + attacker.playerHand.GetCard(AICardIndex).ToString());
 
+                                    //The card is played from the player's hand (removed) and played onto the field (added)
+                                    playingField.cardPlayed(attacker.playerHand.playCard(AICardIndex));
+                                }
+
+                                //refreshes attacker's hands and display
+                                AttackerHandRefresh();
+
+                                //adds the cards to the field cards list
+                                fieldCards.Add(newCardBox);
+
+                                //refreshes the field display to add the new card
+                                DisplayPlayingField();
+
+                                //sets the endgame flag
+                                if (myDeck.getCardsRemaining() == 0)
+                                {
+                                    endGame = true;
+                                }
+                                //checks to see if a player wins during the endgame
+                                if (endGame)
+                                {
+                                    EndGameCheck();
+                                }
+                                if (flagGameOver == false)
+                                {
+                                    //sets the next roung
+                                    round = DEFENDERTURN;
+
+                                    /*//sets the message to the next player's turn
+                                    lblPlayerTurn.Text = currentPlayer.playerName + "'s turn.";*/
+
+                                    //resets the match flag
+                                    matchFlag = false;
+                                    //resets the error message
+                                    lblErrorMsg.Text = "";
+                                    //sets the current player to the defender
+                                    currentPlayer = defender;
+                                    perevodnoyFlag = false;
+
+                                    //sets the message to the next player's turn
+                                    lblPlayerTurn.Text = currentPlayer.playerName + " is defending.";
+                                    // writeGameLog(defender.playerName + " is defending.");
+                                }
+                            }
+                            //otherwise displays a message telling them the cards cannot be played and breaks out of this loop
+                            else
+                            {
+                                lblErrorMsg.Text = "You can only play a card of the same rank as the cards on the field";
+
+                            }
                         }
                     }
+
                 }
+            }
+
+            //////////////////////////END OF ROUND LOGIC STARTS HERE ///////////////////////////////////////////////
+
+        }
+
+        private void AttackersWin()
+        {
+            if (flagGameOver == false)
+            {
+
+
+                //creates an arraylist with all the field cards
+                ArrayList cardsToBePickedUp = playingField.pickupField();
+
+                //adds the cards to the field display object
+                fieldCards.Clear();
+                this.pnPlayingField.Controls.Clear();
+
+                DisplayPlayingField();
+
+
+                /////DRAW CARDS///// (TODO FURTHER TESTING NEEDED FOR EXCEEDING MAXIMUM ROUNDS BUG)
+                //draws back up to 6 cards in hand if necessary/possible attackers first
+
+                if (attacker == player1)
+                {
+                    //loop until minimum hand size is reached for attacker (*Note attackers draw first)
+                    player1.DrawCards(myDeck);
+
+                    //reset the display
+                    this.pnPlayerHand.Controls.Clear();
+
+                    //clears the output list for player1 hand
+                    cards.Clear();
+
+                    //loops through and adds the player's hands to the hand display
+                    for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                    {
+                        CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
+                        newCardBox.Click += CardBox_Click;// Wire CardBox_Click
+                        cards.Add(newCardBox);
+                    }
+
+                    DisplayControls();
+                }
+                else
+                {
+                    //draws cards back to a full hand
+                    playerAI.DrawCards(myDeck);
+                    //reset the display
+                    this.pnAIHand.Controls.Clear();
+
+                    //clears the output list for player1 hand
+                    cardsAI.Clear();
+
+                    //loops through and adds the player's hands to the hand display
+                    for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                    {
+                        CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
+                        cardsAI.Add(newCardBox);
+                    }
+
+                    DisplayControls();
+                }
+
                 //sets the endgame flag
                 if (myDeck.getCardsRemaining() == 0)
                 {
@@ -942,331 +1061,260 @@ namespace DurakFormApp
                 {
                     EndGameCheck();
                 }
-            }
-
-            //////////////////////////END OF ROUND LOGIC STARTS HERE ///////////////////////////////////////////////
-
-        }
-
-        private void AttackersWin()
-        {
-
-            //creates an arraylist with all the field cards
-            ArrayList cardsToBePickedUp = playingField.pickupField();
-
-            //adds the cards to the field display object
-            fieldCards.Clear();
-            this.pnPlayingField.Controls.Clear();
-
-            DisplayPlayingField();
 
 
-            /////DRAW CARDS///// (TODO FURTHER TESTING NEEDED FOR EXCEEDING MAXIMUM ROUNDS BUG)
-            //draws back up to 6 cards in hand if necessary/possible attackers first
-
-            if (attacker == player1)
-            {
-                //loop until minimum hand size is reached for attacker (*Note attackers draw first)
-                player1.DrawCards(myDeck);
-
-                //reset the display
-                this.pnPlayerHand.Controls.Clear();
-
-                //clears the output list for player1 hand
-                cards.Clear();
-
-                //loops through and adds the player's hands to the hand display
-                for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                if (defender == player1)
                 {
-                    CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
-                    newCardBox.Click += CardBox_Click;// Wire CardBox_Click
-                    cards.Add(newCardBox);
+                    string tempString = "";
+                    //adds all the cards in the pickup list to the defender's hand
+                    for (int i = 0; i < cardsToBePickedUp.Count; i++)
+                    {
+                        player1.playerHand.addCard((Card)cardsToBePickedUp[i]);
+                        tempString += " " + cardsToBePickedUp[i].ToString();
+
+                    }
+                    writeGameLog(player1.playerName + " picked up:" + tempString);
+                    //loop until minimum hand size is reached for defender (*Note defender always draws second)
+                    player1.DrawCards(myDeck);
+
+                    //reset the display
+                    this.pnPlayerHand.Controls.Clear();
+
+                    //clears the output list for player1 hand
+                    cards.Clear();
+
+                    //loops through and adds the player's hands to the hand display
+                    for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                    {
+                        CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
+                        newCardBox.Click += CardBox_Click;// Wire CardBox_Click
+                        cards.Add(newCardBox);
+                    }
+
+                    DisplayControls();
+                }
+                else
+                {
+                    string tempString = "";
+                    //adds all the cards in the pickup list to the defender's hand
+                    for (int i = 0; i < cardsToBePickedUp.Count; i++)
+                    {
+                        playerAI.playerHand.addCard((Card)cardsToBePickedUp[i]);
+                        tempString += " " + cardsToBePickedUp[i].ToString();
+
+                    }
+                    writeGameLog(playerAI.playerName + " picked up:" + tempString);
+                    //draws hand back to 6
+                    playerAI.DrawCards(myDeck);
+
+                    //reset the display
+                    this.pnAIHand.Controls.Clear();
+
+                    //clears the output list for player1 hand
+                    cardsAI.Clear();
+
+                    //loops through and adds the player's hands to the hand display
+                    for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                    {
+                        CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
+                        cardsAI.Add(newCardBox);
+                    }
+
+                    DisplayControls();
                 }
 
-                DisplayControls();
-            }
-            else
-            {
-                //draws cards back to a full hand
-                playerAI.DrawCards(myDeck);
-                //reset the display
-                this.pnAIHand.Controls.Clear();
 
-                //clears the output list for player1 hand
-                cardsAI.Clear();
-
-                //loops through and adds the player's hands to the hand display
-                for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                //sets the endgame flag
+                if (myDeck.getCardsRemaining() == 0)
                 {
-                    CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
-                    cardsAI.Add(newCardBox);
+                    endGame = true;
                 }
 
-                DisplayControls();
-            }
-
-            //sets the endgame flag
-            if (myDeck.getCardsRemaining() == 0)
-            {
-                endGame = true;
-            }
-
-            //checks to see if a player wins during the endgame
-            if (endGame)
-            {
-                EndGameCheck();
-            }
-
-
-            if (defender == player1)
-            {
-                string tempString="";
-                //adds all the cards in the pickup list to the defender's hand
-                for (int i = 0; i < cardsToBePickedUp.Count; i++)
+                //checks to see if a player wins during the endgame
+                if (endGame)
                 {
-                    player1.playerHand.addCard((Card)cardsToBePickedUp[i]);
-                   tempString += " " + cardsToBePickedUp[i].ToString();
-                   
-                }
-                writeGameLog(player1.playerName + " picked up:" + tempString);
-                //loop until minimum hand size is reached for defender (*Note defender always draws second)
-                player1.DrawCards(myDeck);
-
-                //reset the display
-                this.pnPlayerHand.Controls.Clear();
-
-                //clears the output list for player1 hand
-                cards.Clear();
-
-                //loops through and adds the player's hands to the hand display
-                for (int i = 0; i < player1.playerHand.gethandSize(); i++)
-                {
-                    CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
-                    newCardBox.Click += CardBox_Click;// Wire CardBox_Click
-                    cards.Add(newCardBox);
+                    EndGameCheck();
                 }
 
-                DisplayControls();
-            }
-            else
-            {
-               string tempString = "";
-                //adds all the cards in the pickup list to the defender's hand
-                for (int i = 0; i < cardsToBePickedUp.Count; i++)
+                //check the current roles and swaps them
+                if (attacker == player1)
                 {
-                    playerAI.playerHand.addCard((Card)cardsToBePickedUp[i]);
-                    tempString += " " + cardsToBePickedUp[i].ToString();
-                   
+                    defender = playerAI;
+                    attacker = player1;
                 }
-                writeGameLog(playerAI.playerName + " picked up:" + tempString);
-                //draws hand back to 6
-                playerAI.DrawCards(myDeck);
-
-                //reset the display
-                this.pnAIHand.Controls.Clear();
-
-                //clears the output list for player1 hand
-                cardsAI.Clear();
-
-                //loops through and adds the player's hands to the hand display
-                for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                else if (attacker == playerAI)
                 {
-                    CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
-                    cardsAI.Add(newCardBox);
+                    defender = player1;
+                    attacker = playerAI;
                 }
 
-                DisplayControls();
+                //reset counters and attributes
+                turnCounter = 0;
+                currentPlayer = attacker;
+                round = ATTACKINITIAL;
+                perevodnoyFlag = false;
+                lblPlayerTurn.Text = currentPlayer.playerName + " is still attacker.";
+                writeGameLog("Round End");
+                writeGameLog(currentPlayer.playerName + " is still attacker.");
+                //disable the skip turn function
+                btnSkipTurn.Enabled = false;
+                playerCardIndex = 0;
+                lblCardSelected.Text = player1.playerHand.GetCard(playerCardIndex).ToString();
+
+                //update the deck size
+                lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
+
             }
-
-
-            //sets the endgame flag
-            if (myDeck.getCardsRemaining() == 0)
-            {
-                endGame = true;
-            }
-
-            //checks to see if a player wins during the endgame
-            if (endGame)
-            {
-                EndGameCheck();
-            }
-
-            //check the current roles and swaps them
-            if (attacker == player1)
-            {
-                defender = playerAI;
-                attacker = player1;
-            }
-            else if (attacker == playerAI)
-            {
-                defender = player1;
-                attacker = playerAI;
-            }
-
-            //reset counters and attributes
-            turnCounter = 0;
-            currentPlayer = attacker;
-            round = ATTACKINITIAL;
-            perevodnoyFlag = false;
-            lblPlayerTurn.Text = currentPlayer.playerName + " is still attacker.";
-            writeGameLog("Round End");
-            writeGameLog(currentPlayer.playerName + " is still attacker.");
-            //disable the skip turn function
-            btnSkipTurn.Enabled = false;
-            playerCardIndex = 0;
-            lblCardSelected.Text = player1.playerHand.GetCard(playerCardIndex).ToString();
-
-            //update the deck size
-            lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
-
-
         }
         private void DefendersWin()
         {
-
-            /////Discard Field Cards //////
-            //field cards get discarded
-            playingField.discardField();
-
-            //adds the cards to the field display object
-            fieldCards.Clear();
-            this.pnPlayingField.Controls.Clear();
-
-            DisplayPlayingField();
-
-
-            /////DRAW CARDS/////
-            //draws back up to 6 cards in hand if necessary/possible attackers first
-
-            if (attacker == player1)
+            if (flagGameOver == false)
             {
-                //loop until minimum hand size is reached for attacker (*Note attackers draw first)
-                player1.DrawCards(myDeck);
 
-                //reset the display
-                this.pnPlayerHand.Controls.Clear();
 
-                //clears the output list for player1 hand
-                cards.Clear();
+                /////Discard Field Cards //////
+                //field cards get discarded
+                playingField.discardField();
 
-                //loops through and adds the player's hands to the hand display
-                for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                //adds the cards to the field display object
+                fieldCards.Clear();
+                this.pnPlayingField.Controls.Clear();
+
+                DisplayPlayingField();
+
+
+                /////DRAW CARDS/////
+                //draws back up to 6 cards in hand if necessary/possible attackers first
+
+                if (attacker == player1)
                 {
-                    CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
-                    newCardBox.Click += CardBox_Click;// Wire CardBox_Click
-                    cards.Add(newCardBox);
+                    //loop until minimum hand size is reached for attacker (*Note attackers draw first)
+                    player1.DrawCards(myDeck);
+
+                    //reset the display
+                    this.pnPlayerHand.Controls.Clear();
+
+                    //clears the output list for player1 hand
+                    cards.Clear();
+
+                    //loops through and adds the player's hands to the hand display
+                    for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                    {
+                        CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
+                        newCardBox.Click += CardBox_Click;// Wire CardBox_Click
+                        cards.Add(newCardBox);
+                    }
+
+                    DisplayControls();
+                }
+                else
+                {
+                    //draws cards
+                    playerAI.DrawCards(myDeck);
+
+                    //reset the display
+                    this.pnAIHand.Controls.Clear();
+
+                    //clears the output list for player1 hand
+                    cardsAI.Clear();
+
+                    //loops through and adds the player's hands to the hand display
+                    for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                    {
+                        CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
+                        cardsAI.Add(newCardBox);
+                    }
+
+                    DisplayControls();
                 }
 
-                DisplayControls();
-            }
-            else
-            {
-                //draws cards
-                playerAI.DrawCards(myDeck);
 
-                //reset the display
-                this.pnAIHand.Controls.Clear();
-
-                //clears the output list for player1 hand
-                cardsAI.Clear();
-
-                //loops through and adds the player's hands to the hand display
-                for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                //sets the endgame flag
+                if (myDeck.getCardsRemaining() == 0)
                 {
-                    CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
-                    cardsAI.Add(newCardBox);
+                    endGame = true;
+
                 }
 
-                DisplayControls();
-            }
-
-
-            //sets the endgame flag
-            if (myDeck.getCardsRemaining() == 0)
-            {
-                endGame = true;
-                
-            }
-
-            //checks to see if a player wins during the endgame
-            if (endGame)
-            {
-                EndGameCheck();
-            }
-
-
-            if (defender == player1)
-            {
-                //loop until minimum hand size is reached for defender (*Note defender always draws second)
-                player1.DrawCards(myDeck);
-
-                //reset the display
-                this.pnPlayerHand.Controls.Clear();
-
-                //clears the output list for player1 hand
-                cards.Clear();
-
-                //loops through and adds the player's hands to the hand display
-                for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                //checks to see if a player wins during the endgame
+                if (endGame)
                 {
-                    CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
-                    newCardBox.Click += CardBox_Click;// Wire CardBox_Click
-                    cards.Add(newCardBox);
+                    EndGameCheck();
                 }
 
-                DisplayControls();
-            }
-            else
-            {
-                //draws cards
-                playerAI.DrawCards(myDeck);
 
-                //reset the display
-                this.pnAIHand.Controls.Clear();
-
-                //clears the output list for player1 hand
-                cardsAI.Clear();
-
-                //loops through and adds the player's hands to the hand display
-                for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                if (defender == player1)
                 {
-                    CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
-                    cardsAI.Add(newCardBox);
+                    //loop until minimum hand size is reached for defender (*Note defender always draws second)
+                    player1.DrawCards(myDeck);
+
+                    //reset the display
+                    this.pnPlayerHand.Controls.Clear();
+
+                    //clears the output list for player1 hand
+                    cards.Clear();
+
+                    //loops through and adds the player's hands to the hand display
+                    for (int i = 0; i < player1.playerHand.gethandSize(); i++)
+                    {
+                        CardBox.CardBox newCardBox = new CardBox.CardBox(player1.playerHand.GetCard(i));
+                        newCardBox.Click += CardBox_Click;// Wire CardBox_Click
+                        cards.Add(newCardBox);
+                    }
+
+                    DisplayControls();
+                }
+                else
+                {
+                    //draws cards
+                    playerAI.DrawCards(myDeck);
+
+                    //reset the display
+                    this.pnAIHand.Controls.Clear();
+
+                    //clears the output list for player1 hand
+                    cardsAI.Clear();
+
+                    //loops through and adds the player's hands to the hand display
+                    for (int i = 0; i < playerAI.playerHand.gethandSize(); i++)
+                    {
+                        CardBox.CardBox newCardBox = new CardBox.CardBox(playerAI.playerHand.GetCard(i));
+                        cardsAI.Add(newCardBox);
+                    }
+
+                    DisplayControls();
                 }
 
-                DisplayControls();
+
+                //sets the endgame flag
+                if (myDeck.getCardsRemaining() == 0)
+                {
+                    endGame = true;
+                }
+
+                //checks to see if a player wins during the endgame
+                if (endGame)
+                {
+                    EndGameCheck();
+                }
+
+                //checks the roles and swaps them
+                SwapRoles();
+                writeGameLog("Roles Swapped");
+
+                //reset counters and attributes
+                turnCounter = 0;
+                currentPlayer = attacker;
+                round = ATTACKINITIAL;
+                perevodnoyFlag = false;
+                lblPlayerTurn.Text = currentPlayer.playerName + " is the new attacker.";
+                writeGameLog(attacker.playerName + " is the new attacker.");
+                //disable the skip turn function
+                btnSkipTurn.Enabled = false;
+
+                //update the deck size
+                lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
             }
-
-
-            //sets the endgame flag
-            if (myDeck.getCardsRemaining() == 0)
-            {
-                endGame = true;
-            }
-
-            //checks to see if a player wins during the endgame
-            if (endGame)
-            {
-                EndGameCheck();
-            }
-
-            //checks the roles and swaps them
-            SwapRoles();
-            writeGameLog("Roles Swapped");        
-
-            //reset counters and attributes
-            turnCounter = 0;
-            currentPlayer = attacker;
-            round = ATTACKINITIAL;
-            perevodnoyFlag = false;
-            lblPlayerTurn.Text = currentPlayer.playerName + " is the new attacker.";
-            writeGameLog(attacker.playerName + " is the new attacker.");
-            //disable the skip turn function
-            btnSkipTurn.Enabled = false;
-
-            //update the deck size
-            lblDeckSizeValue.Text = myDeck.getCardsRemaining().ToString();
-
         }
 
         /// <summary>
@@ -1274,30 +1322,33 @@ namespace DurakFormApp
         /// </summary>
         private void AttackerHandRefresh()
         {
-            //checks if the attacker is the player1 or player AI
-            if (attacker == player1)
+            if (flagGameOver == false)
             {
-                //removes the card from the list that displays the hand of the player
-                cards.RemoveAt(playerCardIndex);
-
-
-                //resets the list to remove the existing display
-                this.pnPlayerHand.Controls.Clear();
-
-                DisplayControls();
-            }
-            else
-            {
-                if (cardsAI.Count > 0)
+                //checks if the attacker is the player1 or player AI
+                if (attacker == player1)
                 {
                     //removes the card from the list that displays the hand of the player
-                    cardsAI.RemoveAt(AICardIndex);
+                    cards.RemoveAt(playerCardIndex);
 
 
                     //resets the list to remove the existing display
-                    this.pnAIHand.Controls.Clear();
+                    this.pnPlayerHand.Controls.Clear();
 
                     DisplayControls();
+                }
+                else
+                {
+                    if (cardsAI.Count > 0)
+                    {
+                        //removes the card from the list that displays the hand of the player
+                        cardsAI.RemoveAt(AICardIndex);
+
+
+                        //resets the list to remove the existing display
+                        this.pnAIHand.Controls.Clear();
+
+                        DisplayControls();
+                    }
                 }
             }
         }
@@ -1307,6 +1358,9 @@ namespace DurakFormApp
         /// </summary>
         private void DefenderHandRefresh()
         {
+            if (flagGameOver == false)
+            {
+
             if (defender == player1)
             {
                 //removes the card from the hand display
@@ -1333,6 +1387,7 @@ namespace DurakFormApp
 
             }
 
+            }
         }
 
 
@@ -1343,24 +1398,27 @@ namespace DurakFormApp
         /// <param name="e"></param>
         private void btnSkipTurn_Click(object sender, EventArgs e)
         {
-            //checks the current player and runs the corresponding end of round functions based on whom won
-            if(currentPlayer == defender)
+            if (flagGameOver == false)
             {
-                writeGameLog(defender.playerName + " skipped.");
-                writeGameLog("Round End");
-                AttackersWin();
-                
-               
-            }
-            else if (currentPlayer == attacker)
-            {
-                writeGameLog(attacker.playerName + " skipped.");
-                writeGameLog("Round End");
-                DefendersWin();
-            }
-            AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver);
+                //checks the current player and runs the corresponding end of round functions based on whom won
+                if (currentPlayer == defender)
+                {
+                    writeGameLog(defender.playerName + " skipped.");
+                    writeGameLog("Round End");
+                    AttackersWin();
 
-            TurnCycle();
+
+                }
+                else if (currentPlayer == attacker)
+                {
+                    writeGameLog(attacker.playerName + " skipped.");
+                    writeGameLog("Round End");
+                    DefendersWin();
+                }
+                AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver);
+
+                TurnCycle();
+            }
         }
 
         /// <summary>
@@ -1413,15 +1471,16 @@ namespace DurakFormApp
                 btnDiscardPile.Enabled = false;
                 btnSkipTurn.Enabled = false;
                 btnStart.Visible = true;
+                txtNameInput.Visible = true;
 
-                round = "gameover";
-                turnCounter = 10;
-                myDeck = new Deck();
-                endGame = false;
-                cardsAI = new List<CardBox.CardBox>();
-                cardsAI.Clear();
-                playerAI.playerHand.removeHand();
+                pnPlayerHand.Controls.Clear();
                 pnAIHand.Controls.Clear();
+                pnPlayingField.Controls.Clear();
+
+                flagGameOver = true;
+
+                myDeck = new Deck();
+                player1.DrawCards(myDeck);
 
             }
             cardBox1.Visible = false;
@@ -1446,6 +1505,8 @@ namespace DurakFormApp
 
         public void SwapRoles()
         {
+            if (flagGameOver == false)
+            { 
             //check the current roles and swaps them
             if (defender == player1)
             {
@@ -1458,6 +1519,8 @@ namespace DurakFormApp
                 attacker = playerAI;
             }
         }
+        }
+
 
         /// <summary>
         /// Function usd for the click of a cardbox object
@@ -1531,40 +1594,44 @@ namespace DurakFormApp
             {
                 EndGameCheck();
             }
-            if (currentPlayer == playerAI && round == ATTACKERTURN)
-            { 
-                if(playerAI.AITurnCycle(trumpCard,playingField,round, perevodnoyFlag, flagGameOver) == -1)
-                {
-                    DefendersWin();
-                }
-                else if (playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver) == -2)
-                {
-
-                }
-                else
-                {
-                    perevodnoyFlag = false;
-                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver);
-                    TurnCycle();
-                }
-            }
-            if (currentPlayer == playerAI && round == DEFENDERTURN)
+            if (flagGameOver == false)
             {
-                if (playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver) == -1)
+                if (currentPlayer == playerAI && round == ATTACKERTURN)
                 {
-                    //System.Threading.Thread.Sleep(3000);
-                    AttackersWin();
+                    if (playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver) == -1)
+                    {
+                        DefendersWin();
+                    }
+                    else if (playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver) == -2)
+                    {
+
+                    }
+                    else
+                    {
+                        perevodnoyFlag = false;
+                        AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver);
+                        TurnCycle();
+                    }
                 }
-                else if(playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver) == -2)
+                if (currentPlayer == playerAI && round == DEFENDERTURN)
                 {
-                    
-                }
-                else
-                {
-                    AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver);
-                    TurnCycle();
+                    if (playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver) == -1)
+                    {
+                        //System.Threading.Thread.Sleep(3000);
+                        AttackersWin();
+                    }
+                    else if (playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver) == -2)
+                    {
+
+                    }
+                    else
+                    {
+                        AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag, flagGameOver);
+                        TurnCycle();
+                    }
                 }
             }
+
         }
 
         public void writeGameLog(string msg)

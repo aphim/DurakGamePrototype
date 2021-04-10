@@ -1,346 +1,109 @@
 Application has started
-Game Started At: April 9, 2021 6:38:16 PM
-Trump Card: The Queen of Spades
-Player 1's hand: The Seven of Spades The Eight of Diamonds The Seven of Diamonds The Queen of Hearts The Ten of Hearts The Six of Spades
-AI's hand: The Six of Hearts The King of Clubs The King of Diamonds The Ten of Spades The Queen of Clubs The Ace of Clubs
-AI is the initial attacker.
-AI attacked with: The Six of Hearts
-Player 1 defended with: The Six of Spades
-Roles Swapped
-AI defended with: The Ten of Spades
-Player 1 attacked with: The Ten of Hearts
-Player 1 drew: The Jack of Spades The Ten of Clubs
-AI picked up: The Six of Hearts The Six of Spades The Ten of Spades The Ten of Hearts
-Round End
-Player 1 is still attacker.
-Player 1 attacked with: The Seven of Diamonds
-AI defended with: The Six of Spades
-Player 1 attacked with: The Seven of Spades
-AI defended with: The Ten of Spades
-Player 1 attacked with: The Ten of Clubs
-AI defended with: The Queen of Clubs
-Player 1 attacked with: The Queen of Hearts
-Player 1 drew: The Jack of Hearts The Eight of Spades The Eight of Clubs The Ten of Diamonds
-AI picked up: The Seven of Diamonds The Six of Spades The Seven of Spades The Ten of Spades The Ten of Clubs The Queen of Clubs The Queen of Hearts
-Round End
-Player 1 is still attacker.
-Player 1 attacked with: The Eight of Clubs
-AI defended with: The Six of Spades
-Player 1 attacked with: The Eight of Diamonds
-AI defended with: The Seven of Spades
-Player 1 attacked with: The Eight of Spades
-AI defended with: The Ten of Spades
-Player 1 attacked with: The Ten of Diamonds
-AI defended with: The King of Diamonds
-Player 1 skipped.
-Round End
-Player 1 drew: The King of Spades The Eight of Hearts The Nine of Hearts The Six of Clubs
-Roles Swapped
-AI is the new attacker.
-AI attacked with: The Six of Hearts
-Player 1 defended with: The Six of Clubs
-Roles Swapped
-AI defended with: The Ten of Clubs
-Player 1 skipped.
-Round End
-Player 1 drew: The Nine of Diamonds
-Roles Swapped
-AI is the new attacker.
-AI attacked with: The Seven of Diamonds
-Player 1 defended with: The Nine of Diamonds
-AI drew: The Ace of Spades
-Player 1 drew: The Six of Diamonds
-Roles Swapped
-Player 1 is the new attacker.
-Player 1 attacked with: The Six of Diamonds
-AI defended with: The Ace of Spades
-Player 1 skipped.
-Round End
-Player 1 drew: The Nine of Clubs
-AI drew: The Nine of Spades
-Roles Swapped
-AI is the new attacker.
-AI attacked with: The Ten of Hearts
-Player 1 defended with: The Jack of Spades
-AI drew: The Seven of Clubs
-Player 1 drew: The King of Hearts
-Roles Swapped
-Player 1 is the new attacker.
-Player 1 attacked with: The Nine of Clubs
-AI defended with: The Nine of Spades
-Roles Swapped
-Player 1 defended with: The Nine of Hearts
-Roles Swapped
-AI defended with: The Queen of Hearts
-Player 1 skipped.
-Round End
-Player 1 drew: The Seven of Hearts The Ace of Diamonds
-AI drew: The Jack of Diamonds The Jack of Clubs
-Roles Swapped
-AI is the new attacker.
-AI attacked with: The Seven of Clubs
-Player 1 defended with: The Seven of Hearts
-Roles Swapped
-Player 1 drew: The Queen of Diamonds
-AI picked up: The Seven of Clubs The Seven of Hearts
-Round End
-Player 1 is still attacker.
-Player 1 attacked with: The Eight of Hearts
-Player 1 drew: The Ace of Hearts
-AI picked up: The Eight of Hearts
-Round End
-Player 1 is still attacker.
-Player 1 attacked with: The Queen of Diamonds
-AI defended with: The Queen of Clubs
-Roles Swapped
-Player 1 defended with: The King of Spades
-AI attacked with: The King of Clubs
-Player 1 skipped.
-Round End
-Player 1 picked up: The Queen of Diamonds The Queen of Clubs The King of Spades The King of Clubs
-Round End
-AI is still attacker.
-AI attacked with: The Seven of Clubs
-Player 1 defended with: The Queen of Clubs
-AI attacked with: The Seven of Hearts
-Player 1 defended with: The King of Hearts
-AI drew: The Queen of Spades
-Roles Swapped
-Player 1 is the new attacker.
-Player 1 attacked with: The King of Clubs
-AI defended with: The Queen of Spades
-Player 1 attacked with: The King of Spades
-AI picked up: The King of Clubs The Queen of Spades The King of Spades
-Round End
-Player 1 is still attacker.
-Player 1 attacked with: The Jack of Hearts
-AI defended with: The Jack of Clubs
-Roles Swapped
-Player 1 skipped.
-Round End
-Player 1 picked up: The Jack of Hearts The Jack of Clubs
-Round End
-AI is still attacker.
-AI attacked with: The Eight of Hearts
-Player 1 defended with: The Jack of Hearts
-AI attacked with: The Jack of Diamonds
-Player 1 defended with: The Queen of Diamonds
-AI attacked with: The Queen of Spades
-Player 1 skipped.
-Round End
-Player 1 picked up: The Eight of Hearts The Jack of Hearts The Jack of Diamonds The Queen of Diamonds The Queen of Spades
-Round End
-AI is still attacker.
-AI attacked with: The King of Clubs
-Player 1 defended with: The Queen of Spades
-AI attacked with: The King of Spades
-Player 1 skipped.
-Round End
-Player 1 picked up: The King of Clubs The Queen of Spades The King of Spades
-Round End
-AI is still attacker.
-AI attacked with: The Ace of Clubs
-AI won the game!!
-Trump Card: The Ace of Clubs
-Player 1's hand: The Nine of Clubs The Ace of Diamonds The Seven of Diamonds The Eight of Spades The King of Spades The Queen of Spades
-AI's hand: The Ace of Spades The Eight of Hearts The Ten of Spades The Jack of Spades The King of Hearts The King of Diamonds
+Game Started At: April 9, 2021 8:34:05 PM
+Trump Card: The Ace of Hearts
+Player 1's hand: The Queen of Hearts The Eight of Diamonds The Queen of Diamonds The Nine of Diamonds The Queen of Clubs The Seven of Diamonds
+AI's hand: The Jack of Spades The Ten of Diamonds The King of Clubs The Nine of Spades The Ten of Clubs The Seven of Clubs
 Player 1 is the initial attacker.
 Player 1 attacked with: The Seven of Diamonds
-AI defended with: The King of Diamonds
-Player 1 attacked with: The King of Spades
-AI defended with: The Ace of Spades
+AI defended with: The Seven of Clubs
+Roles Swapped
+Player 1 defended with: The Queen of Clubs
+AI drew: The Eight of Clubs
+Player 1 drew: The King of Diamonds The Ace of Spades
+Roles Swapped
+Player 1 is the new attacker.
+Player 1 attacked with: The Eight of Diamonds
+AI defended with: The Eight of Clubs
+Roles Swapped
 Player 1 skipped.
 Round End
-Player 1 drew: The Eight of Clubs The Seven of Clubs
-AI drew: The Nine of Hearts The Ten of Hearts
+AI drew: The Ace of Clubs
+Player 1 picked up: The Eight of Diamonds The Eight of Clubs
+Round End
+AI is still attacker.
+AI attacked with: The Nine of Spades
+Player 1 defended with: The Nine of Diamonds
+Roles Swapped
+AI defended with: The Ten of Diamonds
+Player 1 skipped.
+Round End
+AI drew: The Seven of Spades The Queen of Spades
 Roles Swapped
 AI is the new attacker.
-AI attacked with: The Eight of Hearts
-Player 1 defended with: The Eight of Clubs
-Roles Swapped
-Player 1 drew: The King of Clubs
-AI picked up: The Eight of Hearts The Eight of Clubs
+AI attacked with: The Seven of Spades
+Player 1 defended with: The Ace of Spades
+AI attacked with: The Ace of Clubs
+Player 1 skipped.
 Round End
-Player 1 is still attacker.
-Player 1 attacked with: The Seven of Clubs
-AI defended with: The Eight of Clubs
-Player 1 attacked with: The Eight of Spades
+AI drew: The Six of Clubs The Ten of Spades
+Player 1 picked up: The Seven of Spades The Ace of Spades The Ace of Clubs
+Round End
+AI is still attacker.
+AI attacked with: The Six of Clubs
+Player 1 defended with: The Eight of Clubs
+AI drew: The Jack of Hearts
+Roles Swapped
+Player 1 is the new attacker.
+Player 1 attacked with: The Seven of Spades
 AI defended with: The Ten of Spades
 Player 1 skipped.
 Round End
-Player 1 drew: The Ace of Hearts The Ten of Diamonds
 AI drew: The Six of Spades
 Roles Swapped
 AI is the new attacker.
 AI attacked with: The Six of Spades
-Player 1 defended with: The Queen of Spades
-AI drew: The Six of Diamonds
-Player 1 drew: The Nine of Spades
-Roles Swapped
-Player 1 is the new attacker.
-Player 1 attacked with: The Ten of Diamonds
-AI defended with: The Ten of Hearts
-Roles Swapped
-Player 1 defended with: The Ace of Hearts
-AI drew: The Seven of Spades
-Player 1 drew: The Queen of Hearts The Six of Hearts
-Roles Swapped
-Player 1 is the new attacker.
-Player 1 attacked with: The Six of Hearts
-AI defended with: The Six of Diamonds
-Roles Swapped
-Player 1 defended with: The Ace of Diamonds
-AI drew: The Six of Clubs
-Player 1 drew: The Queen of Diamonds The Ten of Clubs
-Roles Swapped
-Player 1 is the new attacker.
-Player 1 attacked with: The Ten of Clubs
-Player 1 drew: The Jack of Diamonds
-AI picked up: The Ten of Clubs
-Round End
-Player 1 is still attacker.
-Player 1 attacked with: The Jack of Diamonds
-AI defended with: The Jack of Spades
-Roles Swapped
-Player 1 defended with: The Nine of Clubs
-AI attacked with: The Nine of Hearts
-Player 1 defended with: The Queen of Hearts
-AI drew: The Eight of Diamonds
-Player 1 drew: The Nine of Diamonds The Jack of Hearts The Jack of Clubs
-Roles Swapped
-Player 1 is the new attacker.
-Player 1 attacked with: The Nine of Diamonds
-AI defended with: The Ten of Clubs
-Player 1 attacked with: The Nine of Spades
-AI defended with: The Six of Clubs
-Player 1 skipped.
-Round End
-Player 1 drew: The Seven of Hearts The Queen of Clubs
-AI drew: The Ace of Clubs
-Roles Swapped
-AI is the new attacker.
-AI attacked with: The Seven of Spades
-Player 1 defended with: The Seven of Hearts
-Roles Swapped
-AI defended with: The Eight of Hearts
-Player 1 skipped.
-Round End
-Roles Swapped
-AI is the new attacker.
-AI attacked with: The Eight of Diamonds
-Player 1 defended with: The Queen of Diamonds
-Roles Swapped
-Player 1 is the new attacker.
-Player 1 attacked with: The Queen of Clubs
-AI defended with: The Ace of Clubs
-Player 1 skipped.
-Round End
-Roles Swapped
-AI is the new attacker.
-AI attacked with: The King of Hearts
-AI won the game!!
-Trump Card: The Eight of Hearts
-Player 1's hand: The Jack of Hearts The Six of Spades The King of Spades The Queen of Spades The Ace of Clubs The Seven of Hearts
-AI's hand: The Jack of Diamonds The King of Hearts The Jack of Spades The Nine of Clubs The Jack of Clubs The King of Diamonds
-Player 1 is the initial attacker.
-Player 1 attacked with: The Six of Spades
-AI defended with: The Jack of Spades
-Player 1 attacked with: The Jack of Hearts
-AI defended with: The King of Hearts
-Player 1 attacked with: The King of Spades
-Player 1 drew: The Nine of Hearts The Seven of Spades The Seven of Clubs
-AI picked up: The Six of Spades The Jack of Spades The Jack of Hearts The King of Hearts The King of Spades
-Round End
-Player 1 is still attacker.
-Player 1 attacked with: The Seven of Clubs
-AI defended with: The Nine of Clubs
-Player 1 attacked with: The Seven of Spades
-AI defended with: The Jack of Spades
-Player 1 attacked with: The Seven of Hearts
-AI defended with: The Jack of Hearts
-Player 1 skipped.
-Round End
-Player 1 drew: The Ace of Spades The King of Clubs The Ace of Diamonds
-Roles Swapped
-AI is the new attacker.
-AI attacked with: The Six of Spades
-Player 1 defended with: The Queen of Spades
-AI drew: The Six of Diamonds
-Player 1 drew: The Ten of Spades
-Roles Swapped
-Player 1 is the new attacker.
-Player 1 attacked with: The Nine of Hearts
-AI defended with: The King of Hearts
-Player 1 attacked with: The King of Clubs
-Player 1 drew: The Nine of Diamonds The Queen of Hearts
-AI picked up: The Nine of Hearts The King of Hearts The King of Clubs
-Round End
-Player 1 is still attacker.
-Player 1 attacked with: The Nine of Diamonds
-AI defended with: The Nine of Hearts
-Roles Swapped
-Player 1 defended with: The Queen of Hearts
-Player 1 drew: The Six of Clubs The Nine of Spades
-Roles Swapped
-Player 1 is the new attacker.
-Player 1 attacked with: The Six of Clubs
-AI defended with: The Six of Diamonds
-Roles Swapped
-Player 1 skipped.
-Round End
-Player 1 picked up: The Six of Clubs The Six of Diamonds
-Round End
-AI is still attacker.
-AI attacked with: The Jack of Diamonds
-Player 1 skipped.
-Round End
+Player 1 defended with: The Ace of Spades
 AI drew: The Six of Hearts
-Player 1 picked up: The Jack of Diamonds
-Round End
-AI is still attacker.
-AI attacked with: The Jack of Clubs
-Player 1 defended with: The Jack of Diamonds
-Roles Swapped
-AI defended with: The Six of Hearts
-Player 1 attacked with: The Six of Diamonds
-AI defended with: The King of Diamonds
-Player 1 attacked with: The Six of Clubs
-AI defended with: The King of Clubs
-Player 1 skipped.
-Round End
-Player 1 drew: The Ten of Diamonds
-AI drew: The Queen of Diamonds The Queen of Clubs The Ten of Clubs The Eight of Spades
-Roles Swapped
-AI is the new attacker.
-AI attacked with: The Eight of Spades
-Player 1 defended with: The Nine of Spades
-AI drew: The Ace of Hearts
-Player 1 drew: The Ten of Hearts
+Player 1 drew: The Seven of Hearts
 Roles Swapped
 Player 1 is the new attacker.
-Player 1 attacked with: The Ten of Diamonds
-AI defended with: The Ten of Clubs
-Roles Swapped
-Player 1 defended with: The Ten of Spades
-Roles Swapped
-AI defended with: The King of Spades
-Player 1 attacked with: The Ten of Hearts
-AI defended with: The King of Hearts
+Player 1 attacked with: The Eight of Diamonds
+AI defended with: The Six of Hearts
 Player 1 skipped.
 Round End
-Player 1 drew: The Seven of Diamonds The Eight of Clubs The Eight of Diamonds
-AI drew: The Eight of Hearts
+Player 1 drew: The Eight of Spades
+AI drew: The Nine of Clubs
 Roles Swapped
 AI is the new attacker.
-AI attacked with: The Queen of Diamonds
-Player 1 defended with: The Ace of Diamonds
-AI attacked with: The Queen of Clubs
+AI attacked with: The Nine of Clubs
 Player 1 defended with: The Ace of Clubs
-AI attacked with: The Ace of Hearts
+AI drew: The Ten of Hearts
+Player 1 drew: The Nine of Hearts
+Roles Swapped
+Player 1 is the new attacker.
+Player 1 attacked with: The Eight of Spades
+AI defended with: The Ten of Hearts
 Player 1 skipped.
 Round End
-Player 1 picked up: The Queen of Diamonds The Ace of Diamonds The Queen of Clubs The Ace of Clubs The Ace of Hearts
+Player 1 drew: The Jack of Diamonds
+AI drew: The Six of Diamonds
+Roles Swapped
+AI is the new attacker.
+AI attacked with: The Six of Diamonds
+Player 1 defended with: The Jack of Diamonds
+AI attacked with: The Jack of Spades
+Player 1 defended with: The Seven of Hearts
+AI attacked with: The Jack of Hearts
+Player 1 defended with: The Queen of Hearts
+AI attacked with: The Queen of Spades
+Player 1 defended with: The Nine of Hearts
+AI drew: The Eight of Hearts The Ace of Diamonds The King of Spades The Jack of Clubs
+Player 1 drew: The King of Hearts The Ace of Hearts
+Roles Swapped
+Player 1 is the new attacker.
+Player 1 attacked with: The Queen of Diamonds
+AI defended with: The Ace of Diamonds
+Player 1 attacked with: The Ace of Hearts
+AI picked up: The Queen of Diamonds The Ace of Diamonds The Ace of Hearts
 Round End
-AI is still attacker.
-AI attacked with: The Eight of Hearts
-AI won the game!!
+Player 1 is still attacker.
+Player 1 attacked with: The King of Diamonds
+AI defended with: The King of Spades
+Roles Swapped
+Player 1 defended with: The King of Hearts
+Player 1 won the game!!
+Player 1 drew: The Ace of Spades The King of Spades The Queen of Spades The Jack of Spades The Ten of Spades The Nine of Spades
+Trump Card: The Eight of Clubs
+Player 1's hand: The Ace of Diamonds The Ten of Diamonds The Six of Spades The Six of Diamonds The Six of Hearts The Ten of Clubs
+AI's hand: The King of Diamonds The Eight of Hearts The Nine of Diamonds The Queen of Diamonds The Eight of Spades The Seven of Diamonds
+Player 1 is the initial attacker.
