@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*  Project: OOP 4200: Durak Project
+ *  Author: Jacky Yuan
+ *          Ashok Sasitharan
+ *          Andre Agrippa
+ *          Roshan Persaud
+ *          Manthan Amitkumar Shah
+ *          
+ *  Desc:  This is the main program for the Durak Project. Contains the main logic for the game
+ * 
+ *The Card images were all taken from this website below:
+ *http://acbl.mybigcommerce.com/52-playing-cards/
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.ComponentModel;
@@ -58,12 +71,16 @@ namespace DurakFormApp
 
         string filePath = @"../../logs/GameLog.txt";
 
+        /// <summary>
+        /// Initialization of the form
+        /// </summary>
         public frmDurak()
         {
             InitializeComponent();
             //initiate variables
             btnSkipTurn.Enabled = false;
 
+            //Begins the log files
             using (StreamWriter writer = new StreamWriter(filePath))
             {
                 writer.WriteLine("Application has started");
@@ -110,7 +127,7 @@ namespace DurakFormApp
                             );
         }
         /// <summary>
-        /// If the exit buttonis clciked, close the form
+        /// If the exit button is clicked, closes the form
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -150,6 +167,7 @@ namespace DurakFormApp
         /// <param name="e"></param>
         private void btnStart_Click(object sender, EventArgs e)
         {
+            //Initializes new instances of variables for a fresh start of the game
             myDeck = new Deck();
             turnCounter = 0;
             endGame = false;
@@ -173,6 +191,7 @@ namespace DurakFormApp
             //shuffle deck
             myDeck.Shuffle();
 
+            //checks if a player name has been inputted
             if(String.IsNullOrEmpty(txtNameInput.Text))
             {
                player1 = new Player("Player 1");
@@ -206,6 +225,7 @@ namespace DurakFormApp
             DisplayControls();
             DetermineStartingPlayer();
 
+            //checks which player is the initial player and used the corresponding start logic
             if (attacker == player1)
             {
                 lblPlayerTurn.Text = player1.playerName + " is the initial attacker.";
@@ -221,6 +241,7 @@ namespace DurakFormApp
                
             }
 
+            //enable input buttons
             btnPlayCard.Enabled = true;
             btnDiscardPile.Enabled = true;
             btnStart.Visible = false;
@@ -402,8 +423,6 @@ namespace DurakFormApp
                         //The card is played from the player's hand (removed) and played onto the field (added)
 
                         playingField.cardPlayed(attacker.playerHand.playCard(AICardIndex));
-
-
 
 
                     }
@@ -1308,6 +1327,8 @@ namespace DurakFormApp
 
         }
 
+        ////////////////////////////////////////////////////////////////END OF ROUND LOGIC ENDS HERE ////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// Function that refreshes the hand and display on an attacker's turn
         /// </summary>
@@ -1542,7 +1563,11 @@ namespace DurakFormApp
 
         }
 
-        //toggles AI hand to show or hide cards
+        /// <summary>
+        /// Toggles if the AI hand is shown
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkAIHandToggle_CheckedChanged(object sender, EventArgs e)
         {
             //checks if the hand is currently shown or not

@@ -1,4 +1,16 @@
-﻿
+﻿/*  Project: OOP 4200: Durak Project
+ *  Author: Jacky Yuan
+ *          Ashok Sasitharan
+ *          Andre Agrippa
+ *          Roshan Persaud
+ *          Manthan Amitkumar Shah
+ *          
+ *  Desc:  This class is used for the deck in CardLib based on the tutorials.
+ * 
+ *The Card images were all taken from this website below:
+ *http://acbl.mybigcommerce.com/52-playing-cards/
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +55,7 @@ namespace Ch10CardLib
         /// <summary>
         /// Constructor that takes in a card and sets the current card to have the same suit, rank, and value
         /// </summary>
-        /// <param name="card"></param>
+        /// <param name="card">the card object</param>
         public Card(Card card)
         {
             suit = card.suit;
@@ -84,7 +96,7 @@ namespace Ch10CardLib
         /// <summary>
         /// Overriden GetHashCode()
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the hash code of the card</returns>
         public override int GetHashCode()
         {
             return 13 * (int)suit + (int)rank;
@@ -93,7 +105,7 @@ namespace Ch10CardLib
         /// <summary>
         /// Method that sets the trump suit to be equal to the trump card's suit
         /// </summary>
-        /// <param name="trumpCard"></param>
+        /// <param name="trumpCard">the trump card obejct</param>
         public static void setTrumpSuit(TrumpCard trumpCard)
         {
             Suit trump = trumpCard.suit;
@@ -103,7 +115,7 @@ namespace Ch10CardLib
         /// <summary>
         /// Method that returns the trump suit
         /// </summary>
-        /// <returns></returns>
+        /// <returns>returns the trump card</returns>
         public Suit getTrumpSuit()
         {
             return trump;
@@ -112,7 +124,7 @@ namespace Ch10CardLib
         /// <summary>
         /// method that sets the trump card's rank to be the rank of the trumpo card
         /// </summary>
-        /// <param name="trumpCard"></param>
+        /// <param name="trumpCard">the current trump card</param>
         public static void setTrumpRank(TrumpCard trumpCard)
         {
             Rank trumpRank = trumpCard.rank;
@@ -122,7 +134,7 @@ namespace Ch10CardLib
         /// <summary>
         /// Method used to obtain the rank of the trump card
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the rank of the current trump card</returns>
         public Rank getTrumpRank()
         {
             return trumpRank;
@@ -131,8 +143,8 @@ namespace Ch10CardLib
         /// <summary>
         /// method used to check if the ranks of 2 cards are the same
         /// </summary>
-        /// <param name="card1"></param>
-        /// <returns></returns>
+        /// <param name="card1">a card object</param>
+        /// <returns>true if they are the same rank or false if they are not</returns>
         public bool isSameRank(Card card1)
         {
             if (card1.rank == this.rank)

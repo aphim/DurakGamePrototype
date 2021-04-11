@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*  Project: OOP 4200: Durak Project
+ *  Author: Jacky Yuan
+ *          Ashok Sasitharan
+ *          Andre Agrippa
+ *          Roshan Persaud
+ *          Manthan Amitkumar Shah
+ *          
+ *  Desc:  This is the form and event handlers for the discard pile pop-up form.
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.ComponentModel;

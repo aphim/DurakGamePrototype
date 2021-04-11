@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*  Project: OOP 4200: Durak Project
+ *  Author: Jacky Yuan
+ *          Ashok Sasitharan
+ *          Andre Agrippa
+ *          Roshan Persaud
+ *          Manthan Amitkumar Shah
+ *          
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

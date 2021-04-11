@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*  Project: OOP 4200: Durak Project
+ *  Author: Jacky Yuan
+ *          Ashok Sasitharan
+ *          Andre Agrippa
+ *          
+ *  Desc:  This class is used for the AI logic for the game Durak.
+ * 
+ * The Card images were all taken from this website below:
+ *http://acbl.mybigcommerce.com/52-playing-cards/
+ */
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +21,6 @@ namespace Ch10CardLib
     {
 
         const int TURNSKIPPED = -1;
-        const int GAMEENDED = -2;
 
 
         //constructor for making an instance of an AI object
@@ -23,18 +32,17 @@ namespace Ch10CardLib
         /// <summary>
         /// this function checks which turn it is and directs it to the proper turn function
         /// </summary>
-        /// <param name="TrumpCard"></param>
-        /// <param name="PlayingField"></param>
-        /// <param name="round"></param>
-        /// <param name="perevodnoyFlag"></param>
-        /// <param name="gameOver"></param>
-        /// <returns></returns>
+        /// <param name="TrumpCard">the current trump card object</param>
+        /// <param name="PlayingField">the current playing field object</param>
+        /// <param name="round">the string corresponding to the current round</param>
+        /// <param name="perevodnoyFlag">the flag for whether it is in the turn swapped state</param>
+        /// <returns>int corresponding to the index of the card in the player hand</returns>
         public int AITurnCycle(Card TrumpCard, Field PlayingField, string round, bool perevodnoyFlag)
         {
-
                 const string ATTACKINITIAL = "initialTurn";
                 const string ATTACKERTURN = "attacker";
                 const string DEFENDERTURN = "defender";
+            //Checks to see what state the game is currently in an calls the corresponding function
                 if (round == ATTACKINITIAL)
                 {
                     return AIAttackerInitialTurn(TrumpCard);
@@ -58,9 +66,8 @@ namespace Ch10CardLib
         /// <summary>
         /// Method used to control the AI's decisions while making the initial attack (Will play the lowest value card)
         /// </summary>
-        /// <param name="playingField"></param>
-        /// <param name="handAI"></param>
-        /// <param name="trumpCard"></param>
+        /// <param name="trumpCard">the current trump card object</param>
+        /// <returns>int corresponding to the index of the card in the player hand</returns>
         public int AIAttackerInitialTurn(Card trumpCard)
         {
 
@@ -114,10 +121,9 @@ namespace Ch10CardLib
         /// <summary>
         /// Method used to control the AI's decisions while making a standard attack turn.
         /// </summary>
-        /// <param name="playingField"></param>
-        /// <param name="passFlag"></param>
-        /// <param name="trumpCard"></param>
-        /// <param name="handAI"></param>
+        /// <param name="playingField">the current playing field object</param>
+        /// <param name="trumpCard">the current trump card object</param>
+        /// <returns>int corresponding to the index of the card in the player hand</returns>
         public int AIAttackerTurn(Field playingField, Card trumpCard)
         {
 
@@ -245,13 +251,14 @@ namespace Ch10CardLib
 
         }
 
-        
+
         /// <summary>
         /// This method controls the AI's descisions on a defender turn
         /// </summary>
-        /// <param name="playingField"></param>
-        /// <param name="trumpCard"></param>
-        /// <param name="passFlag"></param>
+        /// <param name="playingField">the current playing field object</param>
+        /// <param name="trumpCard"> the current trump card object</param>
+        /// <param name="perevodnoyFlag">the perevodnoyFlag</param>
+        /// <returns>int corresponding to the index of the card in the player hand</returns>
         public int AIDefenderTurn(Field playingField, Card trumpCard, bool perevodnoyFlag)
         {
 

@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*  Project: OOP 4200: Durak Project
+ *  Author: Jacky Yuan
+ *          Ashok Sasitharan
+ *          Andre Agrippa
+ *          Roshan Persaud
+ *          Manthan Amitkumar Shah
+ *          
+ *  Desc:  This class is used for the field in CardLib.
+ * 
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +62,7 @@ namespace Ch10CardLib
         /// <summary>
         /// Method used to add a card to the field
         /// </summary>
-        /// <param name="card"></param>
+        /// <param name="card">a card object </param>
         public void cardPlayed(Card card)
         {
             field.Add(card);

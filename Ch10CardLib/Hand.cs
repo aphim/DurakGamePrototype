@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*  Project: OOP 4200: Durak Project
+ *  Author: Jacky Yuan
+ *          Ashok Sasitharan
+ *          Andre Agrippa
+ *          Roshan Persaud
+ *          Manthan Amitkumar Shah
+ *          
+ *  Desc:  This class is used for the hand in CardLib.
+ * 
+ */
+
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -151,7 +163,7 @@ namespace Ch10CardLib
         /// <summary>
         /// Function used for displaying the hand in the GUI
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the hand in a string format</returns>
         public string displayHandGUI()
         {
             String tempString = "";

@@ -469,3 +469,29 @@ AI drew: The Seven of Diamonds The King of Spades The Eight of Clubs
 Player 1 drew: The Jack of Hearts The Six of Clubs The Seven of Hearts
 Player 1 drew: The Ten of Clubs
 AI drew: The Six of Diamonds
+AI drew: The Six of Spades
+Player 1 drew: The Ace of Clubs The Six of Hearts
+Player 1 drew: The Seven of Spades The Queen of Spades
+Player 1 drew: The Eight of Spades
+AI drew: The Ace of Spades
+AI drew: The Ace of Hearts
+AI drew: The King of Clubs
+AI drew: The Jack of Clubs
+AI drew: The Nine of Diamonds
+AI drew: The Six of Diamonds
+AI drew: The Jack of Diamonds
+AI drew: The Nine of Spades
+AI drew: The King of Diamonds
+AI drew: The Ten of Diamonds
+AI drew: The Seven of Clubs
+AI drew: The King of Spades
+AI drew: The Six of Clubs
+AI drew: The Ten of Hearts
+AI drew: The Queen of Clubs
+AI drew: The Jack of Spades
+AI drew: The Jack of Hearts
+AI drew: The Ten of Clubs
+AI drew: The Eight of Hearts
+Hello drew: The King of Hearts
+Hello drew: The Ace of Diamonds
+AI drew: The Ten of Clubs

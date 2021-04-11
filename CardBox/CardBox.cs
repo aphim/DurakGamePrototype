@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*  Project: OOP 4200: Durak Project
+ *  Author: Jacky Yuan
+ *          Ashok Sasitharan
+ *          Andre Agrippa
+ *          
+ *  Desc:   This page was made with reference to the tutorial 8 of OOP 4200 from Durham College
+ *          The purpose of this page is to generate cardbox objects that can be used in the graphical
+ *          interface of the Durak Project.
+ * 
+ * The Card images were all taken from this website below:
+ *http://acbl.mybigcommerce.com/52-playing-cards/
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
