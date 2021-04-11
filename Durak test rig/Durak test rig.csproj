@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ch10CardClient\Ch10CardClient.csproj" />
     <ProjectReference Include="..\Ch10CardLib\Ch10CardLib.csproj" />
   </ItemGroup>
 
