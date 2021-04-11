@@ -56,7 +56,7 @@ namespace DurakFormApp
 
         int AICardIndex = 0;
 
-        string filePath = @"../../GameLog.txt";
+        string filePath = @"../../logs/GameLog.txt";
 
         public frmDurak()
         {
