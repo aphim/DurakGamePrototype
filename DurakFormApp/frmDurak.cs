@@ -67,6 +67,10 @@ namespace DurakFormApp
         bool flagGameOver = false;
         bool skipClicked = true;
 
+        int gamesPlayed = 0;
+        int gamesWon = 0;
+        int gamesLost = 0;
+
         int AICardIndex = 0;
 
         string filePath = @"../../logs/GameLog.txt";
@@ -246,8 +250,10 @@ namespace DurakFormApp
             btnDiscardPile.Enabled = true;
             btnStart.Visible = false;
             txtNameInput.Visible = false;
-     
-            
+
+
+            writeStatisticsLog(player1.playerName + "\n" + "Games Played: " + gamesPlayed + "\n" + "Games Won: " + gamesWon + "\n" + "Games Lost: " + gamesLost);
+
         }
 
         /// <summary>
@@ -461,14 +467,6 @@ namespace DurakFormApp
                         lblPlayerTurn.Refresh();
                     }
 
-
-                if (player1.playerHand.gethandSize() != 0 && playerAI.playerHand.gethandSize() != 0)
-                {
-                    //enables the skip turn button
-                    btnSkipTurn.Enabled = true;
-
-                }
-            
             }
             //////////////////////////////// The defender's turn (can only play cards of the same suit higher rank or trump suit on non-trumps)////////////////////////////////////////////
             else if (round == DEFENDERTURN)
@@ -1469,6 +1467,8 @@ namespace DurakFormApp
                 cardBox1.Visible = true;
                 chkAIHandToggle.Enabled = true;
 
+                flagGameOver = true;
+
             }
             //checks the handsize of the player to see if it is zero
             else if (player1.playerHand.gethandSize() == 0)
@@ -1654,9 +1654,14 @@ namespace DurakFormApp
                     btnSkipTurn.Enabled = false;
                 }
                 //enables the skip button if it is not the initial round
-                if (round != ATTACKINITIAL)
+                if (round != ATTACKINITIAL && flagGameOver == false && flagGameOver == false)
                 {
                     btnSkipTurn.Enabled = true;
+                }
+
+                if(flagGameOver == true)
+                {
+                    btnSkipTurn.Enabled = false;
                 }
 
             }
@@ -1674,6 +1679,22 @@ namespace DurakFormApp
 
                 writer.WriteLine(msg);
 
+            }
+        }
+
+        /// <summary>
+        /// Function used to connect and write the game statistics log
+        /// </summary>
+        /// <param name="msg"></param>
+        public void writeStatisticsLog(string msg)
+        {
+
+            File.WriteAllText("../../logs/StatsLog.txt", "");
+
+            using (StreamWriter writer = new StreamWriter(@"../../logs/StatsLog.txt", true))
+            {
+
+                writer.WriteLine(msg);
             }
         }
 
