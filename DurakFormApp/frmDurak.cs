@@ -127,7 +127,8 @@ namespace DurakFormApp
                             "12. Rounds continue until the deck runs out of cards." + "\n" +
                             "13. When the deck runs out of cards, the rounds continue but players no longer draw cards. " + "\n" +
                             "14. Players leave the game when they run out of cards and the deck is exhausted. (can be attacker or defender) The last person with " +
-                            "cards remaining loses the game."
+                            "cards remaining loses the game." + "\n" +
+                            "15. Each player has their own log file and can reset statistics by checking the radio button"
                             );
         }
         /// <summary>
@@ -171,6 +172,12 @@ namespace DurakFormApp
         /// <param name="e"></param>
         private void btnStart_Click(object sender, EventArgs e)
         {
+            if (chkResetStats.Checked)
+            {
+                gamesPlayed = 0;
+                gamesWon = 0;
+                gamesLost = 0;
+            }
             //Initializes new instances of variables for a fresh start of the game
             myDeck = new Deck();
             turnCounter = 0;
@@ -250,9 +257,9 @@ namespace DurakFormApp
             btnDiscardPile.Enabled = true;
             btnStart.Visible = false;
             txtNameInput.Visible = false;
-
-
             writeStatisticsLog(player1.playerName + "\n" + "Games Played: " + gamesPlayed + "\n" + "Games Won: " + gamesWon + "\n" + "Games Lost: " + gamesLost);
+
+
 
         }
 
@@ -1468,7 +1475,9 @@ namespace DurakFormApp
                 chkAIHandToggle.Enabled = true;
 
                 flagGameOver = true;
-
+                gamesLost+=1;
+                gamesPlayed+=1;
+                writeStatisticsLog(player1.playerName + "\n" + "Games Played: " + gamesPlayed + "\n" + "Games Won: " + gamesWon + "\n" + "Games Lost: " + gamesLost);
             }
             //checks the handsize of the player to see if it is zero
             else if (player1.playerHand.gethandSize() == 0)
@@ -1492,6 +1501,9 @@ namespace DurakFormApp
 
                 myDeck = new Deck();
                 player1.DrawCards(myDeck);
+                gamesWon+=1;
+                gamesPlayed+=1;
+                writeStatisticsLog(player1.playerName + "\n" + "Games Played: " + gamesPlayed + "\n" + "Games Won: " + gamesWon + "\n" + "Games Lost: " + gamesLost);
 
             }
             cardBox1.Visible = false;
@@ -1688,12 +1700,11 @@ namespace DurakFormApp
         /// <param name="msg"></param>
         public void writeStatisticsLog(string msg)
         {
+            string path = "../../logs/" + player1.playerName + "StatsLog.txt";
 
-            File.WriteAllText("../../logs/StatsLog.txt", "");
-
-            using (StreamWriter writer = new StreamWriter(@"../../logs/StatsLog.txt", true))
-            {
-
+            File.WriteAllText(path, "");
+            using (StreamWriter writer = new StreamWriter(path, true))
+            {           
                 writer.WriteLine(msg);
             }
         }

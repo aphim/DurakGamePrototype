@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Ch10CardLib.Card card1 = new Ch10CardLib.Card();
-            Ch10CardLib.Card card2 = new Ch10CardLib.Card();
+            Ch10CardLib.Card card3 = new Ch10CardLib.Card();
+            Ch10CardLib.Card card4 = new Ch10CardLib.Card();
             this.lblDeckSize = new System.Windows.Forms.Label();
             this.lblDeckSizeValue = new System.Windows.Forms.Label();
             this.pnPlayerHand = new System.Windows.Forms.Panel();
@@ -54,6 +54,7 @@
             this.chkAIHandToggle = new System.Windows.Forms.CheckBox();
             this.txtNameInput = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.chkResetStats = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -216,12 +217,12 @@
             // 
             // cbTrumpCard
             // 
-            card1.FaceUp = false;
-            this.cbTrumpCard.Card = card1;
+            card3.FaceUp = false;
+            this.cbTrumpCard.Card = card3;
             this.cbTrumpCard.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cbTrumpCard.FaceUp = false;
             this.cbTrumpCard.Location = new System.Drawing.Point(59, 72);
-            this.cbTrumpCard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbTrumpCard.Margin = new System.Windows.Forms.Padding(4);
             this.cbTrumpCard.Name = "cbTrumpCard";
             this.cbTrumpCard.rank = Ch10CardLib.Rank.Seven;
             this.cbTrumpCard.Size = new System.Drawing.Size(92, 129);
@@ -230,12 +231,12 @@
             // 
             // cardBox1
             // 
-            card2.FaceUp = false;
-            this.cardBox1.Card = card2;
+            card4.FaceUp = false;
+            this.cardBox1.Card = card4;
             this.cardBox1.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cardBox1.FaceUp = false;
             this.cardBox1.Location = new System.Drawing.Point(14, 358);
-            this.cardBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cardBox1.Margin = new System.Windows.Forms.Padding(4);
             this.cardBox1.Name = "cardBox1";
             this.cardBox1.rank = Ch10CardLib.Rank.Seven;
             this.cardBox1.Size = new System.Drawing.Size(111, 175);
@@ -245,7 +246,7 @@
             // lblErrorMsg
             // 
             this.lblErrorMsg.AutoSize = true;
-            this.lblErrorMsg.Location = new System.Drawing.Point(46, 275);
+            this.lblErrorMsg.Location = new System.Drawing.Point(293, 154);
             this.lblErrorMsg.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblErrorMsg.Name = "lblErrorMsg";
             this.lblErrorMsg.Size = new System.Drawing.Size(73, 13);
@@ -264,7 +265,7 @@
             // 
             this.chkAIHandToggle.AutoSize = true;
             this.chkAIHandToggle.Location = new System.Drawing.Point(59, 240);
-            this.chkAIHandToggle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkAIHandToggle.Margin = new System.Windows.Forms.Padding(2);
             this.chkAIHandToggle.Name = "chkAIHandToggle";
             this.chkAIHandToggle.Size = new System.Drawing.Size(102, 17);
             this.chkAIHandToggle.TabIndex = 25;
@@ -285,12 +286,23 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // chkResetStats
+            // 
+            this.chkResetStats.AutoSize = true;
+            this.chkResetStats.Location = new System.Drawing.Point(59, 263);
+            this.chkResetStats.Name = "chkResetStats";
+            this.chkResetStats.Size = new System.Drawing.Size(84, 17);
+            this.chkResetStats.TabIndex = 27;
+            this.chkResetStats.Text = "Reset Stats ";
+            this.chkResetStats.UseVisualStyleBackColor = true;
+            // 
             // frmDurak
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1011, 555);
+            this.Controls.Add(this.chkResetStats);
             this.Controls.Add(this.txtNameInput);
             this.Controls.Add(this.chkAIHandToggle);
             this.Controls.Add(this.pnPlayingField);
@@ -347,6 +359,7 @@
         private System.Windows.Forms.CheckBox chkAIHandToggle;
         private System.Windows.Forms.TextBox txtNameInput;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.CheckBox chkResetStats;
     }
 }
 
