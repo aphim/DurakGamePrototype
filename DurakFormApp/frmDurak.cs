@@ -105,9 +105,15 @@ namespace DurakFormApp
                             "   b. The suit of this card is the trump suit for this match (The value does not matter much)" + "\n" +
                             "4. The player with the lowest card in their hand is the first attacker." + "\n" +
                             "5. The attacker begins the round by playing a card from their hand to begin the attack." + "\n" +
-                            "6.The defender can, if they choose to, defend against the card by playing a card from their hand that is " +
-                            "either of the same suit but of a higher value or of a card from the trump suit. (If the attacker attacks with a " +
-                            "card of the trump suit, the defender must defend with a card of the trump suit but of a higher value)" + "\n" +
+                            "6.The defender can, if they choose to, defend against the card by playing a card from their hand that is: " +
+                            "\n   a. either of the same suit but of a higher value " +
+                            "\n   b. of a card from the trump suit to continue the round. (If the attacker " +
+                            "\n      attacks with a card of the trump suit, the defender must defend with " +
+                            "       a card of the trump suit but of a higher value) " +
+                            "\n   c. to play a card of the same rank to swap the roles of attacker and " +
+                            "\n      defender. This will count as a round and will be treated as an attack " +
+                            "\n      with the card. They will then also have the option to defend " +
+                            "\n       normally or swap again. This can happen up to 3 times."+ "\n" +
                             "7. If the defender defends the attack, the attacker may choose to chain another attack by playing a card that is" +
                             " if one of the values on the field. (EG: if the attacker plays a 6 of hearts to attack, and defender defends with a " +
                             "8 of hearts. The attacker can attack again this round using either a 6 or an 8) This can go up to 6 attacks in a round. " +
