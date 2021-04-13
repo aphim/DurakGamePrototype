@@ -73,7 +73,7 @@ namespace DurakFormApp
 
         int AICardIndex = 0;
 
-        string filePath = @"../../logs/GameLog.txt";
+      
 
         /// <summary>
         /// Initialization of the form
@@ -85,11 +85,7 @@ namespace DurakFormApp
             btnSkipTurn.Enabled = false;
 
             //Begins the log files
-            using (StreamWriter writer = new StreamWriter(filePath))
-            {
-                writer.WriteLine("Application has started");
-                writer.WriteLine("Game Started At: " + today.ToString("F"));
-            }
+            writeGameLog("Application has started" + "\n" + "Game Started At: " + today.ToString("F"));
             
 
         }
@@ -172,12 +168,8 @@ namespace DurakFormApp
         /// <param name="e"></param>
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if (chkResetStats.Checked)
-            {
-                gamesPlayed = 0;
-                gamesWon = 0;
-                gamesLost = 0;
-            }
+          
+         
             //Initializes new instances of variables for a fresh start of the game
             myDeck = new Deck();
             turnCounter = 0;
@@ -198,21 +190,26 @@ namespace DurakFormApp
             flagGameOver = false;
             playerOffset = 215;
             aiOffset = 215;
-
+            gamesPlayed = 0;
+            gamesWon = 0;
+            gamesLost = 0;
+            btnResetStats.Visible = false;
             //shuffle deck
             myDeck.Shuffle();
 
             //checks if a player name has been inputted
             if(String.IsNullOrEmpty(txtNameInput.Text))
             {
-               player1 = new Player("Player 1");
+               player1 = new Player("Player1");
             }
             else
             {
-                player1 = new Player(txtNameInput.Text);
+                player1 = new Player(txtNameInput.Text.Trim());
+                player1.playerName= player1.playerName.Replace(" ", "");
             }
 
-
+            readStatsLog();
+            gamesPlayed += 1;
             //Reset variables for a new game
             player1.playerHand = new Hand(myDeck);
             playerAI.playerHand = new Hand(myDeck);
@@ -224,12 +221,9 @@ namespace DurakFormApp
             this.cbTrumpCard.Card = trumpCard;
 
             //Prints the trump card and players hands to the log file
-            using (StreamWriter writer = new StreamWriter(filePath, true))
-            {
-                writer.WriteLine("Trump Card: " + trumpCard.ToString());
-                writer.WriteLine(player1.playerName+ "'s hand:" + player1.playerHand.displayHandGUI());
-                writer.WriteLine(playerAI.playerName + "'s hand:" + playerAI.playerHand.displayHandGUI());
-            }
+            writeGameLog("Trump Card: " + trumpCard.ToString() + "\n" + player1.playerName + "'s hand:" + player1.playerHand.displayHandGUI()
+                + "\n" + playerAI.playerName + "'s hand:" + playerAI.playerHand.displayHandGUI());
+         
 
             //1.Create cardbox controls 2.display them on the screen 3.Determine the starting player
             CreateControls();
@@ -1473,10 +1467,10 @@ namespace DurakFormApp
                 cbTrumpCard.Visible = true;
                 cardBox1.Visible = true;
                 chkAIHandToggle.Enabled = true;
-
+                btnResetStats.Visible = true;
                 flagGameOver = true;
                 gamesLost+=1;
-                gamesPlayed+=1;
+               // gamesPlayed+=1;
                 writeStatisticsLog(player1.playerName + "\n" + "Games Played: " + gamesPlayed + "\n" + "Games Won: " + gamesWon + "\n" + "Games Lost: " + gamesLost);
             }
             //checks the handsize of the player to see if it is zero
@@ -1498,11 +1492,11 @@ namespace DurakFormApp
                 pnPlayingField.Controls.Clear();
 
                 flagGameOver = true;
-
+                btnResetStats.Visible = true;
                 myDeck = new Deck();
                 player1.DrawCards(myDeck);
                 gamesWon+=1;
-                gamesPlayed+=1;
+                //gamesPlayed+=1;
                 writeStatisticsLog(player1.playerName + "\n" + "Games Played: " + gamesPlayed + "\n" + "Games Won: " + gamesWon + "\n" + "Games Lost: " + gamesLost);
 
             }
@@ -1686,6 +1680,7 @@ namespace DurakFormApp
         /// <param name="msg"></param>
         public void writeGameLog(string msg)
         {
+            string filePath = "../../logs/GameLogs/" + today.ToString("yyyy-M-dd--HH-mm-ss") + "-GameLog.txt";
             using (StreamWriter writer = new StreamWriter(filePath, true))
             {
 
@@ -1700,14 +1695,69 @@ namespace DurakFormApp
         /// <param name="msg"></param>
         public void writeStatisticsLog(string msg)
         {
-            string path = "../../logs/" + player1.playerName + "StatsLog.txt";
-
+          
+            string path = "../../logs/PlayerStats/" + player1.playerName + "-StatsLog.txt";
+          
+      
             File.WriteAllText(path, "");
-            using (StreamWriter writer = new StreamWriter(path, true))
-            {           
-                writer.WriteLine(msg);
-            }
+
+            
+           
+                using (StreamWriter writer = new StreamWriter(path, true))
+                {
+                    
+                    writer.WriteLine(msg);
+                    
+                }
+                
+      
         }
 
+        public void readStatsLog()
+        {
+            bool fileExists = false;
+            string path = "../../logs/PlayerStats/" + player1.playerName + "-StatsLog.txt";
+            using (FileStream fs = File.Open(path, FileMode.Append, FileAccess.Write))
+            {
+                if ( fs.Length > 0)
+                {
+                    fileExists = true;
+                   
+
+                    
+                }
+            }
+           
+           if(fileExists)
+            {
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    string input = reader.ReadToEnd();
+
+                    string[] splitInput = input.Split(null);
+                    gamesPlayed = int.Parse(splitInput[3]);
+                    gamesWon = int.Parse(splitInput[6]);
+                    gamesLost = int.Parse(splitInput[9]);
+                    Console.WriteLine(splitInput[3]);
+
+                }
+            }
+           
+          
+        }
+
+        private void btnResetStats_Click(object sender, EventArgs e)
+        {
+           
+                gamesPlayed = 0;
+                gamesWon = 0;
+                gamesLost = 0;
+            writeStatisticsLog(player1.playerName + "\n" + "Games Played: " + gamesPlayed + "\n" + "Games Won: " 
+                + gamesWon + "\n" + "Games Lost: " + gamesLost);
+            btnResetStats.Visible = false;
+
+        }
+
+       
     }
 }

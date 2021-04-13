@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Ch10CardLib.Card card3 = new Ch10CardLib.Card();
-            Ch10CardLib.Card card4 = new Ch10CardLib.Card();
+            Ch10CardLib.Card card1 = new Ch10CardLib.Card();
+            Ch10CardLib.Card card2 = new Ch10CardLib.Card();
             this.lblDeckSize = new System.Windows.Forms.Label();
             this.lblDeckSizeValue = new System.Windows.Forms.Label();
             this.pnPlayerHand = new System.Windows.Forms.Panel();
@@ -54,7 +54,7 @@
             this.chkAIHandToggle = new System.Windows.Forms.CheckBox();
             this.txtNameInput = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.chkResetStats = new System.Windows.Forms.CheckBox();
+            this.btnResetStats = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -217,8 +217,8 @@
             // 
             // cbTrumpCard
             // 
-            card3.FaceUp = false;
-            this.cbTrumpCard.Card = card3;
+            card1.FaceUp = false;
+            this.cbTrumpCard.Card = card1;
             this.cbTrumpCard.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cbTrumpCard.FaceUp = false;
             this.cbTrumpCard.Location = new System.Drawing.Point(59, 72);
@@ -231,8 +231,8 @@
             // 
             // cardBox1
             // 
-            card4.FaceUp = false;
-            this.cardBox1.Card = card4;
+            card2.FaceUp = false;
+            this.cardBox1.Card = card2;
             this.cardBox1.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cardBox1.FaceUp = false;
             this.cardBox1.Location = new System.Drawing.Point(14, 358);
@@ -286,15 +286,16 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // chkResetStats
+            // btnResetStats
             // 
-            this.chkResetStats.AutoSize = true;
-            this.chkResetStats.Location = new System.Drawing.Point(59, 263);
-            this.chkResetStats.Name = "chkResetStats";
-            this.chkResetStats.Size = new System.Drawing.Size(84, 17);
-            this.chkResetStats.TabIndex = 27;
-            this.chkResetStats.Text = "Reset Stats ";
-            this.chkResetStats.UseVisualStyleBackColor = true;
+            this.btnResetStats.Location = new System.Drawing.Point(59, 271);
+            this.btnResetStats.Name = "btnResetStats";
+            this.btnResetStats.Size = new System.Drawing.Size(75, 23);
+            this.btnResetStats.TabIndex = 28;
+            this.btnResetStats.Text = "Reset Stats";
+            this.btnResetStats.UseVisualStyleBackColor = true;
+            this.btnResetStats.Visible = false;
+            this.btnResetStats.Click += new System.EventHandler(this.btnResetStats_Click);
             // 
             // frmDurak
             // 
@@ -302,7 +303,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1011, 555);
-            this.Controls.Add(this.chkResetStats);
+            this.Controls.Add(this.btnResetStats);
             this.Controls.Add(this.txtNameInput);
             this.Controls.Add(this.chkAIHandToggle);
             this.Controls.Add(this.pnPlayingField);
@@ -359,7 +360,7 @@
         private System.Windows.Forms.CheckBox chkAIHandToggle;
         private System.Windows.Forms.TextBox txtNameInput;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.CheckBox chkResetStats;
+        private System.Windows.Forms.Button btnResetStats;
     }
 }
 
