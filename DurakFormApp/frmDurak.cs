@@ -1455,7 +1455,7 @@ namespace DurakFormApp
                 btnSkipTurn.Enabled = false;
                 btnStart.Visible = true;
                 txtNameInput.Visible = true;
-
+                txtNameInput.Text = player1.playerName;
 
                 myDeck = new Deck();
                 turnCounter = 0;
@@ -1492,7 +1492,7 @@ namespace DurakFormApp
                 btnSkipTurn.Enabled = false;
                 btnStart.Visible = true;
                 txtNameInput.Visible = true;
-
+                txtNameInput.Text = player1.playerName;
                 pnPlayerHand.Controls.Clear();
                 pnAIHand.Controls.Clear();
                 pnPlayingField.Controls.Clear();
