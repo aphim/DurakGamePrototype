@@ -1687,6 +1687,7 @@ namespace DurakFormApp
         public void writeGameLog(string msg)
         {
             string filePath = "../../logs/GameLogs/" + today.ToString("yyyy-M-dd--HH-mm-ss") + "-GameLog.txt";
+            //writes the message to the game log
             using (StreamWriter writer = new StreamWriter(filePath, true))
             {
 
@@ -1708,7 +1709,7 @@ namespace DurakFormApp
             File.WriteAllText(path, "");
 
             
-           
+                //writes the message to the stats file
                 using (StreamWriter writer = new StreamWriter(path, true))
                 {
                     
@@ -1719,10 +1720,15 @@ namespace DurakFormApp
       
         }
 
+        /// <summary>
+        /// This method reads that player stats log and parses the stats into their variables to be incremented
+        /// </summary>
         public void readStatsLog()
         {
             bool fileExists = false;
             string path = "../../logs/PlayerStats/" + player1.playerName + "-StatsLog.txt";
+
+            //checks to see if a file has been created before being read
             using (FileStream fs = File.Open(path, FileMode.Append, FileAccess.Write))
             {
                 if ( fs.Length > 0)
@@ -1736,6 +1742,7 @@ namespace DurakFormApp
            
            if(fileExists)
             {
+                //takes the data from the player stats file and sets them into their global variables.
                 using (StreamReader reader = new StreamReader(path))
                 {
                     string input = reader.ReadToEnd();
@@ -1752,6 +1759,11 @@ namespace DurakFormApp
           
         }
 
+        /// <summary>
+        /// Resets the player's stats and rewrites the player stats file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnResetStats_Click(object sender, EventArgs e)
         {
            
