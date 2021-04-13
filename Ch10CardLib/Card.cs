@@ -106,7 +106,7 @@ namespace Ch10CardLib
         /// Method that sets the trump suit to be equal to the trump card's suit
         /// </summary>
         /// <param name="trumpCard">the trump card obejct</param>
-        public static void setTrumpSuit(TrumpCard trumpCard)
+        public static void setTrumpSuit(Card trumpCard)
         {
             Suit trump = trumpCard.suit;
 
@@ -125,7 +125,7 @@ namespace Ch10CardLib
         /// method that sets the trump card's rank to be the rank of the trumpo card
         /// </summary>
         /// <param name="trumpCard">the current trump card</param>
-        public static void setTrumpRank(TrumpCard trumpCard)
+        public static void setTrumpRank(Card trumpCard)
         {
             Rank trumpRank = trumpCard.rank;
 

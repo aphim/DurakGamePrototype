@@ -174,8 +174,7 @@ namespace DurakFormApp
         /// <param name="e"></param>
         private void btnStart_Click(object sender, EventArgs e)
         {
-          
-         
+              
             //Initializes new instances of variables for a fresh start of the game
             myDeck = new Deck();
             turnCounter = 0;
@@ -227,8 +226,8 @@ namespace DurakFormApp
             this.cbTrumpCard.Card = trumpCard;
 
             //Prints the trump card and players hands to the log file
-            writeGameLog("Trump Card: " + trumpCard.ToString() + "\n" + player1.playerName + "'s hand:" + player1.playerHand.displayHandGUI()
-                + "\n" + playerAI.playerName + "'s hand:" + playerAI.playerHand.displayHandGUI());
+            writeGameLog("Trump Card: " + trumpCard.ToString() + "\n" + player1.playerName + "'s hand:" + player1.playerHand.ToString()
+                + "\n" + playerAI.playerName + "'s hand:" + playerAI.playerHand.ToString());
          
 
             //1.Create cardbox controls 2.display them on the screen 3.Determine the starting player
@@ -309,7 +308,6 @@ namespace DurakFormApp
                 }
             }
 
-
         }
 
         /// <summary>
@@ -321,9 +319,9 @@ namespace DurakFormApp
             for (int i = cardsToAdd.Count - 1; i >= 0; i--)
             {
                 fieldCards[i].Left = (i * 20) + 100;
+                //make sure all cards are face up
                 fieldCards[i].FaceUp = true;
                 this.pnPlayingField.Controls.Add(fieldCards[i]);
-
             }
         }
 
@@ -1596,11 +1594,11 @@ namespace DurakFormApp
             this.pnAIHand.Controls.Clear();
 
             //Decrements because incrementing will overlap cards in a false way 
-            for (int i = player1.playerHand.gethandSize() - 1; i >= 0; i--)
-            {
-                cards[i].Left = (i * 20) + playerOffset;
-                this.pnPlayerHand.Controls.Add(cards[i]);
-            }
+            //for (int i = player1.playerHand.gethandSize() - 1; i >= 0; i--)
+            //{
+            //    cards[i].Left = (i * 20) + playerOffset;
+            //    this.pnPlayerHand.Controls.Add(cards[i]);
+            //}
             //Decrements because incrementing will overlap cards in a false way 
             for (int i = playerAI.playerHand.gethandSize() - 1; i >= 0; i--)
             {
@@ -1692,7 +1690,6 @@ namespace DurakFormApp
             {
 
                 writer.WriteLine(msg);
-
             }
         }
 

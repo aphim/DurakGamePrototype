@@ -159,12 +159,11 @@ namespace Ch10CardLib
                 }
             }
         }
-
         /// <summary>
         /// Function used for displaying the hand in the GUI
         /// </summary>
         /// <returns>the hand in a string format</returns>
-        public string displayHandGUI()
+        public override string ToString()
         {
             String tempString = "";
             //loops through the hand

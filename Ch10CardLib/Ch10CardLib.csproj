@@ -56,7 +56,6 @@
     </Compile>
     <Compile Include="Rank.cs" />
     <Compile Include="Suit.cs" />
-    <Compile Include="TrumpCard.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
