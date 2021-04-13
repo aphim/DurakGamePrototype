@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Ch10CardLib.Card card1 = new Ch10CardLib.Card();
-            Ch10CardLib.Card card2 = new Ch10CardLib.Card();
+            Ch10CardLib.Card card5 = new Ch10CardLib.Card();
+            Ch10CardLib.Card card6 = new Ch10CardLib.Card();
             this.lblDeckSize = new System.Windows.Forms.Label();
             this.lblDeckSizeValue = new System.Windows.Forms.Label();
             this.pnPlayerHand = new System.Windows.Forms.Panel();
@@ -217,8 +217,8 @@
             // 
             // cbTrumpCard
             // 
-            card1.FaceUp = false;
-            this.cbTrumpCard.Card = card1;
+            card5.FaceUp = false;
+            this.cbTrumpCard.Card = card5;
             this.cbTrumpCard.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cbTrumpCard.FaceUp = false;
             this.cbTrumpCard.Location = new System.Drawing.Point(59, 72);
@@ -231,8 +231,8 @@
             // 
             // cardBox1
             // 
-            card2.FaceUp = false;
-            this.cardBox1.Card = card2;
+            card6.FaceUp = false;
+            this.cardBox1.Card = card6;
             this.cardBox1.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cardBox1.FaceUp = false;
             this.cardBox1.Location = new System.Drawing.Point(14, 358);
@@ -249,9 +249,8 @@
             this.lblErrorMsg.Location = new System.Drawing.Point(293, 154);
             this.lblErrorMsg.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblErrorMsg.Name = "lblErrorMsg";
-            this.lblErrorMsg.Size = new System.Drawing.Size(73, 13);
+            this.lblErrorMsg.Size = new System.Drawing.Size(0, 13);
             this.lblErrorMsg.TabIndex = 23;
-            this.lblErrorMsg.Text = "error message";
             // 
             // pnAIHand
             // 

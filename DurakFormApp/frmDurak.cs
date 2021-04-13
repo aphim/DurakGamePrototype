@@ -1423,7 +1423,7 @@ namespace DurakFormApp
                 writeGameLog("Round End");
                 DefendersWin();
             }
-
+            lblErrorMsg.Text = "";
             AICardIndex = playerAI.AITurnCycle(trumpCard, playingField, round, perevodnoyFlag);
 
             TurnCycle();
